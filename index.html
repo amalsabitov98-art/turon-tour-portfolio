@@ -1051,6 +1051,23 @@
       </div>
     </div>
   </section>
+  <script id="hero-video-script">
+    (() => {
+      const video = document.querySelector('.hero-video');
+      if (!video) return;
+      video.muted = true;
+      video.defaultMuted = true;
+      const attemptPlayback = () => {
+        const playback = video.play();
+        if (playback && typeof playback.catch === 'function') playback.catch(() => {});
+      };
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', attemptPlayback, { once: true });
+      else attemptPlayback();
+      ['pointerdown', 'touchstart', 'wheel', 'scroll', 'keydown'].forEach((eventName) => {
+        window.addEventListener(eventName, attemptPlayback, { once: true, passive: true });
+      });
+    })();
+  </script>
   <style id="scroll-cinema-styles">
     html { scroll-snap-type: y proximity; scroll-padding-top: 0; }
     .motion-screen { position: relative; scroll-snap-align: start; scroll-snap-stop: normal; overflow: hidden; }
