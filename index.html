@@ -136,14 +136,11 @@
       background:
         linear-gradient(90deg, var(--orange), var(--blue)) left top / 28% 4px no-repeat,
         linear-gradient(var(--orange), var(--orange)) left top / 4px 31% no-repeat,
-        linear-gradient(90deg, var(--blue), var(--green)) right top / 28% 4px no-repeat,
-        linear-gradient(var(--blue), var(--blue)) right top / 4px 31% no-repeat,
-        linear-gradient(90deg, var(--orange), var(--blue)) left bottom / 28% 4px no-repeat,
-        linear-gradient(var(--orange), var(--orange)) left bottom / 4px 31% no-repeat,
         linear-gradient(90deg, var(--blue), var(--green)) right bottom / 28% 4px no-repeat,
         linear-gradient(var(--green), var(--green)) right bottom / 4px 31% no-repeat;
       filter: drop-shadow(0 0 10px rgba(37,169,220,.1));
     }
+    .frame::after { display: none; }
     h1 {
       margin: 0;
       max-width: 590px;
