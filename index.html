@@ -393,8 +393,8 @@
     .about-ambition {
       max-width: 500px;
       margin: 13px 0 0;
-      color: rgba(246,245,241,.48);
-      font-size: clamp(11.5px, .92vw, 14px);
+      color: rgba(246,245,241,.62);
+      font-size: clamp(13px, .98vw, 15px);
       line-height: 1.55;
     }
     .about-footer {
@@ -554,12 +554,15 @@
       min-width: 0;
       padding: 8px 18px;
       font-family: "Sora", sans-serif;
-      font-size: clamp(9px, .76vw, 11.5px);
+      font-size: clamp(11px, .95vw, 14px);
       font-weight: 600;
       letter-spacing: .08em;
       line-height: 1.7;
       text-transform: uppercase;
     }
+    .route-destinations span:nth-of-type(3n + 1) { color: var(--orange); }
+    .route-destinations span:nth-of-type(3n + 2) { color: var(--blue); }
+    .route-destinations span:nth-of-type(3n) { color: var(--green); }
     .route-destinations i { margin: 0 8px; color: rgba(244,123,36,.74); font-style: normal; font-weight: 400; }
     .experience-screen {
       position: relative;
@@ -750,8 +753,8 @@
     .story-note {
       max-width: 510px;
       margin: 11px 0 0;
-      color: rgba(246,245,241,.5);
-      font-size: clamp(11.5px, .9vw, 13.5px);
+      color: rgba(246,245,241,.62);
+      font-size: clamp(13px, 1vw, 15px);
       line-height: 1.55;
     }
     .story-footer {
@@ -801,7 +804,7 @@
       }
       .story-rule { margin: 18px 0 14px; }
       .story-lead { font-size: clamp(13px, 1vw, 15px); line-height: 1.46; }
-      .story-note { margin-top: 6px; font-size: clamp(11px, .82vw, 12.5px); line-height: 1.42; }
+      .story-note { margin-top: 6px; font-size: clamp(13px, 1vw, 15px); line-height: 1.46; }
       .story-footer { padding-top: 12px; }
     }
     @media (max-width: 760px) {
@@ -832,7 +835,7 @@
       .route-row { grid-template-columns: 138px minmax(0, 1fr); }
       .route-stat { grid-template-columns: 38px 1fr; gap: 8px; padding-left: 8px; padding-right: 10px; }
       .route-stat strong { font-size: 27px; }
-      .route-destinations { padding: 8px 10px; font-size: 8px; line-height: 1.65; }
+      .route-destinations { padding: 8px 10px; font-size: 10.5px; line-height: 1.55; letter-spacing: .04em; }
       .route-destinations i { margin: 0 4px; }
       .experience-shell { padding: 24px 20px; }
       .experience-screen::before { background-position: 57% center; }
@@ -931,8 +934,8 @@
 
       <div class="directions-footer">
         <div class="route-lines">
-          <div class="route-row"><div class="route-stat"><strong>07</strong><span>Global directions</span></div><div class="route-destinations">Europe <i>/</i> Japan <i>/</i> The Americas <i>/</i> Asia <i>/</i> Turkey <i>/</i> Middle East <i>/</i> Russia</div></div>
-          <div class="route-row"><div class="route-stat"><strong>06</strong><span>Charter markets</span></div><div class="route-destinations">USA <i>/</i> Thailand <i>/</i> Turkey <i>/</i> UAE <i>/</i> Russia <i>/</i> Saudi Arabia</div></div>
+          <div class="route-row"><div class="route-stat"><strong>07</strong><span>Global directions</span></div><div class="route-destinations"><span>Europe</span> <i>/</i> <span>Japan</span> <i>/</i> <span>The Americas</span> <i>/</i> <span>Asia</span> <i>/</i> <span>Turkey</span> <i>/</i> <span>Middle East</span> <i>/</i> <span>Russia</span></div></div>
+          <div class="route-row"><div class="route-stat"><strong>06</strong><span>Charter markets</span></div><div class="route-destinations"><span>USA</span> <i>/</i> <span>Thailand</span> <i>/</i> <span>Turkey</span> <i>/</i> <span>UAE</span> <i>/</i> <span>Russia</span> <i>/</i> <span>Saudi Arabia</span></div></div>
         </div>
         <div class="index">03 / 08</div>
       </div>
@@ -1046,7 +1049,7 @@
       </div>
 
       <div class="story-footer">
-        <div class="story-proof mission-contact"><span><a href="mailto:info@turontourism.uz">info@turontourism.uz</a></span><i></i><span><a href="https://www.turontourism.uz">turontourism.uz</a></span></div>
+        <div class="story-proof mission-contact"><span><a href="mailto:info@turontourism.uz">info@turontourism.uz</a></span><i></i><span><a href="https://turonbooking.uz">turonbooking.uz</a></span></div>
         <div class="index">08 / 08</div>
       </div>
     </div>
@@ -1069,8 +1072,8 @@
     })();
   </script>
   <style id="scroll-cinema-styles">
-    html { scroll-snap-type: y proximity; scroll-padding-top: 0; }
-    .motion-screen { position: relative; scroll-snap-align: start; scroll-snap-stop: normal; overflow: hidden; }
+    html { scroll-snap-type: none; scroll-padding-top: 0; }
+    .motion-screen { position: relative; scroll-snap-align: none; scroll-snap-stop: normal; overflow: hidden; }
     .motion-screen::before {
       transform: scale(1.045);
       transition: transform 1.25s cubic-bezier(.16, 1, .3, 1), filter 1.05s ease;
@@ -1102,7 +1105,7 @@
       letter-spacing: .18em; text-align: center;
     }
     @media (max-width: 760px) {
-      html { scroll-snap-type: y proximity; }
+      html { scroll-snap-type: none; }
       .scroll-progress { display: none; }
       .motion-reveal { transform: translate3d(0, 18px, 0); }
     }
