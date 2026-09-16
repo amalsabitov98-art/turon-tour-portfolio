@@ -141,7 +141,7 @@
     .kicker .ny { color: var(--blue); }
     .kicker .world { color: var(--green); }
     .kicker .dot { color: rgba(255,255,255,.64); font-size: .72em; }
-    .frame { position: relative; display: block; width: max-content; max-width: 100%; padding: 25px 32px 27px; }
+    .frame { position: static; display: contents; width: auto; max-width: none; padding: 0; }
     .frame::before, .frame::after {
       content: ""; position: absolute; inset: 0; pointer-events: none;
       background:
@@ -155,6 +155,7 @@
         linear-gradient(var(--green), var(--green)) right bottom / 4px 31% no-repeat;
       filter: drop-shadow(0 0 10px rgba(37,169,220,.1));
     }
+    .frame::before, .frame::after { display: none; }
     h1 {
       margin: 0;
       max-width: none;
@@ -812,7 +813,6 @@
       nav { display: none; }
       .copy { width: 100%; }
       h1 { max-width: 100%; font-size: clamp(42px, 15vw, 74px); overflow-wrap: break-word; }
-      .frame { width: 100%; max-width: 100%; padding: 20px 18px 22px; }
       .subcopy, .actions { margin-left: 18px; }
       .services { gap: 7px; flex-wrap: wrap; }
       .service-chip { min-height: 38px; }
