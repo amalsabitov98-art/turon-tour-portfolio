@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Turon Tourism — Hero Direction</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,500&family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap');
+    :root {
+      --orange: #f47b24;
+      --blue: #25a9dc;
+      --green: #63ba63;
+      --white: #f6f5f1;
+      --muted: rgba(246, 245, 241, .62);
+      --brand-gradient: linear-gradient(100deg in oklch, #ff7417 0%, #f05b2c 28%, #1bb7d9 58%, #55bd71 100%);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; min-height: 100%; background: #090909; }
+    body { font-family: "Manrope", "Segoe UI", sans-serif; color: var(--white); }
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      isolation: isolate;
+      background: #111;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background: url("hero-photo.png") center 48% / cover no-repeat;
+      transform: scale(1.015);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.87) 0%, rgba(0,0,0,.56) 36%, rgba(0,0,0,.1) 72%),
+        linear-gradient(180deg, rgba(0,0,0,.22), transparent 42%, rgba(0,0,0,.55));
+    }
+    .grid {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: .09;
+      background-image:
+        linear-gradient(rgba(255,255,255,.16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.16) 1px, transparent 1px);
+      background-size: 96px 96px;
+      mask-image: linear-gradient(90deg, black, transparent 67%);
+    }
+    .shell {
+      min-height: 100svh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 34px 42px 30px;
+    }
+    header, footer { display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark { width: 47px; height: 47px; object-fit: contain; filter: drop-shadow(0 4px 14px rgba(37,169,220,.18)); }
+    .brand-copy { display: grid; justify-items: center; line-height: 1; }
+    .brand-copy strong {
+      color: white;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+      font-weight: 500;
+      letter-spacing: .045em;
+    }
+    .brand-copy small {
+      margin-top: 5px;
+      color: var(--orange);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: .14em;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(25,28,34,.64), rgba(4,6,10,.42));
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.22), 0 12px 34px rgba(0,0,0,.22);
+      backdrop-filter: blur(18px) saturate(145%);
+      -webkit-backdrop-filter: blur(18px) saturate(145%);
+    }
+    nav a {
+      position: relative;
+      padding: 11px 15px;
+      border-radius: 999px;
+      color: rgba(255,255,255,.64);
+      font-family: "Sora", sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color .22s ease, background .22s ease, transform .22s ease;
+    }
+    nav a:hover { color: white; transform: translateY(-1px); }
+    nav a.active {
+      color: white;
+      background: linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,.08));
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.26), 0 7px 16px rgba(0,0,0,.18);
+    }
+    nav a.contact { padding-right: 27px; }
+    nav a.contact::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      width: 7px;
+      height: 7px;
+      margin-top: -3.5px;
+      border-radius: 50%;
+      background: var(--brand-gradient);
+      box-shadow: 0 0 10px rgba(37,169,220,.7);
+    }
+    .hero-content { display: flex; align-items: center; padding: 6vh 0 4vh; }
+    .copy { width: min(660px, 68vw); }
+    .kicker { display: flex; align-items: center; gap: 13px; font-family: "Sora", sans-serif; font-size: clamp(14px, 1.3vw, 19px); font-weight: 800; letter-spacing: -.015em; text-transform: uppercase; margin-bottom: 28px; text-shadow: 0 3px 18px rgba(0,0,0,.7); }
+    .kicker::before { content: ""; width: 46px; height: 3px; border-radius: 99px; background: var(--brand-gradient); box-shadow: 0 0 16px rgba(37,169,220,.35); }
+    .kicker .uz { color: var(--orange); }
+    .kicker .ny { color: var(--blue); }
+    .kicker .world { color: var(--green); }
+    .kicker .dot { color: rgba(255,255,255,.64); font-size: .72em; }
+    .frame { position: relative; display: inline-block; padding: 25px 32px 27px; }
+    .frame::before, .frame::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background:
+        linear-gradient(90deg, var(--orange), var(--blue)) left top / 28% 4px no-repeat,
+        linear-gradient(var(--orange), var(--orange)) left top / 4px 31% no-repeat,
+        linear-gradient(90deg, var(--blue), var(--green)) right top / 28% 4px no-repeat,
+        linear-gradient(var(--blue), var(--blue)) right top / 4px 31% no-repeat,
+        linear-gradient(90deg, var(--orange), var(--blue)) left bottom / 28% 4px no-repeat,
+        linear-gradient(var(--orange), var(--orange)) left bottom / 4px 31% no-repeat,
+        linear-gradient(90deg, var(--blue), var(--green)) right bottom / 28% 4px no-repeat,
+        linear-gradient(var(--green), var(--green)) right bottom / 4px 31% no-repeat;
+      filter: drop-shadow(0 0 10px rgba(37,169,220,.1));
+    }
+    h1 {
+      margin: 0;
+      max-width: 590px;
+      font-family: "Sora", "Segoe UI", sans-serif;
+      font-size: clamp(58px, 7.1vw, 114px);
+      font-weight: 800;
+      line-height: .84;
+      letter-spacing: -.075em;
+      text-transform: uppercase;
+    }
+    h1 em { display: block; font-style: normal; color: transparent; background: var(--brand-gradient); background-clip: text; -webkit-background-clip: text; filter: saturate(1.08); }
+    .subcopy {
+      position: relative;
+      margin: 27px 0 0 33px;
+      max-width: 540px;
+      padding-left: 19px;
+    }
+    .subcopy::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 3px;
+      bottom: 3px;
+      width: 3px;
+      border-radius: 99px;
+      background: linear-gradient(180deg, var(--orange), var(--blue), var(--green));
+      box-shadow: 0 0 14px rgba(37,169,220,.26);
+    }
+    .subcopy strong {
+      display: block;
+      color: var(--white);
+      font-family: "Sora", sans-serif;
+      font-size: clamp(16px, 1.55vw, 21px);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -.025em;
+    }
+    .subcopy strong span {
+      color: transparent;
+      background: var(--brand-gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+    .subcopy small {
+      display: block;
+      margin-top: 7px;
+      max-width: 500px;
+      color: rgba(246,245,241,.66);
+      font-family: "Manrope", sans-serif;
+      font-size: 12.5px;
+      font-weight: 400;
+      line-height: 1.55;
+    }
+    .actions { margin: 28px 0 0 33px; display: flex; align-items: center; gap: 26px; }
+    .button, .link {
+      position: relative;
+      isolation: isolate;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      min-height: 52px;
+      padding: 0 23px;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 999px;
+      overflow: hidden;
+      color: white;
+      font-family: "Sora", sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      backdrop-filter: blur(18px) saturate(150%);
+      -webkit-backdrop-filter: blur(18px) saturate(150%);
+      background: linear-gradient(180deg, rgba(20,23,30,.82), rgba(4,7,11,.7));
+      box-shadow:
+        inset 0 1px 1px rgba(255,255,255,.36),
+        inset 0 -8px 16px rgba(37,169,220,.10),
+        0 12px 28px rgba(0,0,0,.36),
+        0 0 0 1px rgba(37,169,220,.08);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .button::before, .link::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      z-index: -1;
+      border-radius: inherit;
+      background:
+        radial-gradient(circle at 16% 0%, rgba(37,169,220,.46), transparent 34%),
+        radial-gradient(circle at 82% 100%, rgba(244,123,36,.45), transparent 38%);
+      opacity: .72;
+    }
+    .button::after {
+      content: "";
+      position: absolute;
+      inset: auto 16% -13px;
+      height: 25px;
+      z-index: -2;
+      background: linear-gradient(90deg, var(--blue), var(--green), var(--orange));
+      filter: blur(16px);
+      opacity: .48;
+    }
+    .button:hover, .link:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.48); box-shadow: inset 0 1px 1px rgba(255,255,255,.48), 0 16px 38px rgba(0,0,0,.42), 0 0 24px rgba(37,169,220,.16); }
+    .button span { font-size: 16px; line-height: 0; }
+    .link { color: rgba(255,255,255,.9); background: rgba(8,10,14,.44); box-shadow: inset 0 1px 1px rgba(255,255,255,.24), 0 10px 24px rgba(0,0,0,.24); }
+    footer { padding-top: 20px; border-top: 1px solid rgba(255,255,255,.15); color: var(--muted); }
+    .services { display: flex; gap: 9px; }
+    .service-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 42px;
+      padding: 0 13px;
+      border: 1px solid rgba(255,255,255,.17);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(22,25,31,.62), rgba(4,6,10,.38));
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.18), 0 10px 24px rgba(0,0,0,.2);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      color: rgba(255,255,255,.8);
+      font-family: "Sora", sans-serif;
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform .22s ease, border-color .22s ease, color .22s ease;
+    }
+    .service-chip:hover { transform: translateY(-2px); color: white; border-color: rgba(255,255,255,.38); }
+    .service-chip .num { color: var(--orange); font-weight: 800; }
+    .service-chip:nth-child(2) .num { color: var(--blue); }
+    .service-chip:nth-child(3) .num { color: var(--green); }
+    .service-chip .arrow { margin-left: 2px; color: rgba(255,255,255,.5); font-size: 12px; }
+    .index {
+      display: flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 0 15px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      background: rgba(8,10,14,.44);
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.15);
+      font-family: "Sora", sans-serif;
+      font-size: 9px;
+      letter-spacing: .13em;
+    }
+    .about-screen {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      isolation: isolate;
+      background: #050505;
+    }
+    .about-screen::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 42%;
+      z-index: -3;
+      background: url("second-route-table.png") center / cover no-repeat;
+      filter: grayscale(1) contrast(1.06) brightness(.84);
+      transform: scale(1.018);
+    }
+    .about-screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, #050505 0%, #050505 34%, rgba(5,5,5,.92) 43%, rgba(5,5,5,.25) 58%, transparent 76%),
+        linear-gradient(180deg, rgba(0,0,0,.32), transparent 34%, rgba(0,0,0,.48));
+    }
+    .about-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 34px 42px 30px;
+    }
+    .about-header { position: relative; z-index: 2; }
+    .about-content { display: flex; align-items: center; padding: 4vh 0 3vh; }
+    .about-copy { width: min(760px, 64vw); }
+    .about-label {
+      margin-bottom: 28px;
+      color: rgba(255,255,255,.58);
+      font-family: "Sora", sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+    .about-copy h2 {
+      margin: 0;
+      max-width: 790px;
+      color: #f6f5f1;
+      text-shadow: 0 8px 38px rgba(0,0,0,.58);
+    }
+    .about-copy h2 strong {
+      display: block;
+      font-family: "Sora", sans-serif;
+      font-size: clamp(48px, 5.25vw, 88px);
+      font-weight: 800;
+      line-height: .92;
+      letter-spacing: -.065em;
+      text-transform: uppercase;
+    }
+    .about-copy h2 em {
+      display: block;
+      margin-top: 11px;
+      font-family: "Bodoni Moda", Georgia, serif;
+      font-size: clamp(40px, 4.65vw, 78px);
+      font-weight: 500;
+      font-style: italic;
+      line-height: .96;
+      letter-spacing: -.055em;
+      white-space: nowrap;
+    }
+    .about-rule {
+      width: 112px;
+      height: 2px;
+      margin: 34px 0 26px;
+      background: var(--orange);
+      box-shadow: 0 0 15px rgba(244,123,36,.22);
+    }
+    .about-lead {
+      max-width: 515px;
+      margin: 0;
+      color: rgba(246,245,241,.82);
+      font-size: clamp(14px, 1.12vw, 17px);
+      font-weight: 500;
+      line-height: 1.62;
+    }
+    .about-ambition {
+      max-width: 500px;
+      margin: 13px 0 0;
+      color: rgba(246,245,241,.48);
+      font-size: clamp(11.5px, .92vw, 14px);
+      line-height: 1.55;
+    }
+    .about-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.16);
+    }
+    .proof-line {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      color: rgba(255,255,255,.72);
+      font-family: "Sora", sans-serif;
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .proof-line i { width: 4px; height: 4px; border-radius: 50%; background: var(--orange); }
+    .directions-screen {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      isolation: isolate;
+      background: #080808;
+    }
+    .directions-screen::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background: url("third-terminal.png") center 52% / cover no-repeat;
+      filter: grayscale(1) contrast(1.06) brightness(.8);
+      transform: scale(1.012);
+    }
+    .directions-screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.73) 31%, rgba(0,0,0,.28) 57%, rgba(0,0,0,.08) 80%),
+        linear-gradient(180deg, rgba(0,0,0,.24), transparent 35%, rgba(0,0,0,.82));
+    }
+    .directions-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 34px 42px 30px;
+    }
+    .directions-header { position: relative; z-index: 2; }
+    .directions-content { display: flex; align-items: center; padding: 4vh 0 2vh; }
+    .directions-copy { width: min(770px, 67vw); }
+    .directions-label {
+      margin-bottom: 27px;
+      color: rgba(255,255,255,.64);
+      font-family: "Sora", sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+    .directions-copy h2 { margin: 0; color: #f6f5f1; text-shadow: 0 9px 34px rgba(0,0,0,.62); }
+    .directions-copy h2 strong {
+      display: block;
+      max-width: 750px;
+      font-family: "Sora", sans-serif;
+      font-size: clamp(44px, 4.9vw, 82px);
+      font-weight: 800;
+      line-height: .93;
+      letter-spacing: -.065em;
+      text-transform: uppercase;
+    }
+    .directions-copy h2 em {
+      display: block;
+      width: fit-content;
+      max-width: 100%;
+      margin-top: 10px;
+      color: transparent;
+      background: var(--brand-gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      font-family: "Bodoni Moda", Georgia, serif;
+      font-size: clamp(48px, 5.6vw, 94px);
+      font-weight: 500;
+      font-style: italic;
+      line-height: .96;
+      letter-spacing: -.055em;
+      white-space: nowrap;
+      filter: saturate(1.06) brightness(1.08);
+    }
+    .directions-rule { width: 112px; height: 2px; margin: 32px 0 24px; background: var(--orange); box-shadow: 0 0 15px rgba(244,123,36,.22); }
+    .directions-lead {
+      max-width: 520px;
+      margin: 0;
+      color: rgba(246,245,241,.78);
+      font-size: clamp(14px, 1.12vw, 17px);
+      font-weight: 500;
+      line-height: 1.62;
+    }
+    .directions-footer {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 28px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.17);
+    }
+    .route-lines {
+      display: grid;
+      min-width: 0;
+      border-top: 1px solid rgba(255,255,255,.14);
+      border-bottom: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(90deg, rgba(3,4,6,.72), rgba(3,4,6,.26));
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .route-row {
+      display: grid;
+      grid-template-columns: 174px minmax(0, 1fr);
+      align-items: center;
+      min-width: 0;
+      min-height: 58px;
+      color: rgba(255,255,255,.8);
+    }
+    .route-row + .route-row { border-top: 1px solid rgba(255,255,255,.11); }
+    .route-stat {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      align-items: center;
+      gap: 12px;
+      align-self: stretch;
+      padding: 8px 18px 8px 12px;
+      border-right: 1px solid rgba(255,255,255,.17);
+      font-family: "Sora", sans-serif;
+    }
+    .route-stat strong {
+      font-family: "Bodoni Moda", Georgia, serif;
+      font-size: 32px;
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1;
+      color: #f6f5f1;
+    }
+    .route-stat span {
+      color: var(--orange);
+      font-size: 7.5px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      line-height: 1.45;
+      text-transform: uppercase;
+    }
+    .route-destinations {
+      min-width: 0;
+      padding: 8px 18px;
+      font-family: "Sora", sans-serif;
+      font-size: clamp(9px, .76vw, 11.5px);
+      font-weight: 600;
+      letter-spacing: .08em;
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
+    .route-destinations i { margin: 0 8px; color: rgba(244,123,36,.74); font-style: normal; font-weight: 400; }
+    .experience-screen {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      isolation: isolate;
+      background: #050505;
+    }
+    .experience-screen::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background: url("fourth-experience-team.png") center / cover no-repeat;
+      filter: grayscale(1) contrast(1.08) brightness(.76);
+      transform: scale(1.012);
+    }
+    .experience-screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.96) 0%, rgba(0,0,0,.88) 22%, rgba(0,0,0,.53) 42%, rgba(0,0,0,.08) 67%),
+        linear-gradient(180deg, rgba(0,0,0,.31), transparent 38%, rgba(0,0,0,.72));
+    }
+    .experience-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 34px 42px 30px;
+    }
+    .experience-header { position: relative; z-index: 2; }
+    .experience-content { display: flex; align-items: center; padding: 4vh 0 3vh; }
+    .experience-copy { width: min(690px, 56vw); }
+    .experience-label {
+      margin-bottom: 28px;
+      color: rgba(255,255,255,.62);
+      font-family: "Sora", sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+    .experience-copy h2 { margin: 0; color: #f6f5f1; text-shadow: 0 9px 34px rgba(0,0,0,.72); }
+    .experience-copy h2 strong {
+      display: block;
+      font-family: "Sora", sans-serif;
+      font-size: clamp(47px, 5.15vw, 86px);
+      font-weight: 800;
+      line-height: .92;
+      letter-spacing: -.065em;
+      text-transform: uppercase;
+    }
+    .experience-copy h2 em {
+      display: block;
+      width: fit-content;
+      margin-top: 10px;
+      color: transparent;
+      background: var(--brand-gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      font-family: "Bodoni Moda", Georgia, serif;
+      font-size: clamp(48px, 5.4vw, 91px);
+      font-weight: 500;
+      font-style: italic;
+      line-height: .96;
+      letter-spacing: -.055em;
+      white-space: nowrap;
+      filter: saturate(1.04) brightness(1.08);
+    }
+    .experience-rule { width: 112px; height: 2px; margin: 32px 0 24px; background: var(--orange); box-shadow: 0 0 15px rgba(244,123,36,.22); }
+    .experience-lead {
+      max-width: 530px;
+      margin: 0;
+      color: rgba(246,245,241,.79);
+      font-size: clamp(14px, 1.08vw, 16.5px);
+      font-weight: 500;
+      line-height: 1.64;
+    }
+    .experience-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.16);
+    }
+    .experience-proof {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      color: rgba(255,255,255,.72);
+      font-family: "Sora", sans-serif;
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .experience-proof i { width: 4px; height: 4px; border-radius: 50%; background: var(--orange); }
+    .story-screen {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      isolation: isolate;
+      background: #050505;
+    }
+    .story-screen::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background: var(--image) var(--position, center) / cover no-repeat;
+      filter: grayscale(1) contrast(1.07) brightness(var(--brightness, .77));
+      transform: scale(1.012);
+    }
+    .story-screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.96) 0%, rgba(0,0,0,.86) 23%, rgba(0,0,0,.5) 43%, rgba(0,0,0,.07) 68%),
+        linear-gradient(180deg, rgba(0,0,0,.28), transparent 38%, rgba(0,0,0,.76));
+    }
+    .mission-screen::after {
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.91) 0%, rgba(0,0,0,.75) 27%, rgba(0,0,0,.36) 48%, rgba(0,0,0,.08) 72%),
+        linear-gradient(180deg, rgba(0,0,0,.28), transparent 34%, rgba(0,0,0,.78));
+    }
+    .story-shell {
+      min-height: 100svh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 34px 42px 30px;
+    }
+    .story-header { position: relative; z-index: 2; }
+    .story-content { min-height: 0; display: flex; align-items: center; padding: 4vh 0 3vh; }
+    .story-copy { width: min(920px, calc(100vw - 84px)); }
+    .story-label {
+      margin-bottom: 27px;
+      color: rgba(255,255,255,.62);
+      font-family: "Sora", sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+    .story-copy h2 { margin: 0; color: #f6f5f1; text-shadow: 0 9px 34px rgba(0,0,0,.72); }
+    .story-copy h2 strong {
+      display: block;
+      max-width: 700px;
+      font-family: "Sora", sans-serif;
+      font-size: clamp(45px, 5vw, 84px);
+      font-weight: 800;
+      line-height: .92;
+      letter-spacing: -.065em;
+      text-transform: uppercase;
+    }
+    .story-copy h2 em {
+      display: block;
+      width: fit-content;
+      max-width: 100%;
+      margin-top: 10px;
+      color: transparent;
+      background: var(--brand-gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      font-family: "Bodoni Moda", Georgia, serif;
+      font-size: clamp(46px, 5.25vw, 89px);
+      font-weight: 500;
+      font-style: italic;
+      line-height: .96;
+      letter-spacing: -.055em;
+      white-space: nowrap;
+      filter: saturate(1.04) brightness(1.08);
+    }
+    .story-rule { width: 112px; height: 2px; margin: 31px 0 23px; background: var(--orange); box-shadow: 0 0 15px rgba(244,123,36,.22); }
+    .story-lead {
+      max-width: 535px;
+      margin: 0;
+      color: rgba(246,245,241,.81);
+      font-size: clamp(14px, 1.08vw, 16.5px);
+      font-weight: 500;
+      line-height: 1.64;
+    }
+    .story-note {
+      max-width: 510px;
+      margin: 11px 0 0;
+      color: rgba(246,245,241,.5);
+      font-size: clamp(11.5px, .9vw, 13.5px);
+      line-height: 1.55;
+    }
+    .story-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.16);
+    }
+    .story-proof {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      color: rgba(255,255,255,.74);
+      font-family: "Sora", sans-serif;
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .story-proof i { width: 4px; height: 4px; border-radius: 50%; background: var(--orange); }
+    .mission-contact { display: flex; align-items: center; gap: 20px; }
+    .mission-contact a { color: rgba(255,255,255,.75); text-decoration: none; }
+    @media (max-width: 1180px) {
+      .story-copy h2 strong { max-width: min(760px, 88vw); }
+      .story-copy h2 em {
+        max-width: 88vw;
+        white-space: normal;
+        text-wrap: balance;
+      }
+      .story-lead { max-width: min(600px, 78vw); }
+      .story-note { max-width: min(560px, 76vw); }
+    }
+    @media (max-height: 720px) and (min-width: 761px) {
+      .story-shell { padding: 18px 30px 16px; }
+      .story-content { padding: 1.5vh 0 1vh; }
+      .story-label { margin-bottom: 14px; }
+      .story-copy h2 strong {
+        font-size: clamp(38px, min(4.6vw, 9.2vh), 66px);
+        line-height: .88;
+      }
+      .story-copy h2 em {
+        margin-top: 6px;
+        font-size: clamp(39px, min(4.75vw, 9.4vh), 68px);
+        line-height: .9;
+      }
+      .story-rule { margin: 18px 0 14px; }
+      .story-lead { font-size: clamp(13px, 1vw, 15px); line-height: 1.46; }
+      .story-note { margin-top: 6px; font-size: clamp(11px, .82vw, 12.5px); line-height: 1.42; }
+      .story-footer { padding-top: 12px; }
+    }
+    @media (max-width: 760px) {
+      .shell { padding: 24px 20px; }
+      nav { display: none; }
+      .copy { width: 100%; }
+      h1 { font-size: clamp(55px, 19vw, 90px); }
+      .frame { padding: 20px 18px 22px; }
+      .subcopy, .actions { margin-left: 18px; }
+      .services { gap: 7px; flex-wrap: wrap; }
+      .service-chip { min-height: 38px; }
+      .about-shell { padding: 24px 20px; }
+      .about-copy { width: 100%; }
+      .about-screen::before { left: 25%; background-position: 58% center; opacity: .74; }
+      .about-screen::after { background: linear-gradient(90deg, rgba(5,5,5,.98), rgba(5,5,5,.82) 58%, rgba(5,5,5,.28)); }
+      .about-copy h2 strong { font-size: clamp(45px, 13vw, 72px); }
+      .about-copy h2 em { font-size: clamp(34px, 10.4vw, 58px); white-space: normal; }
+      .about-lead { max-width: 88%; }
+      .proof-line { max-width: 76%; flex-wrap: wrap; row-gap: 8px; }
+      .directions-shell { padding: 24px 20px; }
+      .directions-screen::before { background-position: 56% center; }
+      .directions-screen::after { background: linear-gradient(90deg, rgba(0,0,0,.93), rgba(0,0,0,.7) 64%, rgba(0,0,0,.18)); }
+      .directions-copy { width: 100%; }
+      .directions-copy h2 strong { max-width: 92%; font-size: clamp(42px, 12.5vw, 70px); }
+      .directions-copy h2 em { font-size: clamp(42px, 12vw, 68px); white-space: normal; }
+      .directions-lead { max-width: 86%; }
+      .directions-footer { grid-template-columns: 1fr auto; }
+      .route-row { grid-template-columns: 138px minmax(0, 1fr); }
+      .route-stat { grid-template-columns: 38px 1fr; gap: 8px; padding-left: 8px; padding-right: 10px; }
+      .route-stat strong { font-size: 27px; }
+      .route-destinations { padding: 8px 10px; font-size: 8px; line-height: 1.65; }
+      .route-destinations i { margin: 0 4px; }
+      .experience-shell { padding: 24px 20px; }
+      .experience-screen::before { background-position: 57% center; }
+      .experience-screen::after { background: linear-gradient(90deg, rgba(0,0,0,.95), rgba(0,0,0,.76) 67%, rgba(0,0,0,.22)); }
+      .experience-copy { width: 100%; }
+      .experience-copy h2 strong { max-width: 92%; font-size: clamp(43px, 12.5vw, 72px); }
+      .experience-copy h2 em { font-size: clamp(42px, 12vw, 68px); white-space: normal; }
+      .experience-lead { max-width: 87%; }
+      .experience-proof { max-width: 78%; flex-wrap: wrap; row-gap: 8px; }
+      .story-shell { padding: 24px 20px; }
+      .story-screen::before { background-position: 58% center; }
+      .story-screen::after, .mission-screen::after { background: linear-gradient(90deg, rgba(0,0,0,.96), rgba(0,0,0,.76) 68%, rgba(0,0,0,.2)); }
+      .story-copy { width: 100%; }
+      .story-copy h2 strong { max-width: 94%; font-size: clamp(42px, 12vw, 70px); }
+      .story-copy h2 em { font-size: clamp(41px, 11.5vw, 66px); white-space: normal; }
+      .story-lead, .story-note { max-width: 88%; }
+      .story-proof { max-width: 79%; flex-wrap: wrap; row-gap: 8px; }
+      .mission-contact { align-items: flex-start; flex-direction: column; gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="hero">
+    <div class="grid"></div>
+    <div class="shell">
+      <header>
+        <div class="brand"><img class="brand-mark" src="tour-mark.png" alt="Turon Tour"><span class="brand-copy"><strong>TURON</strong><small>TOUR</small></span></div>
+        <nav><a class="active" href="#about">About</a><a href="#directions">Services</a><a href="#experience">Expertise</a><a class="contact" href="#mission">Contact</a></nav>
+      </header>
+
+      <section class="hero-content">
+        <div class="copy">
+          <div class="kicker"><span class="uz">Uzbekistan</span><span class="dot">•</span><span class="ny">New York</span><span class="dot">•</span><span class="world">Worldwide</span></div>
+          <div class="frame">
+            <h1>Travel<br><em>without</em><br>compromise.</h1>
+          </div>
+          <div class="subcopy">
+            <strong>One journey. <span>One accountable team.</span></strong>
+            <small>Flights, logistics and on-the-ground support — managed from departure to arrival.</small>
+          </div>
+          <div class="actions"><a class="button" href="#">Start a journey <span>↗</span></a><a class="link" href="#">View capabilities</a></div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="services">
+          <a class="service-chip" href="#"><span class="num">01</span><span>DMC Uzbekistan</span><span class="arrow">↗</span></a>
+          <a class="service-chip" href="#"><span class="num">02</span><span>Business travel</span><span class="arrow">↗</span></a>
+          <a class="service-chip" href="#"><span class="num">03</span><span>Air consolidation</span><span class="arrow">↗</span></a>
+        </div>
+        <div class="index">01 / 08</div>
+      </footer>
+    </div>
+  </main>
+  <section class="about-screen" id="about">
+    <div class="about-shell">
+      <header class="about-header">
+        <div class="brand"><img class="brand-mark" src="tour-mark.png" alt="Turon Tour"><span class="brand-copy"><strong>TURON</strong><small>TOUR</small></span></div>
+        <nav><a class="active" href="#about">About</a><a href="#directions">Services</a><a href="#experience">Expertise</a><a class="contact" href="#mission">Contact</a></nav>
+      </header>
+
+      <div class="about-content">
+        <div class="about-copy">
+          <div class="about-label">02 / About Turon</div>
+          <h2><strong>GLOBAL REACH.</strong><em>PERSONAL CONTROL.</em></h2>
+          <div class="about-rule"></div>
+          <p class="about-lead">Turon Tourism is a market-leading travel company in Uzbekistan, delivering high-quality, personalized and flexible service for individual, group, leisure and business travel.</p>
+          <p class="about-ambition">Our ambition is to set a higher standard for adventure travel in Uzbekistan.</p>
+        </div>
+      </div>
+
+      <div class="about-footer">
+        <div class="proof-line"><span>Personalized service</span><i></i><span>Business &amp; group travel</span><i></i><span>Global coverage</span></div>
+        <div class="index">02 / 08</div>
+      </div>
+    </div>
+  </section>
+  <section class="directions-screen" id="directions">
+    <div class="directions-shell">
+      <header class="directions-header">
+        <div class="brand"><img class="brand-mark" src="tour-mark.png" alt="Turon Tour"><span class="brand-copy"><strong>TURON</strong><small>TOUR</small></span></div>
+        <nav><a href="#about">About</a><a class="active" href="#directions">Services</a><a href="#experience">Expertise</a><a class="contact" href="#mission">Contact</a></nav>
+      </header>
+
+      <div class="directions-content">
+        <div class="directions-copy">
+          <div class="directions-label">03 / Our directions</div>
+          <h2><strong>CONNECTING UZBEKISTAN</strong><em>TO THE WORLD.</em></h2>
+          <div class="directions-rule"></div>
+          <p class="directions-lead">Full-service inbound and outbound travel for individuals and groups, backed by extensive charter expertise.</p>
+        </div>
+      </div>
+
+      <div class="directions-footer">
+        <div class="route-lines">
+          <div class="route-row"><div class="route-stat"><strong>07</strong><span>Global directions</span></div><div class="route-destinations">Europe <i>/</i> Japan <i>/</i> The Americas <i>/</i> Asia <i>/</i> Turkey <i>/</i> Middle East <i>/</i> Russia</div></div>
+          <div class="route-row"><div class="route-stat"><strong>06</strong><span>Charter markets</span></div><div class="route-destinations">USA <i>/</i> Thailand <i>/</i> Turkey <i>/</i> UAE <i>/</i> Russia <i>/</i> Saudi Arabia</div></div>
+        </div>
+        <div class="index">03 / 08</div>
+      </div>
+    </div>
+  </section>
+  <section class="experience-screen" id="experience">
+    <div class="experience-shell">
+      <header class="experience-header">
+        <div class="brand"><img class="brand-mark" src="tour-mark.png" alt="Turon Tour"><span class="brand-copy"><strong>TURON</strong><small>TOUR</small></span></div>
+        <nav><a href="#about">About</a><a href="#directions">Services</a><a class="active" href="#experience">Expertise</a><a class="contact" href="#mission">Contact</a></nav>
+      </header>
+
+      <div class="experience-content">
+        <div class="experience-copy">
+          <div class="experience-label">04 / Our experience</div>
+          <h2><strong>EXPERTISE THAT</strong><em>MOVES PEOPLE.</em></h2>
+          <div class="experience-rule"></div>
+          <p class="experience-lead">One of Uzbekistan’s largest consolidator and GSA companies, backed by experienced specialists in air ticketing and tour packages.</p>
+        </div>
+      </div>
+
+      <div class="experience-footer">
+        <div class="experience-proof"><span>Air consolidation</span><i></i><span>GSA expertise</span><i></i><span>Tour packages</span></div>
+        <div class="index">04 / 08</div>
+      </div>
+    </div>
+  </section>
+  <section class="story-screen team-screen" id="team" style="--image: url('fifth-team.png'); --position: center; --brightness: .78;">
+    <div class="story-shell">
+      <header class="story-header">
+        <div class="brand"><img class="brand-mark" src="tour-mark.png" alt="Turon Tour"><span class="brand-copy"><strong>TURON</strong><small>TOUR</small></span></div>
+        <nav><a href="#about">About</a><a href="#directions">Services</a><a class="active" href="#team">Expertise</a><a class="contact" href="#mission">Contact</a></nav>
+      </header>
+
+      <div class="story-content">
+        <div class="story-copy">
+          <div class="story-label">05 / Our team</div>
+          <h2><strong>100+ SPECIALISTS</strong><em>ONE STANDARD.</em></h2>
+          <div class="story-rule"></div>
+          <p class="story-lead">Qualified travel professionals across Uzbekistan and New York, focused on precise, personal service.</p>
+          <p class="story-note">We serve more than 30,000 Umrah and Hajj passengers each year.</p>
+        </div>
+      </div>
+
+      <div class="story-footer">
+        <div class="story-proof"><span>100+ team members</span><i></i><span>Uzbekistan + NYC</span><i></i><span>30K+ passengers / year</span></div>
+        <div class="index">05 / 08</div>
+      </div>
+    </div>
+  </section>
+  <section class="story-screen charter-screen" id="charter" style="--image: url('sixth-charter.png'); --position: center; --brightness: .72;">
+    <div class="story-shell">
+      <header class="story-header">
+        <div class="brand"><img class="brand-mark" src="tour-mark.png" alt="Turon Tour"><span class="brand-copy"><strong>TURON</strong><small>TOUR</small></span></div>
+        <nav><a href="#about">About</a><a class="active" href="#charter">Services</a><a href="#experience">Expertise</a><a class="contact" href="#mission">Contact</a></nav>
+      </header>
+
+      <div class="story-content">
+        <div class="story-copy">
+          <div class="story-label">06 / Charter flights</div>
+          <h2><strong>CHARTER REACH</strong><em>PROVEN DELIVERY.</em></h2>
+          <div class="story-rule"></div>
+          <p class="story-lead">For the past three years, Turon Tourism has operated charter programs to Moscow, Istanbul, Dubai, New York, Jeddah and Phuket.</p>
+          <p class="story-note">Programs have operated across the fleets of Uzbekistan Airways, Centrum Air, Turkish Airlines and Utah Airways.</p>
+        </div>
+      </div>
+
+      <div class="story-footer">
+        <div class="story-proof"><span>Moscow</span><i></i><span>Istanbul</span><i></i><span>Dubai</span><i></i><span>New York</span><i></i><span>Jeddah</span><i></i><span>Phuket</span></div>
+        <div class="index">06 / 08</div>
+      </div>
+    </div>
+  </section>
+  <section class="story-screen service-screen" id="service" style="--image: url('seventh-service.png'); --position: center; --brightness: .77;">
+    <div class="story-shell">
+      <header class="story-header">
+        <div class="brand"><img class="brand-mark" src="tour-mark.png" alt="Turon Tour"><span class="brand-copy"><strong>TURON</strong><small>TOUR</small></span></div>
+        <nav><a href="#about">About</a><a href="#directions">Services</a><a class="active" href="#service">Expertise</a><a class="contact" href="#mission">Contact</a></nav>
+      </header>
+
+      <div class="story-content">
+        <div class="story-copy">
+          <div class="story-label">07 / Our approach</div>
+          <h2><strong>PERSONAL SERVICE</strong><em>BUILT TO PERFORM.</em></h2>
+          <div class="story-rule"></div>
+          <p class="story-lead">Experienced people, continuous training and current technology support comprehensive, cost-effective travel solutions.</p>
+          <p class="story-note">Every itinerary can be tailored to the client's requirements and special interests.</p>
+        </div>
+      </div>
+
+      <div class="story-footer">
+        <div class="story-proof"><span>Trained specialists</span><i></i><span>Tailor-made itineraries</span><i></i><span>Efficient technology</span></div>
+        <div class="index">07 / 08</div>
+      </div>
+    </div>
+  </section>
+  <section class="story-screen mission-screen" id="mission" style="--image: url('eighth-mission.png'); --position: center; --brightness: .68;">
+    <div class="story-shell">
+      <header class="story-header">
+        <div class="brand"><img class="brand-mark" src="tour-mark.png" alt="Turon Tour"><span class="brand-copy"><strong>TURON</strong><small>TOUR</small></span></div>
+        <nav><a href="#about">About</a><a href="#directions">Services</a><a href="#experience">Expertise</a><a class="contact active" href="#mission">Contact</a></nav>
+      </header>
+
+      <div class="story-content">
+        <div class="story-copy">
+          <div class="story-label">08 / Our mission</div>
+          <h2><strong>WORLD-CLASS DMC</strong><em>ROOTED IN UZBEKISTAN.</em></h2>
+          <div class="story-rule"></div>
+          <p class="story-lead">Our mission is to build a world-class destination management company that exceeds the expectations of every client.</p>
+        </div>
+      </div>
+
+      <div class="story-footer">
+        <div class="story-proof mission-contact"><span><a href="mailto:info@turontourism.uz">info@turontourism.uz</a></span><i></i><span><a href="https://www.turontourism.uz">turontourism.uz</a></span></div>
+        <div class="index">08 / 08</div>
+      </div>
+    </div>
+  </section>
+  <style id="scroll-cinema-styles">
+    html { scroll-snap-type: y proximity; scroll-padding-top: 0; }
+    .motion-screen { position: relative; scroll-snap-align: start; scroll-snap-stop: normal; overflow: hidden; }
+    .motion-screen::before {
+      transform: scale(1.045);
+      transition: transform 1.25s cubic-bezier(.16, 1, .3, 1), filter 1.05s ease;
+      will-change: transform;
+    }
+    .motion-screen.is-active::before { transform: scale(1.012); }
+    .motion-reveal {
+      opacity: 0;
+      transform: translate3d(0, 26px, 0);
+      transition: opacity .78s cubic-bezier(.22, 1, .36, 1), transform .88s cubic-bezier(.16, 1, .3, 1);
+      transition-delay: var(--motion-delay, 0ms);
+      will-change: opacity, transform;
+    }
+    .motion-screen.is-active .motion-reveal { opacity: 1; transform: translate3d(0, 0, 0); }
+    .scroll-progress {
+      position: fixed; z-index: 100; top: 50%; right: clamp(14px, 2vw, 30px);
+      display: flex; flex-direction: column; align-items: center; gap: 9px;
+      transform: translateY(-50%); mix-blend-mode: difference;
+    }
+    .scroll-progress__track { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+    .scroll-progress__dot {
+      width: 3px; height: 3px; padding: 0; border: 0; border-radius: 999px;
+      background: rgba(255, 255, 255, .42); cursor: pointer;
+      transition: height .4s cubic-bezier(.16, 1, .3, 1), background-color .35s ease, box-shadow .35s ease;
+    }
+    .scroll-progress__dot.is-current { height: 28px; background: #fff; box-shadow: 0 0 14px rgba(255, 255, 255, .35); }
+    .scroll-progress__count {
+      min-width: 34px; color: #fff; font: 600 9px/1.2 Arial, sans-serif;
+      letter-spacing: .18em; text-align: center;
+    }
+    @media (max-width: 760px) {
+      html { scroll-snap-type: y proximity; }
+      .scroll-progress { display: none; }
+      .motion-reveal { transform: translate3d(0, 18px, 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-snap-type: none; scroll-behavior: auto; }
+      .motion-screen::before, .motion-reveal { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+  <script id="scroll-cinema-script">
+    (() => {
+      const sections = [...document.querySelectorAll('.hero, .about-screen, .directions-screen, .experience-screen, .team-screen, .charter-screen, .service-screen, .mission-screen')];
+      if (!sections.length) return;
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealSelector = ['header', '[class*="label"]', '[class*="kicker"]', 'h1', 'h2', 'h3', 'p', '[class*="actions"]', '[class*="stats"]', '[class*="footer"]', '[class*="bottom"]'].join(',');
+      sections.forEach((section, sectionIndex) => {
+        section.classList.add('motion-screen');
+        section.dataset.screenIndex = sectionIndex;
+        const seen = new Set();
+        [...section.querySelectorAll(revealSelector)].forEach((element) => {
+          if (seen.has(element) || element.closest('.scroll-progress')) return;
+          seen.add(element);
+          element.classList.add('motion-reveal');
+          element.style.setProperty('--motion-delay', `${Math.min(seen.size - 1, 7) * 75}ms`);
+        });
+      });
+      const progress = document.createElement('nav');
+      progress.className = 'scroll-progress';
+      progress.setAttribute('aria-label', 'Page sections');
+      const track = document.createElement('div');
+      track.className = 'scroll-progress__track';
+      const count = document.createElement('div');
+      count.className = 'scroll-progress__count';
+      progress.append(track, count);
+      document.body.append(progress);
+      const dots = sections.map((section, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'scroll-progress__dot';
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `Go to section ${index + 1}`);
+        dot.addEventListener('click', () => section.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }));
+        track.append(dot);
+        return dot;
+      });
+      const setActive = (index) => {
+        sections.forEach((section, itemIndex) => section.classList.toggle('is-active', itemIndex === index));
+        dots.forEach((dot, itemIndex) => {
+          const current = itemIndex === index;
+          dot.classList.toggle('is-current', current);
+          if (current) dot.setAttribute('aria-current', 'true');
+          else dot.removeAttribute('aria-current');
+        });
+        count.textContent = `${String(index + 1).padStart(2, '0')} / ${String(sections.length).padStart(2, '0')}`;
+      };
+      setActive(0);
+      if (reduceMotion || !('IntersectionObserver' in window)) return;
+      const visibility = new Map();
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => visibility.set(entry.target, entry.intersectionRatio));
+        let activeIndex = 0;
+        let bestRatio = -1;
+        sections.forEach((section, index) => {
+          const ratio = visibility.get(section) || 0;
+          if (ratio > bestRatio) { bestRatio = ratio; activeIndex = index; }
+        });
+        setActive(activeIndex);
+      }, { threshold: [0, .2, .35, .5, .7, .9] });
+      sections.forEach((section) => observer.observe(section));
+    })();
+  </script>
+</body>
+</html>
