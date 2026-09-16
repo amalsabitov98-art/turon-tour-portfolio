@@ -29,8 +29,19 @@
       content: "";
       position: absolute;
       inset: 0;
-      z-index: -3;
+      z-index: -4;
       background: url("hero-photo.png") center 48% / cover no-repeat;
+      transform: scale(1.015);
+    }
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: grayscale(1) contrast(1.05) brightness(.76);
       transform: scale(1.015);
     }
     .hero::after {
@@ -845,6 +856,9 @@
 </head>
 <body>
   <main class="hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="hero-photo.png" aria-hidden="true">
+      <source src="hero-video.mp4" type="video/mp4">
+    </video>
     <div class="grid"></div>
     <div class="shell">
       <header>
