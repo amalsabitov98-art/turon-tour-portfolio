@@ -703,7 +703,7 @@
     }
     .story-header { position: relative; z-index: 2; }
     .story-content { min-height: 0; display: flex; align-items: center; padding: 4vh 0 3vh; }
-    .story-copy { width: min(920px, calc(100vw - 84px)); }
+    .story-copy { width: min(1140px, calc(100vw - 84px)); }
     .story-label {
       margin-bottom: 27px;
       color: rgba(255,255,255,.62);
@@ -729,18 +729,23 @@
       width: fit-content;
       max-width: 100%;
       margin-top: 10px;
+      padding-right: 0.18em;
       color: transparent;
       background: var(--brand-gradient);
       background-clip: text;
       -webkit-background-clip: text;
       font-family: "Bodoni Moda", Georgia, serif;
-      font-size: clamp(46px, 5.25vw, 89px);
+      font-size: clamp(44px, 5vw, 86px);
       font-weight: 500;
       font-style: italic;
       line-height: .96;
       letter-spacing: -.055em;
       white-space: nowrap;
       filter: saturate(1.04) brightness(1.08);
+    }
+    .mission-screen .story-copy h2 em {
+      font-size: clamp(36px, 4.25vw, 74px);
+      padding-right: 0.3em;
     }
     .story-rule { width: 112px; height: 2px; margin: 31px 0 23px; background: var(--orange); box-shadow: 0 0 15px rgba(244,123,36,.22); }
     .story-lead {
