@@ -889,16 +889,16 @@
     .charter-ticker-bar {
       position: relative;
       width: 100%;
-      margin-top: clamp(24px, 3.5vh, 42px);
-      padding: clamp(16px, 2.2vh, 26px) clamp(20px, 3vw, 42px);
-      border-radius: 26px;
+      margin-top: clamp(16px, 2.5vh, 28px);
+      padding: clamp(11px, 1.6vh, 18px) clamp(20px, 3vw, 42px);
+      border-radius: 20px;
       background: linear-gradient(135deg, rgba(8, 12, 18, 0.82) 0%, rgba(4, 7, 12, 0.92) 100%);
       border: 1px solid rgba(255, 255, 255, 0.18);
       backdrop-filter: blur(28px) saturate(160%);
       -webkit-backdrop-filter: blur(28px) saturate(160%);
       box-shadow: 
-        0 24px 60px rgba(0, 0, 0, 0.7),
-        0 0 40px rgba(37, 169, 220, 0.1),
+        0 20px 50px rgba(0, 0, 0, 0.7),
+        0 0 35px rgba(37, 169, 220, 0.1),
         inset 0 1px 1.5px rgba(255, 255, 255, 0.25);
       overflow: hidden;
       mask-image: linear-gradient(90deg, transparent 0%, #000 clamp(40px, 6vw, 90px), #000 calc(100% - clamp(40px, 6vw, 90px)), transparent 100%);
@@ -907,7 +907,7 @@
     .charter-ticker-track {
       display: flex;
       align-items: center;
-      gap: clamp(48px, 5.5vw, 84px);
+      gap: clamp(40px, 5vw, 76px);
       width: max-content;
       animation: charterMarquee 34s linear infinite;
       will-change: transform;
@@ -939,6 +939,97 @@
       width: auto;
       object-fit: contain;
       pointer-events: none;
+    }
+
+    /* REVERSE TICKER: DIRECT DESTINATIONS (QANOT SHARQ STYLE) */
+    .dest-ticker-bar {
+      position: relative;
+      width: 100%;
+      margin-top: clamp(10px, 1.4vh, 16px);
+      padding: clamp(12px, 1.7vh, 19px) clamp(20px, 3vw, 42px);
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(6, 12, 20, 0.88) 0%, rgba(3, 7, 12, 0.95) 100%);
+      border: 1.5px solid rgba(84, 198, 235, 0.42);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.75),
+        0 0 35px rgba(84, 198, 235, 0.16),
+        inset 0 1px 1.5px rgba(84, 198, 235, 0.38);
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 clamp(40px, 6vw, 90px), #000 calc(100% - clamp(40px, 6vw, 90px)), transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 clamp(40px, 6vw, 90px), #000 calc(100% - clamp(40px, 6vw, 90px)), transparent 100%);
+    }
+    .dest-ticker-track {
+      display: flex;
+      align-items: center;
+      gap: clamp(30px, 3.6vw, 54px);
+      width: max-content;
+      animation: destMarqueeRev 30s linear infinite;
+      will-change: transform;
+    }
+    .dest-ticker-bar:hover .dest-ticker-track {
+      animation-play-state: paused;
+    }
+    @keyframes destMarqueeRev {
+      0% { transform: translateX(-33.333333%); }
+      100% { transform: translateX(0%); }
+    }
+    .dest-qs-item {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(14px, 1.8vw, 24px);
+      user-select: none;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .dest-qs-text {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(15px, 1.35vw, 21px);
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #ffffff;
+      transform: skewX(-5deg);
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+    .dest-qs-text.cyan {
+      color: #54c6eb;
+      text-shadow: 0 0 14px rgba(84, 198, 235, 0.65);
+    }
+    .dest-qs-item:hover .dest-qs-text {
+      color: #54c6eb;
+      text-shadow: 0 0 22px rgba(84, 198, 235, 0.95), 0 0 40px rgba(37, 169, 220, 0.6);
+      transform: skewX(-5deg) scale(1.08);
+    }
+    .dest-qs-item:hover .dest-qs-text.cyan {
+      color: #ffffff;
+      text-shadow: 0 0 22px #54c6eb, 0 0 40px rgba(244, 123, 36, 0.6);
+      transform: skewX(-5deg) scale(1.08);
+    }
+    .dest-qs-chevron {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #54c6eb;
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 8px #54c6eb);
+      transform: skewX(-5deg);
+      animation: chevronFloat 2s infinite ease-in-out;
+    }
+    @keyframes chevronFloat {
+      0%, 100% { transform: skewX(-5deg) translateX(0); opacity: 0.75; }
+      50% { transform: skewX(-5deg) translateX(3px); opacity: 1; filter: drop-shadow(0 0 12px #54c6eb); }
+    }
+    .dest-qs-chevron svg {
+      width: 100%;
+      height: 100%;
     }
     .story-footer {
       display: flex;
@@ -988,10 +1079,13 @@
       .story-rule { margin: 18px 0 14px; }
       .story-lead { font-size: clamp(13px, 1vw, 15px); line-height: 1.46; }
       .story-note { margin-top: 6px; font-size: clamp(13px, 1vw, 15px); line-height: 1.46; }
-      .charter-ticker-bar { margin-top: 14px; padding: 10px 20px; border-radius: 18px; }
-      .charter-ticker-track { gap: 38px; animation-duration: 26s; }
+      .charter-ticker-bar { margin-top: 10px; padding: 8px 18px; border-radius: 16px; }
+      .charter-ticker-track { gap: 32px; animation-duration: 26s; }
       .ticker-item img { transform: scale(0.75); }
-      .story-footer { padding-top: 12px; }
+      .dest-ticker-bar { margin-top: 8px; padding: 8px 18px; border-radius: 16px; }
+      .dest-ticker-track { gap: 24px; animation-duration: 24s; }
+      .dest-qs-text { font-size: 13.5px; }
+      .story-footer { padding-top: 10px; }
     }
     @media (max-width: 760px) {
       .shell { padding: 24px 20px; }
@@ -1038,9 +1132,12 @@
       .story-copy h2 strong { max-width: 94%; font-size: clamp(42px, 12vw, 70px); }
       .story-copy h2 em { font-size: clamp(41px, 11.5vw, 66px); white-space: normal; }
       .story-lead, .story-note { max-width: 88%; }
-      .charter-ticker-bar { width: 100%; margin-top: 18px; padding: 12px 16px; border-radius: 18px; }
-      .charter-ticker-track { gap: 32px; animation-duration: 24s; }
-      .ticker-item img { transform: scale(0.7); }
+      .charter-ticker-bar { width: 100%; margin-top: 14px; padding: 10px 14px; border-radius: 16px; }
+      .charter-ticker-track { gap: 28px; animation-duration: 24s; }
+      .ticker-item img { transform: scale(0.68); }
+      .dest-ticker-bar { width: 100%; margin-top: 8px; padding: 10px 14px; border-radius: 16px; }
+      .dest-ticker-track { gap: 20px; animation-duration: 22s; }
+      .dest-qs-text { font-size: 13px; }
       .story-proof { max-width: 79%; flex-wrap: wrap; row-gap: 8px; }
       .mission-contact { align-items: flex-start; flex-direction: column; gap: 6px; }
       .index { width: 58px; height: 58px; min-height: 58px; }
@@ -1280,10 +1377,41 @@
             <div class="ticker-item" title="FlyOne"><img src="logos/flyone_white.png" alt="FlyOne" style="height: 50px;"></div>
           </div>
         </div>
+
+        <div class="dest-ticker-bar" aria-label="Direct charter destinations">
+          <div class="dest-ticker-track">
+            <!-- Set 1 -->
+            <div class="dest-qs-item"><span class="dest-qs-text">MOSCOW</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text cyan">ISTANBUL</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text">DUBAI</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text cyan">NEW YORK</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text">JEDDAH</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text cyan">MEDINA</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text">PHUKET</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+
+            <!-- Set 2 -->
+            <div class="dest-qs-item"><span class="dest-qs-text">MOSCOW</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text cyan">ISTANBUL</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text">DUBAI</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text cyan">NEW YORK</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text">JEDDAH</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text cyan">MEDINA</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text">PHUKET</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+
+            <!-- Set 3 -->
+            <div class="dest-qs-item"><span class="dest-qs-text">MOSCOW</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text cyan">ISTANBUL</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text">DUBAI</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text cyan">NEW YORK</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text">JEDDAH</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text cyan">MEDINA</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+            <div class="dest-qs-item"><span class="dest-qs-text">PHUKET</span><span class="dest-qs-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div>
+          </div>
+        </div>
       </div>
 
       <div class="story-footer">
-        <div class="story-proof"><span>Moscow</span><i></i><span>Istanbul</span><i></i><span>Dubai</span><i></i><span>New York</span><i></i><span>Jeddah</span><i></i><span>Medina</span><i></i><span>Phuket</span></div>
+        <div class="story-proof"><span>Direct Charter Programs</span><i></i><span>Key International Hubs</span><i></i><span>7 Years of Operations</span></div>
         <div class="index" data-step="6" aria-label="Slide 6 of 8">
           <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
             <circle class="index-ring__track" cx="26" cy="26" r="21" />
