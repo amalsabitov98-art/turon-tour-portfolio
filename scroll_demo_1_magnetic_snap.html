@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Demo 1: Smooth Magnetic Snap + Stagger Reveal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    /* CORE MECHANIC: CSS SCROLL SNAP */
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      background: #06090e;
+      color: #fff;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      overflow-y: scroll;
+    }
+
+    body {
+      margin: 0;
+      background: #06090e;
+      overflow-x: hidden;
+    }
+
+    /* Fixed Top Banner Explaining the Mechanic */
+    .demo-bar {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(8, 14, 22, 0.9);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(244, 123, 36, 0.45);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(244, 123, 36, 0.25);
+      border-radius: 999px;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      pointer-events: auto;
+    }
+    .demo-badge {
+      background: #f47b24;
+      color: #000;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .demo-text {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .demo-text strong { color: #ffb156; }
+    .demo-nav-dots {
+      display: flex;
+      gap: 8px;
+      margin-left: 10px;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      padding-left: 12px;
+    }
+    .demo-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: none;
+    }
+    .demo-dot:hover { background: #ffb156; }
+    .demo-dot.active {
+      background: #f47b24;
+      box-shadow: 0 0 10px #f47b24;
+      transform: scale(1.2);
+    }
+
+    /* Screen Base */
+    .slide-section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      height: 100vh;
+      height: 100svh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 34px 50px 28px;
+    }
+
+    /* Backgrounds */
+    .slide-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-position: center;
+      background-size: cover;
+      transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(1.06);
+    }
+    .slide-section.is-active .slide-bg {
+      transform: scale(1);
+    }
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(90deg, rgba(6, 10, 16, 0.95) 0%, rgba(6, 10, 16, 0.72) 48%, rgba(6, 10, 16, 0.35) 100%);
+    }
+
+    /* Header */
+    .slide-header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #f47b24, #ffb156);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 20px;
+      color: #000;
+    }
+    .brand-copy strong {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      color: #fff;
+      display: block;
+      line-height: 1;
+    }
+    .brand-copy small {
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      color: #ffb156;
+      display: block;
+      margin-top: 4px;
+    }
+    nav {
+      display: flex;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(8, 14, 22, 0.6);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+    }
+    nav a {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      transition: all 0.2s;
+    }
+    nav a.active, nav a:hover {
+      color: #fff;
+      background: rgba(244, 123, 36, 0.25);
+    }
+
+    /* Main Content & Stagger Animation Classes */
+    .slide-body {
+      position: relative;
+      z-index: 10;
+      max-width: 960px;
+      margin: auto 0;
+    }
+
+    /* STAGGER REVEAL ENGINE */
+    .stagger-item {
+      opacity: 0;
+      transform: translateY(32px);
+      filter: blur(8px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .slide-section.is-active .stagger-item {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    .stagger-label { transition-delay: 0.1s; }
+    .stagger-title { transition-delay: 0.22s; }
+    .stagger-rule  { 
+      transition-delay: 0.34s;
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.75s ease;
+    }
+    .slide-section.is-active .stagger-rule {
+      transform: scaleX(1);
+    }
+    .stagger-lead  { transition-delay: 0.44s; }
+    .stagger-footer { 
+      transition-delay: 0.58s;
+      transform: translateY(40px) scale(0.98);
+    }
+    .slide-section.is-active .stagger-footer {
+      transform: translateY(0) scale(1);
+    }
+
+    .story-label {
+      font-family: "Sora", sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      color: #ffb156;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(38px, 4.4vw, 68px);
+      line-height: 0.94;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+    h2 strong { display: block; color: #ffffff; }
+    h2 em { display: block; color: #f47b24; font-style: normal; margin-top: 8px; }
+    
+    .story-rule {
+      width: 80px;
+      height: 3.5px;
+      background: #f47b24;
+      margin: 22px 0 18px;
+      box-shadow: 0 0 16px rgba(244, 123, 36, 0.85);
+      border-radius: 2px;
+    }
+    .story-lead {
+      font-size: clamp(14.5px, 1.15vw, 17px);
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.86);
+      max-width: 650px;
+    }
+
+    /* Footer & Pinned Step Index */
+    .slide-footer {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 14px;
+    }
+    .step-badge {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1px solid rgba(244, 123, 36, 0.35);
+      background: rgba(8, 14, 22, 0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 24px rgba(0, 0, 0, 0.8);
+    }
+    .step-badge .cur { font-size: 17px; font-weight: 800; color: #ffb156; }
+    .step-badge .sep { width: 16px; height: 1px; background: rgba(244, 123, 36, 0.4); margin: 2px 0; }
+    .step-badge .tot { font-size: 10px; color: rgba(255, 255, 255, 0.6); }
+
+    /* Luxury HUD Beam (Slide 2) */
+    .luxury-hud-beam {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      width: 100%;
+      max-width: min(1080px, calc(100% - 130px));
+      margin: 0 auto;
+      padding: 13px 48px;
+      border-radius: 16px;
+      background: rgba(8, 14, 22, 0.78);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(244, 123, 36, 0.4);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65), 0 0 28px rgba(244, 123, 36, 0.16);
+      overflow: hidden;
+    }
+    .hud-streak {
+      position: absolute;
+      top: 0;
+      left: -260px;
+      width: 260px;
+      height: 2.5px;
+      background: linear-gradient(90deg, transparent, #fff, #ffb156, transparent);
+      box-shadow: 0 0 20px #ffb156;
+      animation: streakSweep 6s infinite ease-in-out;
+    }
+    @keyframes streakSweep {
+      0% { left: -260px; opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
+    .hud-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      justify-content: center;
+    }
+    .hud-num {
+      font-family: "Sora", sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      color: #ffb156;
+    }
+    .hud-title {
+      font-family: "Sora", sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .hud-sep {
+      color: #ffb156;
+      font-size: 18px;
+      font-weight: 300;
+      opacity: 0.7;
+    }
+
+    /* Transatlantic Console (Slide 3) */
+    .team-hud {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      width: 100%;
+      max-width: min(1080px, calc(100% - 130px));
+      margin: 0 auto;
+      padding: 12px 48px;
+      border-radius: 16px;
+      background: rgba(8, 14, 22, 0.78);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(84, 198, 235, 0.4);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65), 0 0 28px rgba(84, 198, 235, 0.18);
+      overflow: hidden;
+    }
+    .team-col {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .team-val {
+      font-family: "Sora", sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffb156;
+      letter-spacing: 0.05em;
+    }
+    .team-sub {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: #54c6eb;
+      text-transform: uppercase;
+    }
+    .team-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .team-bridge {
+      font-family: "Sora", sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #54c6eb;
+      letter-spacing: 0.12em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Explanatory Controls -->
+  <div class="demo-bar">
+    <span class="demo-badge">Вариант 1</span>
+    <div class="demo-text">
+      <strong>Магнитный Smooth Scroll-Snap:</strong> скролльте колесиком или тачпадом — слайд мягко магнитит к границе экрана, а элементы выплывают каскадом.
+    </div>
+    <div class="demo-nav-dots">
+      <button class="demo-dot active" onclick="scrollToSlide(0)" title="Слайд 1"></button>
+      <button class="demo-dot" onclick="scrollToSlide(1)" title="Слайд 2"></button>
+      <button class="demo-dot" onclick="scrollToSlide(2)" title="Слайд 3"></button>
+    </div>
+  </div>
+
+  <!-- SLIDE 1: HERO -->
+  <section class="slide-section is-active" id="slide-1">
+    <div class="slide-bg" style="background-image: url('https://amalsabitov98-art.github.io/turon-tour-portfolio/hero-photo.png');"></div>
+    <div class="slide-overlay"></div>
+
+    <header class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <div class="brand-copy">
+          <strong>TURON</strong>
+          <small>TOUR</small>
+        </div>
+      </div>
+      <nav>
+        <a class="active" href="#slide-1">About</a>
+        <a href="#slide-2">Services</a>
+        <a href="#slide-3">Team</a>
+      </nav>
+    </header>
+
+    <div class="slide-body">
+      <div class="story-label stagger-item stagger-label">01 / Turon Tour</div>
+      <h2 class="stagger-item stagger-title">
+        <strong>DISCOVER UZBEKISTAN</strong>
+        <em>WITH TURON TOUR.</em>
+      </h2>
+      <div class="story-rule stagger-item stagger-rule"></div>
+      <p class="story-lead stagger-item stagger-lead">
+        Your premier Destination Management Company and air consolidation partner, connecting global travelers with authentic Silk Road hospitality.
+      </p>
+    </div>
+
+    <div class="slide-footer stagger-item stagger-footer">
+      <div class="luxury-hud-beam">
+        <div class="hud-streak"></div>
+        <div class="hud-item"><span class="hud-num">01</span><strong class="hud-title">Silk Road Expeditions</strong></div>
+        <div class="hud-sep">›</div>
+        <div class="hud-item"><span class="hud-num">02</span><strong class="hud-title">Charter Flight Consolidator</strong></div>
+        <div class="hud-sep">›</div>
+        <div class="hud-item"><span class="hud-num">03</span><strong class="hud-title">B2B Travel Solutions</strong></div>
+      </div>
+      <div class="step-badge">
+        <span class="cur">01</span>
+        <span class="sep"></span>
+        <span class="tot">03</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: ABOUT -->
+  <section class="slide-section" id="slide-2">
+    <div class="slide-bg" style="background-image: url('https://amalsabitov98-art.github.io/turon-tour-portfolio/second-route-table.png');"></div>
+    <div class="slide-overlay"></div>
+
+    <header class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <div class="brand-copy">
+          <strong>TURON</strong>
+          <small>TOUR</small>
+        </div>
+      </div>
+      <nav>
+        <a href="#slide-1">About</a>
+        <a class="active" href="#slide-2">Services</a>
+        <a href="#slide-3">Team</a>
+      </nav>
+    </header>
+
+    <div class="slide-body">
+      <div class="story-label stagger-item stagger-label">02 / About Turon</div>
+      <h2 class="stagger-item stagger-title">
+        <strong>A FULL-SERVICE DMC</strong>
+        <em>AND TRAVEL CONSOLIDATOR.</em>
+      </h2>
+      <div class="story-rule stagger-item stagger-rule"></div>
+      <p class="story-lead stagger-item stagger-lead">
+        We arrange travel to Uzbekistan and along the Silk Road, providing complete destination management, airline ticketing and tailored group solutions.
+      </p>
+    </div>
+
+    <div class="slide-footer stagger-item stagger-footer">
+      <div class="luxury-hud-beam">
+        <div class="hud-streak"></div>
+        <div class="hud-item"><span class="hud-num">01</span><strong class="hud-title">Personalized Service</strong></div>
+        <div class="hud-sep">›</div>
+        <div class="hud-item"><span class="hud-num">02</span><strong class="hud-title">Business & Group Travel</strong></div>
+        <div class="hud-sep">›</div>
+        <div class="hud-item"><span class="hud-num">03</span><strong class="hud-title">Global Coverage</strong></div>
+      </div>
+      <div class="step-badge">
+        <span class="cur">02</span>
+        <span class="sep"></span>
+        <span class="tot">03</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: TEAM -->
+  <section class="slide-section" id="slide-3">
+    <div class="slide-bg" style="background-image: url('https://amalsabitov98-art.github.io/turon-tour-portfolio/fifth-team.png');"></div>
+    <div class="slide-overlay"></div>
+
+    <header class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <div class="brand-copy">
+          <strong>TURON</strong>
+          <small>TOUR</small>
+        </div>
+      </div>
+      <nav>
+        <a href="#slide-1">About</a>
+        <a href="#slide-2">Services</a>
+        <a class="active" href="#slide-3">Team</a>
+      </nav>
+    </header>
+
+    <div class="slide-body">
+      <div class="story-label stagger-item stagger-label">05 / Our Team</div>
+      <h2 class="stagger-item stagger-title">
+        <strong>EXPANDING TEAM</strong>
+        <em>ACROSS TWO CONTINENTS.</em>
+      </h2>
+      <div class="story-rule stagger-item stagger-rule"></div>
+      <p class="story-lead stagger-item stagger-lead">
+        With operations spanning Tashkent and New York, our dedicated specialists deliver seamless travel solutions worldwide.
+      </p>
+    </div>
+
+    <div class="slide-footer stagger-item stagger-footer">
+      <div class="team-hud">
+        <div class="hud-streak"></div>
+        <div class="team-col">
+          <span class="team-val">100+</span>
+          <span class="team-sub">Team Specialists</span>
+        </div>
+        <div class="team-center">
+          <span class="team-bridge">TAS ⇄ NYC</span>
+          <span class="team-sub">Global Operations</span>
+        </div>
+        <div class="team-col">
+          <span class="team-val">30K+</span>
+          <span class="team-sub">Passengers / Year</span>
+        </div>
+      </div>
+      <div class="step-badge">
+        <span class="cur">03</span>
+        <span class="sep"></span>
+        <span class="tot">03</span>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide-section')];
+    const dots = [...document.querySelectorAll('.demo-dot')];
+
+    function scrollToSlide(index) {
+      slides[index].scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // IntersectionObserver to activate animations on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          slides.forEach((s, idx) => {
+            const match = s === entry.target;
+            s.classList.toggle('is-active', match);
+            if (match) {
+              dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+            }
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+
+    slides.forEach(slide => observer.observe(slide));
+  </script>
+</body>
+</html>

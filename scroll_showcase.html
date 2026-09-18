@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Animation Showcase - 4 Demos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #05080d;
+      color: #fff;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Master Top Switcher Header */
+    .master-header {
+      background: rgba(10, 15, 24, 0.96);
+      border-bottom: 1px solid rgba(244, 123, 36, 0.3);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      flex-shrink: 0;
+    }
+    .master-title {
+      font-family: "Sora", sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: #ffb156;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .master-title span {
+      background: rgba(244, 123, 36, 0.2);
+      color: #f47b24;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 10.5px;
+      border: 1px solid rgba(244, 123, 36, 0.35);
+    }
+
+    .master-tabs {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .m-tab {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: "Sora", sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 7px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .m-tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .m-tab.active {
+      background: linear-gradient(135deg, #f47b24, #e06014);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(244, 123, 36, 0.4);
+    }
+
+    .open-direct-btn {
+      font-family: "Sora", sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #54c6eb;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(84, 198, 235, 0.4);
+      background: rgba(84, 198, 235, 0.1);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .open-direct-btn:hover {
+      background: #54c6eb;
+      color: #05080d;
+      box-shadow: 0 0 14px rgba(84, 198, 235, 0.5);
+    }
+
+    /* Iframe Stage */
+    .stage-frame {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 65px);
+      border: none;
+      background: #06090e;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="master-header">
+    <div class="master-title">
+      4 ВАРИАНТА СКРОЛЛ-АНИМАЦИЙ
+      <span>ТЕСТИРОВАНИЕ НА 3 СЛАЙДАХ</span>
+    </div>
+
+    <div class="master-tabs">
+      <button class="m-tab active" onclick="loadDemo(1, 'scroll_demo_1_magnetic_snap.html')">
+        01 • Магнитный Snap + Stagger (Рекомендуется)
+      </button>
+      <button class="m-tab" onclick="loadDemo(2, 'scroll_demo_2_wheel_keynote.html')">
+        02 • Keynote Slide-by-Slide
+      </button>
+      <button class="m-tab" onclick="loadDemo(3, 'scroll_demo_3_parallax_curtain.html')">
+        03 • Параллакс-шторка (Curtain)
+      </button>
+      <button class="m-tab" onclick="loadDemo(4, 'scroll_demo_4_hud_scanner.html')">
+        04 • Cyber HUD Scanner
+      </button>
+    </div>
+
+    <a class="open-direct-btn" id="directLink" href="scroll_demo_1_magnetic_snap.html" target="_blank" rel="noopener">
+      Открыть отдельно ↗
+    </a>
+  </header>
+
+  <iframe class="stage-frame" id="demoFrame" src="scroll_demo_1_magnetic_snap.html" title="Scroll Animation Demo"></iframe>
+
+  <script>
+    function loadDemo(index, filename) {
+      document.querySelectorAll('.m-tab').forEach((tab, i) => {
+        tab.classList.toggle('active', i === (index - 1));
+      });
+      document.getElementById('demoFrame').src = filename;
+      document.getElementById('directLink').href = filename;
+    }
+  </script>
+</body>
+</html>

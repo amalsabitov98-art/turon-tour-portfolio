@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Demo 3: Layered Parallax Curtain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html {
+      background: #06090e;
+      color: #fff;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #06090e;
+      position: relative;
+    }
+
+    /* Fixed Top Banner Explaining the Mechanic */
+    .demo-bar {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(8, 14, 22, 0.92);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 215, 130, 0.4);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 215, 130, 0.2);
+      border-radius: 999px;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .demo-badge {
+      background: #ffd782;
+      color: #06090e;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .demo-text {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .demo-text strong { color: #ffd782; }
+
+    /* Sticky Stacking Curtain Containers */
+    .curtain-wrapper {
+      position: relative;
+      height: 300vh; /* 3 slides */
+    }
+
+    .curtain-slide {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      height: 100svh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 34px 50px 28px;
+      overflow: hidden;
+      background: #06090e;
+      /* Heavy drop shadow on top edge as it overlaps the previous slide */
+      box-shadow: 0 -30px 60px rgba(0, 0, 0, 0.95), 0 -1px 2px rgba(244, 123, 36, 0.3);
+    }
+    .curtain-slide:first-child {
+      box-shadow: none;
+    }
+
+    /* Background with Parallax Translation */
+    .slide-bg {
+      position: absolute;
+      inset: -15% 0 -15% 0; /* Extra height for parallax travel */
+      z-index: 1;
+      background-position: center;
+      background-size: cover;
+      transform: translateY(0);
+      will-change: transform;
+    }
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(90deg, rgba(6, 10, 16, 0.96) 0%, rgba(6, 10, 16, 0.74) 48%, rgba(6, 10, 16, 0.35) 100%);
+    }
+
+    /* Header */
+    .slide-header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #f47b24, #ffb156);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 20px;
+      color: #000;
+    }
+    .brand-copy strong {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      color: #fff;
+      display: block;
+      line-height: 1;
+    }
+    .brand-copy small {
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      color: #ffb156;
+      display: block;
+      margin-top: 4px;
+    }
+    nav {
+      display: flex;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(8, 14, 22, 0.6);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+    }
+    nav a {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      transition: all 0.2s;
+    }
+    nav a.active {
+      color: #fff;
+      background: rgba(244, 123, 36, 0.25);
+    }
+
+    /* Slide Content */
+    .slide-body {
+      position: relative;
+      z-index: 10;
+      max-width: 960px;
+      margin: auto 0;
+    }
+    .story-label {
+      font-family: "Sora", sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      color: #ffb156;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(38px, 4.4vw, 68px);
+      line-height: 0.94;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+    h2 strong { display: block; color: #ffffff; }
+    h2 em { display: block; color: #f47b24; font-style: normal; margin-top: 8px; }
+    
+    .story-rule {
+      width: 80px;
+      height: 3.5px;
+      background: #f47b24;
+      margin: 22px 0 18px;
+      box-shadow: 0 0 16px rgba(244, 123, 36, 0.85);
+      border-radius: 2px;
+    }
+    .story-lead {
+      font-size: clamp(14.5px, 1.15vw, 17px);
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.86);
+      max-width: 650px;
+    }
+
+    /* Footer & Pinned Step Index */
+    .slide-footer {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 14px;
+    }
+    .step-badge {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1px solid rgba(244, 123, 36, 0.35);
+      background: rgba(8, 14, 22, 0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 24px rgba(0, 0, 0, 0.8);
+    }
+    .step-badge .cur { font-size: 17px; font-weight: 800; color: #ffb156; }
+    .step-badge .sep { width: 16px; height: 1px; background: rgba(244, 123, 36, 0.4); margin: 2px 0; }
+    .step-badge .tot { font-size: 10px; color: rgba(255, 255, 255, 0.6); }
+
+    /* Luxury HUD Beam (Slide 2) */
+    .luxury-hud-beam {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      width: 100%;
+      max-width: min(1080px, calc(100% - 130px));
+      margin: 0 auto;
+      padding: 13px 48px;
+      border-radius: 16px;
+      background: rgba(8, 14, 22, 0.78);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(244, 123, 36, 0.4);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65), 0 0 28px rgba(244, 123, 36, 0.16);
+      overflow: hidden;
+    }
+    .hud-streak {
+      position: absolute;
+      top: 0;
+      left: -260px;
+      width: 260px;
+      height: 2.5px;
+      background: linear-gradient(90deg, transparent, #fff, #ffb156, transparent);
+      box-shadow: 0 0 20px #ffb156;
+      animation: streakSweep 6s infinite ease-in-out;
+    }
+    @keyframes streakSweep {
+      0% { left: -260px; opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
+    .hud-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      justify-content: center;
+    }
+    .hud-num {
+      font-family: "Sora", sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      color: #ffb156;
+    }
+    .hud-title {
+      font-family: "Sora", sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .hud-sep { color: #ffb156; font-size: 18px; opacity: 0.7; }
+
+    /* Transatlantic Console (Slide 3) */
+    .team-hud {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      width: 100%;
+      max-width: min(1080px, calc(100% - 130px));
+      margin: 0 auto;
+      padding: 12px 48px;
+      border-radius: 16px;
+      background: rgba(8, 14, 22, 0.78);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(84, 198, 235, 0.4);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65), 0 0 28px rgba(84, 198, 235, 0.18);
+      overflow: hidden;
+    }
+    .team-col { display: flex; align-items: center; gap: 14px; }
+    .team-val {
+      font-family: "Sora", sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffb156;
+      letter-spacing: 0.05em;
+    }
+    .team-sub {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: #54c6eb;
+      text-transform: uppercase;
+    }
+    .team-center { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .team-bridge {
+      font-family: "Sora", sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #54c6eb;
+      letter-spacing: 0.12em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Explanatory Controls -->
+  <div class="demo-bar">
+    <span class="demo-badge">Вариант 3</span>
+    <div class="demo-text">
+      <strong>Многослойный параллакс «Шторка»:</strong> каждый следующий слайд надвигается снизу с глубокой падающей тенью, как страница глянцевого журнала.
+    </div>
+  </div>
+
+  <div class="curtain-wrapper">
+
+    <!-- SLIDE 1 (CURTAIN BOTTOM LAYER) -->
+    <div class="curtain-slide" style="z-index: 1;">
+      <div class="slide-bg" id="bg-1" style="background-image: url('https://amalsabitov98-art.github.io/turon-tour-portfolio/hero-photo.png');"></div>
+      <div class="slide-overlay"></div>
+
+      <header class="slide-header">
+        <div class="brand">
+          <div class="brand-mark">T</div>
+          <div class="brand-copy">
+            <strong>TURON</strong>
+            <small>TOUR</small>
+          </div>
+        </div>
+        <nav>
+          <a class="active" href="#">About</a>
+          <a href="#">Services</a>
+          <a href="#">Team</a>
+        </nav>
+      </header>
+
+      <div class="slide-body">
+        <div class="story-label">01 / Turon Tour</div>
+        <h2>
+          <strong>DISCOVER UZBEKISTAN</strong>
+          <em>WITH TURON TOUR.</em>
+        </h2>
+        <div class="story-rule"></div>
+        <p class="story-lead">
+          Your premier Destination Management Company and air consolidation partner, connecting global travelers with authentic Silk Road hospitality.
+        </p>
+      </div>
+
+      <div class="slide-footer">
+        <div class="luxury-hud-beam">
+          <div class="hud-streak"></div>
+          <div class="hud-item"><span class="hud-num">01</span><strong class="hud-title">Silk Road Expeditions</strong></div>
+          <div class="hud-sep">›</div>
+          <div class="hud-item"><span class="hud-num">02</span><strong class="hud-title">Charter Flight Consolidator</strong></div>
+          <div class="hud-sep">›</div>
+          <div class="hud-item"><span class="hud-num">03</span><strong class="hud-title">B2B Travel Solutions</strong></div>
+        </div>
+        <div class="step-badge">
+          <span class="cur">01</span>
+          <span class="sep"></span>
+          <span class="tot">03</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2 (CURTAIN MIDDLE LAYER) -->
+    <div class="curtain-slide" style="z-index: 2;">
+      <div class="slide-bg" id="bg-2" style="background-image: url('https://amalsabitov98-art.github.io/turon-tour-portfolio/second-route-table.png');"></div>
+      <div class="slide-overlay"></div>
+
+      <header class="slide-header">
+        <div class="brand">
+          <div class="brand-mark">T</div>
+          <div class="brand-copy">
+            <strong>TURON</strong>
+            <small>TOUR</small>
+          </div>
+        </div>
+        <nav>
+          <a href="#">About</a>
+          <a class="active" href="#">Services</a>
+          <a href="#">Team</a>
+        </nav>
+      </header>
+
+      <div class="slide-body">
+        <div class="story-label">02 / About Turon</div>
+        <h2>
+          <strong>A FULL-SERVICE DMC</strong>
+          <em>AND TRAVEL CONSOLIDATOR.</em>
+        </h2>
+        <div class="story-rule"></div>
+        <p class="story-lead">
+          We arrange travel to Uzbekistan and along the Silk Road, providing complete destination management, airline ticketing and tailored group solutions.
+        </p>
+      </div>
+
+      <div class="slide-footer">
+        <div class="luxury-hud-beam">
+          <div class="hud-streak"></div>
+          <div class="hud-item"><span class="hud-num">01</span><strong class="hud-title">Personalized Service</strong></div>
+          <div class="hud-sep">›</div>
+          <div class="hud-item"><span class="hud-num">02</span><strong class="hud-title">Business & Group Travel</strong></div>
+          <div class="hud-sep">›</div>
+          <div class="hud-item"><span class="hud-num">03</span><strong class="hud-title">Global Coverage</strong></div>
+        </div>
+        <div class="step-badge">
+          <span class="cur">02</span>
+          <span class="sep"></span>
+          <span class="tot">03</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3 (CURTAIN TOP LAYER) -->
+    <div class="curtain-slide" style="z-index: 3;">
+      <div class="slide-bg" id="bg-3" style="background-image: url('https://amalsabitov98-art.github.io/turon-tour-portfolio/fifth-team.png');"></div>
+      <div class="slide-overlay"></div>
+
+      <header class="slide-header">
+        <div class="brand">
+          <div class="brand-mark">T</div>
+          <div class="brand-copy">
+            <strong>TURON</strong>
+            <small>TOUR</small>
+          </div>
+        </div>
+        <nav>
+          <a href="#">About</a>
+          <a href="#">Services</a>
+          <a class="active" href="#">Team</a>
+        </nav>
+      </header>
+
+      <div class="slide-body">
+        <div class="story-label">05 / Our Team</div>
+        <h2>
+          <strong>EXPANDING TEAM</strong>
+          <em>ACROSS TWO CONTINENTS.</em>
+        </h2>
+        <div class="story-rule"></div>
+        <p class="story-lead">
+          With operations spanning Tashkent and New York, our dedicated specialists deliver seamless travel solutions worldwide.
+        </p>
+      </div>
+
+      <div class="slide-footer">
+        <div class="team-hud">
+          <div class="hud-streak"></div>
+          <div class="team-col">
+            <span class="team-val">100+</span>
+            <span class="team-sub">Team Specialists</span>
+          </div>
+          <div class="team-center">
+            <span class="team-bridge">TAS ⇄ NYC</span>
+            <span class="team-sub">Global Operations</span>
+          </div>
+          <div class="team-col">
+            <span class="team-val">30K+</span>
+            <span class="team-sub">Passengers / Year</span>
+          </div>
+        </div>
+        <div class="step-badge">
+          <span class="cur">03</span>
+          <span class="sep"></span>
+          <span class="tot">03</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Smooth Parallax Background Translation
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const vh = window.innerHeight;
+
+      // Parallax on BG 1
+      const bg1 = document.getElementById('bg-1');
+      if (bg1) bg1.style.transform = `translateY(${scrollY * 0.2}px)`;
+
+      // Parallax on BG 2
+      const bg2 = document.getElementById('bg-2');
+      if (bg2 && scrollY >= vh * 0.5) {
+        bg2.style.transform = `translateY(${(scrollY - vh) * 0.2}px)`;
+      }
+
+      // Parallax on BG 3
+      const bg3 = document.getElementById('bg-3');
+      if (bg3 && scrollY >= vh * 1.5) {
+        bg3.style.transform = `translateY(${(scrollY - vh * 2) * 0.2}px)`;
+      }
+    });
+  </script>
+</body>
+</html>

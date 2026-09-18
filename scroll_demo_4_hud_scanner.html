@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Demo 4: Cyber HUD Scanner & Laser Warp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      background: #04070c;
+      color: #fff;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      overflow-y: scroll;
+    }
+
+    body {
+      margin: 0;
+      background: #04070c;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Fullscreen Cyber Scanner Beam */
+    .cyber-scanner {
+      position: fixed;
+      top: -10px;
+      left: 0;
+      width: 100vw;
+      height: 6px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(84, 198, 235, 0.4) 20%, 
+        #ffffff 50%, 
+        #ffb156 80%, 
+        transparent 100%
+      );
+      box-shadow: 0 0 35px #54c6eb, 0 0 60px #f47b24;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+    }
+    .cyber-scanner.scanning {
+      animation: fullScan 0.8s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+    }
+    @keyframes fullScan {
+      0% { top: -10px; opacity: 1; }
+      80% { opacity: 1; }
+      100% { top: 105vh; opacity: 0; }
+    }
+
+    /* Fixed Top Banner Explaining the Mechanic */
+    .demo-bar {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(6, 10, 16, 0.92);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(84, 198, 235, 0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(84, 198, 235, 0.3);
+      border-radius: 999px;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .demo-badge {
+      background: linear-gradient(135deg, #ffb156, #54c6eb);
+      color: #04070c;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .demo-text {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .demo-text strong { color: #54c6eb; }
+
+    /* Screen Base */
+    .slide-section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      height: 100vh;
+      height: 100svh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 34px 50px 28px;
+    }
+
+    /* Backgrounds */
+    .slide-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-position: center;
+      background-size: cover;
+      filter: contrast(1.1) brightness(0.85);
+      transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .slide-section.is-active .slide-bg {
+      filter: contrast(1.02) brightness(0.95);
+      transform: scale(1.02);
+    }
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: radial-gradient(circle at 35% 50%, rgba(4, 7, 12, 0.7) 0%, rgba(4, 7, 12, 0.95) 80%);
+    }
+
+    /* Header */
+    .slide-header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #f47b24, #54c6eb);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 20px;
+      color: #000;
+      box-shadow: 0 0 16px rgba(84, 198, 235, 0.4);
+    }
+    .brand-copy strong {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      color: #fff;
+      display: block;
+      line-height: 1;
+    }
+    .brand-copy small {
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      color: #54c6eb;
+      display: block;
+      margin-top: 4px;
+    }
+    nav {
+      display: flex;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(8, 14, 22, 0.75);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(84, 198, 235, 0.3);
+      border-radius: 999px;
+    }
+    nav a {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      transition: all 0.2s;
+    }
+    nav a.active {
+      color: #fff;
+      background: rgba(84, 198, 235, 0.3);
+      box-shadow: 0 0 14px rgba(84, 198, 235, 0.4);
+    }
+
+    /* Slide Content */
+    .slide-body {
+      position: relative;
+      z-index: 10;
+      max-width: 960px;
+      margin: auto 0;
+    }
+    .story-label {
+      font-family: "Sora", sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      color: #54c6eb;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(38px, 4.4vw, 68px);
+      line-height: 0.94;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+    h2 strong { display: block; color: #ffffff; }
+    h2 em { display: block; color: #ffb156; font-style: normal; margin-top: 8px; }
+    
+    .story-rule {
+      width: 80px;
+      height: 3.5px;
+      background: linear-gradient(90deg, #ffb156, #54c6eb);
+      margin: 22px 0 18px;
+      box-shadow: 0 0 16px rgba(84, 198, 235, 0.85);
+      border-radius: 2px;
+    }
+    .story-lead {
+      font-size: clamp(14.5px, 1.15vw, 17px);
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.86);
+      max-width: 650px;
+    }
+
+    /* Animated Ring Indicator with Neon Spin */
+    .slide-footer {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 14px;
+    }
+    .step-badge {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      border: 1px solid rgba(84, 198, 235, 0.45);
+      background: rgba(6, 10, 16, 0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 28px rgba(84, 198, 235, 0.25);
+      transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .slide-section.is-active .step-badge {
+      border-color: #54c6eb;
+      box-shadow: 0 0 35px rgba(84, 198, 235, 0.6);
+      transform: translateY(-50%) scale(1.08);
+    }
+    .step-badge .cur { font-size: 18px; font-weight: 800; color: #54c6eb; }
+    .step-badge .sep { width: 18px; height: 1px; background: rgba(84, 198, 235, 0.5); margin: 2px 0; }
+    .step-badge .tot { font-size: 10px; color: rgba(255, 255, 255, 0.6); }
+
+    /* HUD Consoles with Activation Pulse */
+    .luxury-hud-beam, .team-hud {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      width: 100%;
+      max-width: min(1080px, calc(100% - 130px));
+      margin: 0 auto;
+      padding: 13px 48px;
+      border-radius: 16px;
+      background: rgba(6, 10, 16, 0.82);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(84, 198, 235, 0.4);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 28px rgba(84, 198, 235, 0.2);
+      overflow: hidden;
+      transition: all 0.5s ease;
+    }
+    .slide-section.is-active .luxury-hud-beam,
+    .slide-section.is-active .team-hud {
+      border-color: #54c6eb;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 40px rgba(84, 198, 235, 0.4);
+    }
+
+    .hud-item { display: flex; align-items: center; gap: 12px; flex: 1; justify-content: center; }
+    .hud-num { font-family: "Sora", sans-serif; font-size: 11px; font-weight: 800; color: #54c6eb; }
+    .hud-title { font-family: "Sora", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; }
+    .hud-sep { color: #54c6eb; font-size: 18px; opacity: 0.7; }
+
+    .team-col { display: flex; align-items: center; gap: 14px; }
+    .team-val { font-family: "Sora", sans-serif; font-size: 28px; font-weight: 800; color: #ffb156; }
+    .team-sub { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: #54c6eb; text-transform: uppercase; }
+    .team-center { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .team-bridge { font-family: "Sora", sans-serif; font-size: 20px; font-weight: 800; color: #54c6eb; letter-spacing: 0.12em; }
+  </style>
+</head>
+<body>
+
+  <!-- Cyber Laser Scan Line -->
+  <div class="cyber-scanner" id="scannerLine"></div>
+
+  <!-- Floating Explanatory Controls -->
+  <div class="demo-bar">
+    <span class="demo-badge">Вариант 4</span>
+    <div class="demo-text">
+      <strong>Cyber HUD Scanner:</strong> при смене слайда лазерная полоса сканирует экран, активируя неоновые консоли и вращая кольцо шага.
+    </div>
+  </div>
+
+  <!-- SLIDE 1: HERO -->
+  <section class="slide-section is-active" id="slide-1">
+    <div class="slide-bg" style="background-image: url('https://amalsabitov98-art.github.io/turon-tour-portfolio/hero-photo.png');"></div>
+    <div class="slide-overlay"></div>
+
+    <header class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <div class="brand-copy">
+          <strong>TURON</strong>
+          <small>TOUR</small>
+        </div>
+      </div>
+      <nav>
+        <a class="active" href="#slide-1">About</a>
+        <a href="#slide-2">Services</a>
+        <a href="#slide-3">Team</a>
+      </nav>
+    </header>
+
+    <div class="slide-body">
+      <div class="story-label">01 / Turon Tour</div>
+      <h2>
+        <strong>DISCOVER UZBEKISTAN</strong>
+        <em>WITH TURON TOUR.</em>
+      </h2>
+      <div class="story-rule"></div>
+      <p class="story-lead">
+        Your premier Destination Management Company and air consolidation partner, connecting global travelers with authentic Silk Road hospitality.
+      </p>
+    </div>
+
+    <div class="slide-footer">
+      <div class="luxury-hud-beam">
+        <div class="hud-item"><span class="hud-num">01</span><strong class="hud-title">Silk Road Expeditions</strong></div>
+        <div class="hud-sep">›</div>
+        <div class="hud-item"><span class="hud-num">02</span><strong class="hud-title">Charter Flight Consolidator</strong></div>
+        <div class="hud-sep">›</div>
+        <div class="hud-item"><span class="hud-num">03</span><strong class="hud-title">B2B Travel Solutions</strong></div>
+      </div>
+      <div class="step-badge">
+        <span class="cur">01</span>
+        <span class="sep"></span>
+        <span class="tot">03</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: ABOUT -->
+  <section class="slide-section" id="slide-2">
+    <div class="slide-bg" style="background-image: url('https://amalsabitov98-art.github.io/turon-tour-portfolio/second-route-table.png');"></div>
+    <div class="slide-overlay"></div>
+
+    <header class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <div class="brand-copy">
+          <strong>TURON</strong>
+          <small>TOUR</small>
+        </div>
+      </div>
+      <nav>
+        <a href="#slide-1">About</a>
+        <a class="active" href="#slide-2">Services</a>
+        <a href="#slide-3">Team</a>
+      </nav>
+    </header>
+
+    <div class="slide-body">
+      <div class="story-label">02 / About Turon</div>
+      <h2>
+        <strong>A FULL-SERVICE DMC</strong>
+        <em>AND TRAVEL CONSOLIDATOR.</em>
+      </h2>
+      <div class="story-rule"></div>
+      <p class="story-lead">
+        We arrange travel to Uzbekistan and along the Silk Road, providing complete destination management, airline ticketing and tailored group solutions.
+      </p>
+    </div>
+
+    <div class="slide-footer">
+      <div class="luxury-hud-beam">
+        <div class="hud-item"><span class="hud-num">01</span><strong class="hud-title">Personalized Service</strong></div>
+        <div class="hud-sep">›</div>
+        <div class="hud-item"><span class="hud-num">02</span><strong class="hud-title">Business & Group Travel</strong></div>
+        <div class="hud-sep">›</div>
+        <div class="hud-item"><span class="hud-num">03</span><strong class="hud-title">Global Coverage</strong></div>
+      </div>
+      <div class="step-badge">
+        <span class="cur">02</span>
+        <span class="sep"></span>
+        <span class="tot">03</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: TEAM -->
+  <section class="slide-section" id="slide-3">
+    <div class="slide-bg" style="background-image: url('https://amalsabitov98-art.github.io/turon-tour-portfolio/fifth-team.png');"></div>
+    <div class="slide-overlay"></div>
+
+    <header class="slide-header">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <div class="brand-copy">
+          <strong>TURON</strong>
+          <small>TOUR</small>
+        </div>
+      </div>
+      <nav>
+        <a href="#slide-1">About</a>
+        <a href="#slide-2">Services</a>
+        <a class="active" href="#slide-3">Team</a>
+      </nav>
+    </header>
+
+    <div class="slide-body">
+      <div class="story-label">05 / Our Team</div>
+      <h2>
+        <strong>EXPANDING TEAM</strong>
+        <em>ACROSS TWO CONTINENTS.</em>
+      </h2>
+      <div class="story-rule"></div>
+      <p class="story-lead">
+        With operations spanning Tashkent and New York, our dedicated specialists deliver seamless travel solutions worldwide.
+      </p>
+    </div>
+
+    <div class="slide-footer">
+      <div class="team-hud">
+        <div class="team-col">
+          <span class="team-val">100+</span>
+          <span class="team-sub">Team Specialists</span>
+        </div>
+        <div class="team-center">
+          <span class="team-bridge">TAS ⇄ NYC</span>
+          <span class="team-sub">Global Operations</span>
+        </div>
+        <div class="team-col">
+          <span class="team-val">30K+</span>
+          <span class="team-sub">Passengers / Year</span>
+        </div>
+      </div>
+      <div class="step-badge">
+        <span class="cur">03</span>
+        <span class="sep"></span>
+        <span class="tot">03</span>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide-section')];
+    const scanner = document.getElementById('scannerLine');
+    let lastActive = 0;
+
+    function triggerScan() {
+      scanner.classList.remove('scanning');
+      void scanner.offsetWidth;
+      scanner.classList.add('scanning');
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          const idx = slides.indexOf(entry.target);
+          if (idx !== lastActive) {
+            triggerScan();
+            lastActive = idx;
+          }
+          slides.forEach(s => s.classList.toggle('is-active', s === entry.target));
+        }
+      });
+    }, { threshold: 0.5 });
+
+    slides.forEach(slide => observer.observe(slide));
+  </script>
+</body>
+</html>
