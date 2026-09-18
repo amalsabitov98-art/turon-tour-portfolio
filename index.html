@@ -293,17 +293,95 @@
     .service-chip:nth-child(3) .num { color: var(--green); }
     .service-chip .arrow { margin-left: 2px; color: rgba(255,255,255,.5); font-size: 12px; }
     .index {
-      display: flex;
+      position: relative;
+      display: inline-flex;
       align-items: center;
-      min-height: 42px;
-      padding: 0 15px;
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 999px;
-      background: rgba(8,10,14,.44);
-      box-shadow: inset 0 1px 1px rgba(255,255,255,.15);
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      min-height: 52px;
+      padding: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(26, 32, 42, 0.88), rgba(9, 12, 16, 0.94));
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 
+        0 10px 24px rgba(0, 0, 0, 0.45),
+        inset 0 1px 1px rgba(255, 255, 255, 0.22),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      user-select: none;
+      flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .index:hover {
+      transform: translateY(-2px) scale(1.05);
+      border-color: rgba(244, 123, 36, 0.45);
+      box-shadow: 
+        0 14px 30px rgba(0, 0, 0, 0.55),
+        0 0 20px rgba(244, 123, 36, 0.28),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    }
+    .index-ring {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      transform: rotate(-90deg);
+    }
+    .index-ring__track {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-width: 2.4;
+      stroke-dasharray: 12.8 3.693;
+    }
+    .index-ring__progress {
+      fill: none;
+      stroke: var(--orange);
+      stroke: url(#chronoGrad);
+      stroke-width: 2.8;
+      filter: drop-shadow(0 0 5px rgba(244, 123, 36, 0.8));
+    }
+    .index[data-step="1"] .index-ring__progress { stroke-dasharray: 12.8 200; }
+    .index[data-step="2"] .index-ring__progress { stroke-dasharray: 12.8 3.693 12.8 200; }
+    .index[data-step="3"] .index-ring__progress { stroke-dasharray: 12.8 3.693 12.8 3.693 12.8 200; }
+    .index[data-step="4"] .index-ring__progress { stroke-dasharray: 12.8 3.693 12.8 3.693 12.8 3.693 12.8 200; }
+    .index[data-step="5"] .index-ring__progress { stroke-dasharray: 12.8 3.693 12.8 3.693 12.8 3.693 12.8 3.693 12.8 200; }
+    .index[data-step="6"] .index-ring__progress { stroke-dasharray: 12.8 3.693 12.8 3.693 12.8 3.693 12.8 3.693 12.8 3.693 12.8 200; }
+    .index[data-step="7"] .index-ring__progress { stroke-dasharray: 12.8 3.693 12.8 3.693 12.8 3.693 12.8 3.693 12.8 3.693 12.8 3.693 12.8 200; }
+    .index[data-step="8"] .index-ring__progress { stroke-dasharray: 12.8 3.693; }
+    .index-core {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      text-align: center;
+      pointer-events: none;
+    }
+    .index-cur {
       font-family: "Sora", sans-serif;
-      font-size: 9px;
-      letter-spacing: .13em;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    }
+    .index-sep {
+      width: 13px;
+      height: 1px;
+      margin: 2px 0 2.5px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    }
+    .index-total {
+      font-family: "Sora", sans-serif;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.45);
     }
     .about-screen {
       position: relative;
@@ -862,8 +940,15 @@
       .mission-contact { align-items: flex-start; flex-direction: column; gap: 6px; }
     }
   </style>
-</head>
 <body>
+  <svg class="chrono-defs" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;" aria-hidden="true">
+    <defs>
+      <linearGradient id="chronoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffb156" />
+        <stop offset="100%" stop-color="#f47b24" />
+      </linearGradient>
+    </defs>
+  </svg>
   <main class="hero">
     <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="hero-photo.png" aria-hidden="true">
       <source src="hero-video.mp4" type="video/mp4">
@@ -895,7 +980,17 @@
           <a class="service-chip" href="#"><span class="num">02</span><span>Business travel</span><span class="arrow">↗</span></a>
           <a class="service-chip" href="#"><span class="num">03</span><span>Air consolidation</span><span class="arrow">↗</span></a>
         </div>
-        <div class="index">01 / 08</div>
+        <div class="index" data-step="1" aria-label="Slide 1 of 8">
+          <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
+            <circle class="index-ring__track" cx="26" cy="26" r="21" />
+            <circle class="index-ring__progress" cx="26" cy="26" r="21" stroke-dasharray="12.8 200" />
+          </svg>
+          <div class="index-core">
+            <span class="index-cur">01</span>
+            <span class="index-sep"></span>
+            <span class="index-total">08</span>
+          </div>
+        </div>
       </footer>
     </div>
   </main>
@@ -918,7 +1013,17 @@
 
       <div class="about-footer">
         <div class="proof-line"><span>Personalized service</span><i></i><span>Business &amp; group travel</span><i></i><span>Global coverage</span></div>
-        <div class="index">02 / 08</div>
+        <div class="index" data-step="2" aria-label="Slide 2 of 8">
+          <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
+            <circle class="index-ring__track" cx="26" cy="26" r="21" />
+            <circle class="index-ring__progress" cx="26" cy="26" r="21" stroke-dasharray="12.8 3.693 12.8 200" />
+          </svg>
+          <div class="index-core">
+            <span class="index-cur">02</span>
+            <span class="index-sep"></span>
+            <span class="index-total">08</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -943,7 +1048,17 @@
           <div class="route-row"><div class="route-stat"><strong>07</strong><span>Global directions</span></div><div class="route-destinations"><span>Europe</span> <i>/</i> <span>Japan</span> <i>/</i> <span>The Americas</span> <i>/</i> <span>Asia</span> <i>/</i> <span>Turkey</span> <i>/</i> <span>Middle East</span> <i>/</i> <span>Russia</span></div></div>
           <div class="route-row"><div class="route-stat"><strong>06</strong><span>Charter markets</span></div><div class="route-destinations"><span>USA</span> <i>/</i> <span>Thailand</span> <i>/</i> <span>Turkey</span> <i>/</i> <span>UAE</span> <i>/</i> <span>Russia</span> <i>/</i> <span>Saudi Arabia</span></div></div>
         </div>
-        <div class="index">03 / 08</div>
+        <div class="index" data-step="3" aria-label="Slide 3 of 8">
+          <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
+            <circle class="index-ring__track" cx="26" cy="26" r="21" />
+            <circle class="index-ring__progress" cx="26" cy="26" r="21" stroke-dasharray="12.8 3.693 12.8 3.693 12.8 200" />
+          </svg>
+          <div class="index-core">
+            <span class="index-cur">03</span>
+            <span class="index-sep"></span>
+            <span class="index-total">08</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -965,7 +1080,17 @@
 
       <div class="experience-footer">
         <div class="experience-proof"><span>Air consolidation</span><i></i><span>GSA expertise</span><i></i><span>Tour packages</span></div>
-        <div class="index">04 / 08</div>
+        <div class="index" data-step="4" aria-label="Slide 4 of 8">
+          <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
+            <circle class="index-ring__track" cx="26" cy="26" r="21" />
+            <circle class="index-ring__progress" cx="26" cy="26" r="21" stroke-dasharray="12.8 3.693 12.8 3.693 12.8 3.693 12.8 200" />
+          </svg>
+          <div class="index-core">
+            <span class="index-cur">04</span>
+            <span class="index-sep"></span>
+            <span class="index-total">08</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -988,7 +1113,17 @@
 
       <div class="story-footer">
         <div class="story-proof"><span>100+ team members</span><i></i><span>Uzbekistan + NYC</span><i></i><span>30K+ passengers / year</span></div>
-        <div class="index">05 / 08</div>
+        <div class="index" data-step="5" aria-label="Slide 5 of 8">
+          <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
+            <circle class="index-ring__track" cx="26" cy="26" r="21" />
+            <circle class="index-ring__progress" cx="26" cy="26" r="21" stroke-dasharray="12.8 3.693 12.8 3.693 12.8 3.693 12.8 3.693 12.8 200" />
+          </svg>
+          <div class="index-core">
+            <span class="index-cur">05</span>
+            <span class="index-sep"></span>
+            <span class="index-total">08</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1011,7 +1146,17 @@
 
       <div class="story-footer">
         <div class="story-proof"><span>Moscow</span><i></i><span>Istanbul</span><i></i><span>Dubai</span><i></i><span>New York</span><i></i><span>Jeddah</span><i></i><span>Medina</span><i></i><span>Phuket</span></div>
-        <div class="index">06 / 08</div>
+        <div class="index" data-step="6" aria-label="Slide 6 of 8">
+          <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
+            <circle class="index-ring__track" cx="26" cy="26" r="21" />
+            <circle class="index-ring__progress" cx="26" cy="26" r="21" stroke-dasharray="12.8 3.693 12.8 3.693 12.8 3.693 12.8 3.693 12.8 3.693 12.8 200" />
+          </svg>
+          <div class="index-core">
+            <span class="index-cur">06</span>
+            <span class="index-sep"></span>
+            <span class="index-total">08</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1034,7 +1179,17 @@
 
       <div class="story-footer">
         <div class="story-proof"><span>Trained specialists</span><i></i><span>Tailor-made itineraries</span><i></i><span>Efficient technology</span></div>
-        <div class="index">07 / 08</div>
+        <div class="index" data-step="7" aria-label="Slide 7 of 8">
+          <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
+            <circle class="index-ring__track" cx="26" cy="26" r="21" />
+            <circle class="index-ring__progress" cx="26" cy="26" r="21" stroke-dasharray="12.8 3.693 12.8 3.693 12.8 3.693 12.8 3.693 12.8 3.693 12.8 3.693 12.8 200" />
+          </svg>
+          <div class="index-core">
+            <span class="index-cur">07</span>
+            <span class="index-sep"></span>
+            <span class="index-total">08</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1056,7 +1211,17 @@
 
       <div class="story-footer">
         <div class="story-proof mission-contact"><span><a href="mailto:info@turontourism.uz">info@turontourism.uz</a></span><i></i><span><a href="https://turonbooking.uz">turonbooking.uz</a></span></div>
-        <div class="index">08 / 08</div>
+        <div class="index" data-step="8" aria-label="Slide 8 of 8">
+          <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
+            <circle class="index-ring__track" cx="26" cy="26" r="21" />
+            <circle class="index-ring__progress" cx="26" cy="26" r="21" stroke-dasharray="12.8 3.693" />
+          </svg>
+          <div class="index-core">
+            <span class="index-cur">08</span>
+            <span class="index-sep"></span>
+            <span class="index-total">08</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1225,6 +1390,14 @@
         count.textContent = `${String(index + 1).padStart(2, '0')} / ${String(sections.length).padStart(2, '0')}`;
       };
       setActive(0);
+      document.querySelectorAll('.index').forEach((badge, index) => {
+        badge.style.cursor = 'pointer';
+        badge.setAttribute('title', 'Next slide');
+        badge.addEventListener('click', () => {
+          const nextIndex = (index + 1) % sections.length;
+          sections[nextIndex]?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        });
+      });
       if (reduceMotion || !('IntersectionObserver' in window)) return;
       const visibility = new Map();
       const observer = new IntersectionObserver((entries) => {
