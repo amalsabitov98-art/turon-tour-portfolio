@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slide 2 Text Concepts - Turon Tour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,400;1,500;1,600&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #06090e;
+      color: #fff;
+      font-family: "Manrope", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Switcher Bar */
+    .preview-header {
+      background: rgba(10, 15, 24, 0.95);
+      border-bottom: 1px solid rgba(84, 198, 235, 0.25);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(20px);
+    }
+    .preview-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #f47b24;
+      box-shadow: 0 0 12px #f47b24;
+    }
+    .preview-brand strong {
+      font-family: "Sora", sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .preview-brand span {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .tabs-wrap {
+      display: flex;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 4px;
+      border-radius: 999px;
+      gap: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: "Sora", sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 7px 18px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      color: #fff;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #f47b24 0%, #ff9e42 100%);
+      color: #06090e;
+      box-shadow: 0 4px 16px rgba(244, 123, 36, 0.35);
+    }
+
+    /* Presentation Canvas (simulates actual Slide 2 background) */
+    .stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+      position: relative;
+      background: #05070a;
+      overflow: hidden;
+    }
+    .stage-backdrop {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 75% 45%, rgba(37, 169, 220, 0.12) 0%, transparent 60%),
+                  radial-gradient(circle at 25% 75%, rgba(244, 123, 36, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+
+    /* Mock Slide Layout Shell */
+    .slide-mockup {
+      position: relative;
+      z-index: 10;
+      width: min(880px, 100%);
+    }
+
+    .slide-label {
+      font-family: "Sora", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .slide-label::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: #f47b24;
+    }
+
+    .slide-headline {
+      margin-bottom: 24px;
+    }
+    .slide-headline strong {
+      display: block;
+      font-family: "Sora", sans-serif;
+      font-size: clamp(38px, 4.8vw, 68px);
+      font-weight: 800;
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      color: #f6f5f1;
+    }
+    .slide-headline em {
+      display: block;
+      margin-top: 8px;
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(34px, 4.4vw, 62px);
+      font-style: italic;
+      font-weight: 500;
+      background: linear-gradient(100deg, #ff7417 0%, #f05b2c 28%, #1bb7d9 65%, #55bd71 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+
+    .slide-rule {
+      width: 100px;
+      height: 2px;
+      background: #f47b24;
+      box-shadow: 0 0 14px rgba(244, 123, 36, 0.4);
+      margin-bottom: 28px;
+    }
+
+    /* Concept Views */
+    .concept-panel {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+    .concept-panel.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ======================================================== */
+    /* CONCEPT 1: EDITORIAL CHRONICLE & CREED (High-End Luxury) */
+    /* ======================================================== */
+    .c1-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .c1-lead {
+      font-size: clamp(16px, 1.25vw, 19px);
+      line-height: 1.68;
+      font-weight: 500;
+      color: #ffffff;
+      max-width: 680px;
+      letter-spacing: -0.01em;
+    }
+    .c1-lead .accent-gold {
+      color: #ffb156;
+      font-weight: 700;
+    }
+    .c1-story-box {
+      position: relative;
+      padding-left: 20px;
+      border-left: 2px solid rgba(84, 198, 235, 0.4);
+      max-width: 660px;
+    }
+    .c1-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: "Sora", sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #54c6eb;
+      margin-bottom: 8px;
+    }
+    .c1-story {
+      font-size: clamp(14px, 1.05vw, 15.5px);
+      line-height: 1.65;
+      color: rgba(246, 245, 241, 0.82);
+    }
+    .c1-story strong {
+      color: #fff;
+      font-weight: 600;
+    }
+    .c1-creed {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 10px;
+      padding-top: 18px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+      max-width: 640px;
+    }
+    .c1-creed-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(244, 123, 36, 0.15);
+      border: 1px solid rgba(244, 123, 36, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f47b24;
+      flex-shrink: 0;
+    }
+    .c1-creed-text {
+      font-family: "Bodoni Moda", serif;
+      font-style: italic;
+      font-size: clamp(17px, 1.35vw, 21px);
+      font-weight: 500;
+      color: #ffedd0;
+      line-height: 1.4;
+      text-shadow: 0 2px 14px rgba(244, 123, 36, 0.3);
+    }
+
+    /* ======================================================== */
+    /* CONCEPT 2: GLASSMORPHIC AVIATION DOSSIER CARD            */
+    /* ======================================================== */
+    .c2-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .c2-lead {
+      font-size: clamp(15.5px, 1.2vw, 18px);
+      line-height: 1.65;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.95);
+      max-width: 650px;
+    }
+    .c2-card {
+      background: linear-gradient(135deg, rgba(12, 19, 30, 0.78) 0%, rgba(6, 10, 16, 0.88) 100%);
+      border: 1px solid rgba(84, 198, 235, 0.28);
+      border-radius: 16px;
+      padding: 22px 26px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+      position: relative;
+      overflow: hidden;
+      max-width: 680px;
+    }
+    .c2-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #f47b24, #54c6eb);
+    }
+    .c2-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .c2-card-tag {
+      font-family: "Sora", sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      color: #54c6eb;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .c2-card-year {
+      font-family: "Sora", sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      color: #f47b24;
+      background: rgba(244, 123, 36, 0.12);
+      padding: 3px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(244, 123, 36, 0.3);
+    }
+    .c2-story {
+      font-size: clamp(13.5px, 1.02vw, 15px);
+      line-height: 1.62;
+      color: rgba(246, 245, 241, 0.85);
+      margin-bottom: 14px;
+    }
+    .c2-creed-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #ffedd0;
+    }
+    .c2-creed-bar svg {
+      width: 16px;
+      height: 16px;
+      color: #f47b24;
+      flex-shrink: 0;
+    }
+
+    /* ======================================================== */
+    /* CONCEPT 3: MODERN EXECUTIVE CALLOUT & KEYWORD ACCENTS    */
+    /* ======================================================== */
+    .c3-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .c3-lead {
+      font-size: clamp(16px, 1.25vw, 18.5px);
+      line-height: 1.65;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.92);
+      max-width: 660px;
+    }
+    .c3-lead mark {
+      background: rgba(84, 198, 235, 0.15);
+      color: #54c6eb;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .c3-origin {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: start;
+      max-width: 660px;
+      margin-top: 4px;
+    }
+    .c3-year-pill {
+      font-family: "Sora", sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #f47b24;
+      line-height: 1;
+      padding: 8px 12px;
+      background: rgba(244, 123, 36, 0.1);
+      border: 1px solid rgba(244, 123, 36, 0.35);
+      border-radius: 10px;
+      text-shadow: 0 0 12px rgba(244, 123, 36, 0.3);
+    }
+    .c3-story {
+      font-size: clamp(13.5px, 1.02vw, 15px);
+      line-height: 1.62;
+      color: rgba(246, 245, 241, 0.78);
+    }
+    .c3-banner {
+      background: linear-gradient(90deg, rgba(244, 123, 36, 0.18) 0%, rgba(84, 198, 235, 0.12) 100%);
+      border: 1px solid rgba(244, 123, 36, 0.3);
+      padding: 12px 20px;
+      border-radius: 12px;
+      max-width: 640px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .c3-banner-text {
+      font-family: "Sora", sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+    .c3-banner-text strong {
+      color: #f47b24;
+    }
+
+    /* ======================================================== */
+    /* CONCEPT 4: ULTRA-CLEAN EDITORIAL WITH LUXURY SERIF ACCENT*/
+    /* ======================================================== */
+    .c4-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .c4-lead {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: clamp(16.5px, 1.3vw, 19.5px);
+      line-height: 1.68;
+      font-weight: 600;
+      color: #ffffff;
+      max-width: 660px;
+      letter-spacing: -0.015em;
+    }
+    .c4-story {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: clamp(14px, 1.05vw, 15.5px);
+      line-height: 1.7;
+      font-weight: 400;
+      color: rgba(246, 245, 241, 0.78);
+      max-width: 640px;
+    }
+    .c4-story span.highlight {
+      color: #54c6eb;
+      font-weight: 600;
+    }
+    .c4-quote-block {
+      margin-top: 6px;
+      position: relative;
+      padding: 16px 0 0 24px;
+      border-left: 3px solid #f47b24;
+      max-width: 620px;
+    }
+    .c4-quote-text {
+      font-family: "Bodoni Moda", serif;
+      font-style: italic;
+      font-size: clamp(18px, 1.4vw, 22px);
+      font-weight: 500;
+      line-height: 1.45;
+      color: #fff;
+    }
+    .c4-quote-sub {
+      font-family: "Sora", sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #f47b24;
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* Bottom Info Card */
+    .concept-explain {
+      margin-top: 36px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, 0.65);
+    }
+    .concept-explain strong {
+      color: #54c6eb;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Switcher -->
+  <header class="preview-header">
+    <div class="preview-brand">
+      <div class="brand-dot"></div>
+      <div>
+        <strong>Slide 2 Typography Concepts</strong>
+        <div><span>Текстовый блок: About Turon</span></div>
+      </div>
+    </div>
+
+    <div class="tabs-wrap">
+      <button class="tab-btn active" onclick="switchConcept(1)">1. Luxury Chronicle & Creed</button>
+      <button class="tab-btn" onclick="switchConcept(2)">2. Glass Aviation Dossier</button>
+      <button class="tab-btn" onclick="switchConcept(3)">3. Executive Keyword Grid</button>
+      <button class="tab-btn" onclick="switchConcept(4)">4. Editorial Bodoni Quote</button>
+    </div>
+  </header>
+
+  <!-- Live Canvas Stage -->
+  <main class="stage">
+    <div class="stage-backdrop"></div>
+    <div class="grid-lines"></div>
+
+    <div class="slide-mockup">
+      <div class="slide-label">02 / About Turon</div>
+      
+      <div class="slide-headline">
+        <strong>GLOBAL REACH.</strong>
+        <em>PERSONAL CONTROL.</em>
+      </div>
+
+      <div class="slide-rule"></div>
+
+      <!-- CONCEPT 1: LUXURY CHRONICLE & CREED -->
+      <div class="concept-panel active" id="concept-1">
+        <div class="c1-wrap">
+          <p class="c1-lead">
+            Turon Tourism is a <span class="accent-gold">market-leading travel company</span> in Uzbekistan, delivering high-quality, personalized and flexible service for individual, group, leisure and business travel.
+          </p>
+
+          <div class="c1-story-box">
+            <div class="c1-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15 9H22L16.5 14L18.5 21L12 17L5.5 21L7.5 14L2 9H9L12 2Z"/></svg>
+              <span>Founding Resilience • Est. 2019</span>
+            </div>
+            <p class="c1-story">
+              Forged through crisis during the global pandemic, we engineered and executed <strong>essential charter flights across closed skies</strong>, building the foundation of trust that drives our travel network today.
+            </p>
+          </div>
+
+          <div class="c1-creed">
+            <div class="c1-creed-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <div class="c1-creed-text">
+              “Our ambition is to set a higher standard for travel in Uzbekistan.”
+            </div>
+          </div>
+        </div>
+
+        <div class="concept-explain">
+          <div>💡 <strong>Особенность Варианта 1:</strong> Элегантный журнал премиум-класса. Главный тезис выделен мягким золотом, кризисная история вынесена в авиационный блок с бейджем, а амбиция оформлена роскошной итальянской антиквой (Bodoni) в кавычках.</div>
+        </div>
+      </div>
+
+      <!-- CONCEPT 2: GLASS AVIATION DOSSIER -->
+      <div class="concept-panel" id="concept-2">
+        <div class="c2-wrap">
+          <p class="c2-lead">
+            Turon Tourism is a market-leading travel company in Uzbekistan, delivering high-quality, personalized and flexible service for individual, group, leisure and business travel.
+          </p>
+
+          <div class="c2-card">
+            <div class="c2-card-head">
+              <div class="c2-card-tag">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                <span>Charter Operations Chronicle</span>
+              </div>
+              <span class="c2-card-year">EST. 2019</span>
+            </div>
+
+            <p class="c2-story">
+              Founded in 2019, the company was forged through crisis. During the global pandemic, we engineered and executed essential charter flights across closed skies, building the foundation of trust that drives our travel network today.
+            </p>
+
+            <div class="c2-creed-bar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Our ambition is to set a higher standard for travel in Uzbekistan.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept-explain">
+          <div>💡 <strong>Особенность Варианта 2:</strong> Авиационный карточный досье-стиль (Aviation Glass Dossier). История 2019 года оформлена в премиальную стеклянную карточку с фирменным градиентным кантом и хронологическим штампом EST. 2019.</div>
+        </div>
+      </div>
+
+      <!-- CONCEPT 3: EXECUTIVE KEYWORD GRID -->
+      <div class="concept-panel" id="concept-3">
+        <div class="c3-wrap">
+          <p class="c3-lead">
+            Turon Tourism is a <mark>market-leading travel company</mark> in Uzbekistan, delivering high-quality, personalized and flexible service for individual, group, leisure and business travel.
+          </p>
+
+          <div class="c3-origin">
+            <div class="c3-year-pill">2019</div>
+            <p class="c3-story">
+              The company was forged through crisis. During the global pandemic, we engineered and executed essential charter flights across closed skies, building the foundation of trust that drives our travel network today.
+            </p>
+          </div>
+
+          <div class="c3-banner">
+            <div class="c3-banner-text">
+              OUR AMBITION • <strong>HIGHER STANDARD FOR TRAVEL IN UZBEKISTAN</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept-explain">
+          <div>💡 <strong>Особенность Варианта 3:</strong> Современный корпоративный стиль: акцентный бейдж года основания `2019`, ключевые слова подсвечены лазурным маркером, а миссия упакована в строгий горизонтальный баннер.</div>
+        </div>
+      </div>
+
+      <!-- CONCEPT 4: EDITORIAL BODONI QUOTE -->
+      <div class="concept-panel" id="concept-4">
+        <div class="c4-wrap">
+          <p class="c4-lead">
+            Turon Tourism is a market-leading travel company in Uzbekistan, delivering high-quality, personalized and flexible service for individual, group, leisure and business travel.
+          </p>
+
+          <p class="c4-story">
+            Founded in 2019, the company was forged through crisis. During the global pandemic, we engineered and executed <span class="highlight">essential charter flights across closed skies</span>, building the foundation of trust that drives our travel network today.
+          </p>
+
+          <div class="c4-quote-block">
+            <div class="c4-quote-text">
+              “Our ambition is to set a higher standard for travel in Uzbekistan.”
+            </div>
+            <span class="c4-quote-sub">Corporate Mission &amp; Standard</span>
+          </div>
+        </div>
+
+        <div class="concept-explain">
+          <div>💡 <strong>Особенность Варианта 4:</strong> Минималистичный премиум (стиль журналов Monocle / Vogue Business / Aston Martin). Чистые шрифты Plus Jakarta Sans с идеальным кернингом, акцентная линия и крупная цитата-манифест в итальянской антикве.</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    function switchConcept(id) {
+      document.querySelectorAll('.concept-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      
+      document.getElementById('concept-' + id).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
