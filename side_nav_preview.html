@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Side Navigation (Dot Nav) Redesign Concepts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #06090e;
+      color: #fff;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .preview-header {
+      background: rgba(10, 15, 24, 0.95);
+      border-bottom: 1px solid rgba(244, 123, 36, 0.3);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .preview-title {
+      font-family: "Sora", sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #ffb156;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .preview-title span {
+      background: rgba(84, 198, 235, 0.18);
+      color: #54c6eb;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      border: 1px solid rgba(84, 198, 235, 0.35);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.65);
+      font-family: "Sora", sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(84, 198, 235, 0.9), rgba(37, 169, 220, 0.9));
+      color: #06090e;
+      font-weight: 800;
+      box-shadow: 0 4px 14px rgba(84, 198, 235, 0.4);
+    }
+
+    .stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 40px;
+      background: #080d14 url('https://amalsabitov98-art.github.io/turon-tour-portfolio/fifth-team.png') center/cover no-repeat;
+      overflow: hidden;
+    }
+    .stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(6, 10, 16, 0.8), rgba(4, 7, 12, 0.96) 85%);
+    }
+
+    .center-info {
+      position: relative;
+      z-index: 10;
+      max-width: 600px;
+      text-align: center;
+      background: rgba(8, 14, 22, 0.75);
+      padding: 32px 40px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    }
+    .center-info h3 {
+      font-family: "Sora", sans-serif;
+      font-size: 24px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .center-info p {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.75);
+    }
+    .center-info strong { color: #ffb156; }
+    .center-info em { color: #54c6eb; font-style: normal; }
+
+    /* ======================================================== */
+    /* CONCEPT 1: NEON GLASS DASHES (Tesla / iOS Style)        */
+    /* ======================================================== */
+    .nav-variant {
+      display: none;
+      position: absolute;
+      right: 36px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+    }
+    .nav-variant.active {
+      display: flex;
+    }
+
+    .dash-nav {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      padding: 16px 10px;
+      border-radius: 999px;
+      background: rgba(8, 14, 22, 0.75);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+    .dash-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      group: true;
+      position: relative;
+    }
+    .dash-tip {
+      font-family: "Sora", sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(8, 14, 22, 0.9);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(244, 123, 36, 0.4);
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateX(10px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .dash-item:hover .dash-tip {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .dash-bar {
+      width: 22px;
+      height: 4px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.25);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .dash-item:hover .dash-bar {
+      background: rgba(255, 255, 255, 0.6);
+      width: 28px;
+    }
+    .dash-item.active .dash-bar {
+      width: 36px;
+      height: 5px;
+      background: linear-gradient(90deg, #ffb156, #f47b24);
+      box-shadow: 0 0 14px #f47b24;
+    }
+
+    /* ======================================================== */
+    /* CONCEPT 2: AVIATION HUD FLIGHT LEVEL (Altimeter Rail)   */
+    /* ======================================================== */
+    .hud-rail-nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 18px 12px;
+      border-radius: 16px;
+      background: rgba(6, 11, 18, 0.85);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(84, 198, 235, 0.35);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.7), 0 0 20px rgba(84, 198, 235, 0.15);
+      position: relative;
+    }
+    .rail-header {
+      font-family: "Sora", sans-serif;
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      color: #54c6eb;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .rail-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+    .rail-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      position: relative;
+    }
+    .rail-num {
+      font-family: "Sora", sans-serif;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.4);
+      width: 18px;
+      transition: all 0.25s ease;
+    }
+    .rail-mark {
+      width: 8px;
+      height: 1.5px;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.25s ease;
+    }
+    .rail-step.active .rail-num {
+      color: #54c6eb;
+      font-size: 12px;
+      text-shadow: 0 0 8px #54c6eb;
+    }
+    .rail-step.active .rail-mark {
+      width: 18px;
+      height: 2.5px;
+      background: #54c6eb;
+      box-shadow: 0 0 10px #54c6eb;
+    }
+    .rail-step:hover .rail-num { color: #fff; }
+
+    /* ======================================================== */
+    /* CONCEPT 3: MINIMAL LASER THREAD (Ultra-Clean Cyber)      */
+    /* ======================================================== */
+    .laser-thread-nav {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 240px;
+      justify-content: space-between;
+    }
+    .laser-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 2px;
+    }
+    .laser-beacon {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ffb156;
+      box-shadow: 0 0 16px #ffb156, 0 0 24px #f47b24;
+      border: 2px solid #fff;
+      transition: top 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .thread-point {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      z-index: 2;
+      transition: all 0.25s ease;
+    }
+    .thread-point:hover {
+      background: #fff;
+      transform: scale(1.4);
+    }
+
+    /* ======================================================== */
+    /* CONCEPT 4: OPTION TO HIDE IT (Нижнего кольца достаточно) */
+    /* ======================================================== */
+    .no-nav-box {
+      border: 1px dashed rgba(255, 255, 255, 0.3);
+      padding: 16px;
+      border-radius: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="preview-header">
+    <div class="preview-title">
+      БОКОВАЯ НАВИГАЦИЯ (DOT NAV / SIDE PAGINATOR)
+      <span>КАК НАЗЫВАЕТСЯ И ВАРИАНТЫ РЕДИЗАЙНА</span>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchNav(1)">
+        01 • Neon Glass Dashes (Tesla/iOS)
+      </button>
+      <button class="tab-btn" onclick="switchNav(2)">
+        02 • Aviation HUD Altimeter Rail
+      </button>
+      <button class="tab-btn" onclick="switchNav(3)">
+        03 • Minimal Laser Thread
+      </button>
+      <button class="tab-btn" onclick="switchNav(4)">
+        04 • Убрать (Использовать нижнее кольцо)
+      </button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div class="center-info">
+      <h3>Что это за штука?</h3>
+      <p>
+        В веб-разработке и UI/UX дизайне этот элемент официально называется <strong>Dot Navigation</strong> (или <em>Боковой пагинатор / Slide Indicator</em>).
+      </p>
+      <p style="margin-top: 10px;">
+        Он показывает, на каком слайде из 8 находится посетитель, и позволяет быстро кликнуть на нужный раздел. Наведите на правую панель, чтобы протестировать интерактивность!
+      </p>
+    </div>
+
+    <!-- VARIANT 1: Neon Glass Dashes -->
+    <div class="nav-variant active" id="var-1">
+      <div class="dash-nav">
+        <div class="dash-item" onclick="setDash(this)">
+          <span class="dash-tip">01 • Hero</span>
+          <div class="dash-bar"></div>
+        </div>
+        <div class="dash-item" onclick="setDash(this)">
+          <span class="dash-tip">02 • About</span>
+          <div class="dash-bar"></div>
+        </div>
+        <div class="dash-item active" onclick="setDash(this)">
+          <span class="dash-tip">03 • Directions</span>
+          <div class="dash-bar"></div>
+        </div>
+        <div class="dash-item" onclick="setDash(this)">
+          <span class="dash-tip">04 • Hospitality</span>
+          <div class="dash-bar"></div>
+        </div>
+        <div class="dash-item" onclick="setDash(this)">
+          <span class="dash-tip">05 • Team</span>
+          <div class="dash-bar"></div>
+        </div>
+        <div class="dash-item" onclick="setDash(this)">
+          <span class="dash-tip">06 • Charter</span>
+          <div class="dash-bar"></div>
+        </div>
+        <div class="dash-item" onclick="setDash(this)">
+          <span class="dash-tip">07 • Service</span>
+          <div class="dash-bar"></div>
+        </div>
+        <div class="dash-item" onclick="setDash(this)">
+          <span class="dash-tip">08 • Mission</span>
+          <div class="dash-bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VARIANT 2: Aviation HUD Altimeter Rail -->
+    <div class="nav-variant" id="var-2">
+      <div class="hud-rail-nav">
+        <span class="rail-header">LEVEL</span>
+        <div class="rail-steps">
+          <div class="rail-step" onclick="setRail(this, 1)"><span class="rail-num">01</span><div class="rail-mark"></div></div>
+          <div class="rail-step" onclick="setRail(this, 2)"><span class="rail-num">02</span><div class="rail-mark"></div></div>
+          <div class="rail-step active" onclick="setRail(this, 3)"><span class="rail-num">03</span><div class="rail-mark"></div></div>
+          <div class="rail-step" onclick="setRail(this, 4)"><span class="rail-num">04</span><div class="rail-mark"></div></div>
+          <div class="rail-step" onclick="setRail(this, 5)"><span class="rail-num">05</span><div class="rail-mark"></div></div>
+          <div class="rail-step" onclick="setRail(this, 6)"><span class="rail-num">06</span><div class="rail-mark"></div></div>
+          <div class="rail-step" onclick="setRail(this, 7)"><span class="rail-num">07</span><div class="rail-mark"></div></div>
+          <div class="rail-step" onclick="setRail(this, 8)"><span class="rail-num">08</span><div class="rail-mark"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VARIANT 3: Minimal Laser Thread -->
+    <div class="nav-variant" id="var-3">
+      <div class="laser-thread-nav">
+        <div class="laser-line"></div>
+        <div class="laser-beacon" id="beacon" style="top: 35%;"></div>
+        <div class="thread-point" onclick="moveBeacon(0)"></div>
+        <div class="thread-point" onclick="moveBeacon(1)"></div>
+        <div class="thread-point" onclick="moveBeacon(2)"></div>
+        <div class="thread-point" onclick="moveBeacon(3)"></div>
+        <div class="thread-point" onclick="moveBeacon(4)"></div>
+        <div class="thread-point" onclick="moveBeacon(5)"></div>
+        <div class="thread-point" onclick="moveBeacon(6)"></div>
+        <div class="thread-point" onclick="moveBeacon(7)"></div>
+      </div>
+    </div>
+
+    <!-- VARIANT 4: Hidden -->
+    <div class="nav-variant" id="var-4">
+      <div class="no-nav-box">
+        Боковая панель полностью скрыта.<br>
+        Навигация осуществляется через круговое кольцо внизу справа <code>01/08</code> и колесико мыши.
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function switchNav(idx) {
+      document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === (idx - 1)));
+      document.querySelectorAll('.nav-variant').forEach((v, i) => v.classList.toggle('active', i === (idx - 1)));
+    }
+
+    function setDash(item) {
+      document.querySelectorAll('.dash-item').forEach(d => d.classList.remove('active'));
+      item.classList.add('active');
+    }
+
+    function setRail(item) {
+      document.querySelectorAll('.rail-step').forEach(r => r.classList.remove('active'));
+      item.classList.add('active');
+    }
+
+    function moveBeacon(idx) {
+      const beacon = document.getElementById('beacon');
+      const percent = (idx / 7) * 100;
+      beacon.style.top = percent + '%';
+    }
+  </script>
+</body>
+</html>
