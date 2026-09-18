@@ -1736,6 +1736,237 @@
       height: 20px;
     }
 
+    /* =================================================== */
+    /* SLIDE 8: EXECUTIVE DIRECT COMMUNICATION HUB         */
+    /* =================================================== */
+    .mission-screen .story-footer {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 20px;
+    }
+    .mission-screen .story-footer .index {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .hub-console {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(20px, 4vw, 56px);
+      width: 100%;
+      max-width: min(1080px, calc(100% - 130px));
+      margin: 0 auto;
+      padding: 13px clamp(24px, 4vw, 48px);
+      border-radius: 16px;
+      background: rgba(8, 14, 22, 0.78);
+      backdrop-filter: blur(24px) saturate(140%);
+      -webkit-backdrop-filter: blur(24px) saturate(140%);
+      border: 1px solid rgba(244, 123, 36, 0.4);
+      box-shadow: 
+        0 14px 40px rgba(0, 0, 0, 0.65),
+        0 0 28px rgba(244, 123, 36, 0.16),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.18);
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .hub-console:hover {
+      border-color: #ffb156;
+      box-shadow: 
+        0 18px 46px rgba(0, 0, 0, 0.75),
+        0 0 34px rgba(244, 123, 36, 0.3),
+        inset 0 1px 2px rgba(255, 215, 130, 0.3);
+    }
+
+    .hub-light-streak {
+      position: absolute;
+      top: 0;
+      left: -260px;
+      width: 260px;
+      height: 2.5px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 215, 130, 0.4) 20%, 
+        #ffffff 50%, 
+        #ffb156 80%, 
+        transparent 100%
+      );
+      box-shadow: 0 0 20px #ffb156, 0 0 30px #f47b24;
+      animation: hubSweep 5.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      z-index: 4;
+    }
+    @keyframes hubSweep {
+      0% { left: -260px; opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
+
+    .hub-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(244, 123, 36, 0.12) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hub-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      text-decoration: none;
+      color: inherit;
+      padding: 6px 14px;
+      border-radius: 12px;
+      transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+      z-index: 2;
+    }
+    .hub-item:hover {
+      background: rgba(244, 123, 36, 0.08);
+      transform: translateY(-2px);
+    }
+    .hub-item.cyan-item:hover {
+      background: rgba(84, 198, 235, 0.08);
+    }
+
+    .hub-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(244, 123, 36, 0.5);
+      background: radial-gradient(circle, rgba(244, 123, 36, 0.25) 0%, rgba(8, 14, 22, 0.85) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffb156;
+      box-shadow: 0 0 16px rgba(244, 123, 36, 0.3);
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+    .hub-item:hover .hub-icon {
+      border-color: #ffb156;
+      background: radial-gradient(circle, rgba(244, 123, 36, 0.45) 0%, rgba(8, 14, 22, 0.95) 100%);
+      box-shadow: 0 0 22px rgba(244, 123, 36, 0.65);
+      transform: scale(1.08);
+    }
+
+    .hub-icon.cyan {
+      border-color: rgba(84, 198, 235, 0.5);
+      background: radial-gradient(circle, rgba(84, 198, 235, 0.25) 0%, rgba(8, 14, 22, 0.85) 100%);
+      color: #54c6eb;
+      box-shadow: 0 0 16px rgba(84, 198, 235, 0.3);
+    }
+    .hub-item:hover .hub-icon.cyan {
+      border-color: #54c6eb;
+      background: radial-gradient(circle, rgba(84, 198, 235, 0.45) 0%, rgba(8, 14, 22, 0.95) 100%);
+      box-shadow: 0 0 22px rgba(84, 198, 235, 0.65);
+      transform: scale(1.08);
+    }
+    .hub-icon svg { width: 18px; height: 18px; }
+
+    .hub-text {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .hub-sub {
+      font-family: "Sora", sans-serif;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      color: #ffb156;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hub-sub.cyan-sub {
+      color: #54c6eb;
+    }
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ffb156;
+      box-shadow: 0 0 8px #ffb156;
+      animation: dotPulse 2s infinite ease-in-out;
+    }
+    .live-dot.cyan-dot {
+      background: #54c6eb;
+      box-shadow: 0 0 8px #54c6eb;
+    }
+    @keyframes dotPulse {
+      0%, 100% { opacity: 0.5; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .hub-value {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(12.5px, 1.15vw, 15px);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffffff;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+    }
+    .hub-item:hover .hub-value {
+      color: #ffedd0;
+      text-shadow: 0 0 14px rgba(255, 177, 86, 0.8);
+    }
+    .hub-item.cyan-item:hover .hub-value {
+      color: #e0f7ff;
+      text-shadow: 0 0 14px rgba(84, 198, 235, 0.8);
+    }
+
+    .hub-action {
+      margin-left: auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.5);
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+    .hub-item:hover .hub-action {
+      border-color: #ffb156;
+      color: #ffb156;
+      transform: translate(2px, -2px);
+      box-shadow: 0 0 10px rgba(244, 123, 36, 0.4);
+    }
+    .hub-item.cyan-item:hover .hub-action {
+      border-color: #54c6eb;
+      color: #54c6eb;
+      box-shadow: 0 0 10px rgba(84, 198, 235, 0.4);
+    }
+
+    .hub-sep {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffb156;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 8px rgba(244, 123, 36, 0.65));
+      animation: chevronPulse 3.5s infinite ease-in-out;
+      z-index: 2;
+    }
+    .hub-sep svg {
+      width: 12px;
+      height: 22px;
+    }
+
     .mission-contact { display: flex; align-items: center; gap: 20px; }
     .mission-contact a { color: rgba(255,255,255,.75); text-decoration: none; }
     @media (max-width: 1180px) {
@@ -1807,6 +2038,19 @@
       .triad-num { font-size: 9px; }
       .triad-title { font-size: 10.5px; }
       .triad-sep svg { width: 9px; height: 16px; }
+      .mission-screen .story-footer { padding-top: 10px; }
+      .hub-console {
+        max-width: min(980px, calc(100% - 110px));
+        padding: 8px 20px;
+        gap: 20px;
+      }
+      .hub-icon { width: 32px; height: 32px; }
+      .hub-icon svg { width: 14px; height: 14px; }
+      .hub-sub { font-size: 8.5px; }
+      .hub-value { font-size: 11.5px; }
+      .hub-action { width: 24px; height: 24px; }
+      .hub-action svg { width: 10px; height: 10px; }
+      .hub-sep svg { width: 10px; height: 18px; }
       .story-footer { padding-top: 10px; }
     }
     @media (max-width: 760px) {
@@ -1963,6 +2207,41 @@
       }
       .triad-num { font-size: 9.5px; }
       .triad-title { font-size: 10px; }
+      .mission-screen .story-footer {
+        position: relative;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding-top: 14px;
+      }
+      .mission-screen .story-footer .index {
+        position: static;
+        transform: none;
+        align-self: flex-end;
+      }
+      .hub-console {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px 14px;
+        gap: 8px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .hub-item {
+        justify-content: flex-start;
+        padding: 8px 10px;
+        border-bottom: 1px solid rgba(244, 123, 36, 0.15);
+      }
+      .hub-item:last-child {
+        border-bottom: none;
+      }
+      .hub-sep {
+        display: none;
+      }
+      .hub-icon { width: 32px; height: 32px; }
+      .hub-icon svg { width: 14px; height: 14px; }
+      .hub-sub { font-size: 8.5px; }
+      .hub-value { font-size: 11px; }
       .story-proof { max-width: 79%; flex-wrap: wrap; row-gap: 8px; }
       .mission-contact { align-items: flex-start; flex-direction: column; gap: 6px; }
       .index { width: 58px; height: 58px; min-height: 58px; }
@@ -2450,7 +2729,55 @@
       </div>
 
       <div class="story-footer">
-        <div class="story-proof mission-contact"><span><a href="mailto:info@turontourism.uz">info@turontourism.uz</a></span><i></i><span><a href="https://turonbooking.uz">turonbooking.uz</a></span></div>
+        <div class="hub-console" role="region" aria-label="Official Contact Channels">
+          <div class="hub-glow"></div>
+          <div class="hub-light-streak"></div>
+          
+          <a class="hub-item" href="mailto:info@turontourism.uz" title="Send Official Email">
+            <div class="hub-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+            </div>
+            <div class="hub-text">
+              <span class="hub-sub"><i class="live-dot"></i> Official Inquiries</span>
+              <strong class="hub-value">info@turontourism.uz</strong>
+            </div>
+            <div class="hub-action" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </div>
+          </a>
+
+          <div class="hub-sep" aria-hidden="true">
+            <svg viewBox="0 0 16 28" fill="none">
+              <path d="M2 2L14 14L2 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <a class="hub-item cyan-item" href="https://turonbooking.uz" target="_blank" rel="noopener" title="Open B2B Booking Platform">
+            <div class="hub-icon cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div class="hub-text">
+              <span class="hub-sub cyan-sub"><i class="live-dot cyan-dot"></i> B2B Reservation Portal</span>
+              <strong class="hub-value">turonbooking.uz</strong>
+            </div>
+            <div class="hub-action" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </div>
+          </a>
+        </div>
         <div class="index" data-step="8" aria-label="Slide 8 of 8">
           <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
             <circle class="index-ring__track" cx="26" cy="26" r="21" />
