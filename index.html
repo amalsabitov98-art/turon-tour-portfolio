@@ -3070,14 +3070,21 @@
         isNavigating = true;
         setActive(targetIndex);
 
-        sections[targetIndex].scrollIntoView({
-          behavior: reduceMotion ? 'auto' : 'smooth',
-          block: 'start'
-        });
+        const target = sections[targetIndex];
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop,
+            behavior: reduceMotion ? 'auto' : 'smooth'
+          });
+          target.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'start'
+          });
+        }
 
         setTimeout(() => {
           isNavigating = false;
-        }, 650);
+        }, 700);
       }
 
       const railButtons = sections.map((section, idx) => {
@@ -3098,7 +3105,11 @@
         mark.className = 'rail-mark';
 
         step.append(tip, num, mark);
-        step.addEventListener('click', () => goToSlide(idx));
+        step.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          goToSlide(idx);
+        });
         railSteps.appendChild(step);
         return step;
       });
@@ -3116,18 +3127,22 @@
         });
       });
 
-      // Synchronize header nav anchor links with Keynote transition
+      // Synchronize header nav anchor links with Keynote transition (safely handles # and fragments)
       document.querySelectorAll('header nav a, .about-header nav a, .story-header nav a, .actions a[href^="#"]').forEach((link) => {
         const hash = link.getAttribute('href');
-        if (!hash || !hash.startsWith('#')) return;
-        const targetSection = document.querySelector(hash);
-        if (!targetSection) return;
-        const targetIdx = sections.indexOf(targetSection);
-        if (targetIdx !== -1) {
-          link.addEventListener('click', (e) => {
-            e.preventDefault();
-            goToSlide(targetIdx);
-          });
+        if (!hash || !hash.startsWith('#') || hash.length <= 1) return;
+        try {
+          const targetSection = document.querySelector(hash);
+          if (!targetSection) return;
+          const targetIdx = sections.indexOf(targetSection);
+          if (targetIdx !== -1) {
+            link.addEventListener('click', (e) => {
+              e.preventDefault();
+              goToSlide(targetIdx);
+            });
+          }
+        } catch (err) {
+          // Ignore invalid selector safely
         }
       });
 
@@ -3168,38 +3183,44 @@
       if (!reduceMotion && 'IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
               const idx = sections.indexOf(entry.target);
               if (idx !== -1 && !isNavigating) {
                 setActive(idx);
               }
             }
           });
-        }, { threshold: [0.2, 0.4, 0.6, 0.8] });
+        }, { threshold: [0.15, 0.3, 0.5, 0.7] });
         sections.forEach((section) => observer.observe(section));
       }
 
-      // Scroll position fallback sync
+      // Continuous Scroll position sync (window & document)
       let scrollSyncTimer = null;
-      window.addEventListener('scroll', () => {
+      const syncActiveOnScroll = () => {
         if (isNavigating) return;
         clearTimeout(scrollSyncTimer);
         scrollSyncTimer = setTimeout(() => {
+          const scrollPos = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+          const viewportMid = scrollPos + window.innerHeight * 0.45;
           let bestIdx = 0;
-          let minDiff = Infinity;
+          let minDistance = Infinity;
           sections.forEach((section, idx) => {
-            const rect = section.getBoundingClientRect();
-            const diff = Math.abs(rect.top);
-            if (diff < minDiff) {
-              minDiff = diff;
+            const top = section.offsetTop;
+            const height = section.offsetHeight || window.innerHeight;
+            const mid = top + height / 2;
+            const dist = Math.abs(viewportMid - mid);
+            if (dist < minDistance) {
+              minDistance = dist;
               bestIdx = idx;
             }
           });
           if (bestIdx !== currentIndex) {
             setActive(bestIdx);
           }
-        }, 60);
-      }, { passive: true });
+        }, 40);
+      };
+      window.addEventListener('scroll', syncActiveOnScroll, { passive: true });
+      document.addEventListener('scroll', syncActiveOnScroll, { passive: true });
     })();
   </script>
 </body>
