@@ -1555,6 +1555,187 @@
       filter: drop-shadow(0 0 12px #ffedd0);
     }
 
+    /* =================================================== */
+    /* SLIDE 7: OPERATIONAL TRIAD HUD CONSOLE              */
+    /* =================================================== */
+    .service-screen .story-footer {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 20px;
+    }
+    .service-screen .story-footer .index {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .triad-hud-console {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(16px, 3vw, 48px);
+      width: 100%;
+      max-width: min(1080px, calc(100% - 130px));
+      margin: 0 auto;
+      padding: 13px clamp(24px, 4vw, 52px);
+      border-radius: 16px;
+      background: rgba(8, 14, 22, 0.74);
+      backdrop-filter: blur(24px) saturate(140%);
+      -webkit-backdrop-filter: blur(24px) saturate(140%);
+      border: 1px solid rgba(244, 123, 36, 0.4);
+      box-shadow: 
+        0 14px 38px rgba(0, 0, 0, 0.65),
+        0 0 28px rgba(244, 123, 36, 0.16),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.18),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .triad-hud-console:hover {
+      border-color: #ffb156;
+      box-shadow: 
+        0 18px 46px rgba(0, 0, 0, 0.75),
+        0 0 34px rgba(244, 123, 36, 0.3),
+        inset 0 1px 2px rgba(255, 215, 130, 0.3);
+    }
+
+    .triad-light-streak {
+      position: absolute;
+      top: 0;
+      left: -260px;
+      width: 240px;
+      height: 2.5px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 215, 130, 0.4) 20%, 
+        #ffffff 50%, 
+        #ffb156 80%, 
+        transparent 100%
+      );
+      box-shadow: 0 0 18px #ffb156, 0 0 28px #f47b24;
+      animation: triadSweep 5.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      z-index: 4;
+    }
+    @keyframes triadSweep {
+      0% { left: -260px; opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
+
+    .triad-hud-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(244, 123, 36, 0.12) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .triad-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      z-index: 2;
+      transition: transform 0.25s ease;
+    }
+    .triad-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .triad-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(244, 123, 36, 0.45);
+      background: radial-gradient(circle, rgba(244, 123, 36, 0.22) 0%, rgba(8, 14, 22, 0.8) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffb156;
+      box-shadow: 0 0 12px rgba(244, 123, 36, 0.25);
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+    .triad-item:hover .triad-icon {
+      border-color: #ffb156;
+      background: radial-gradient(circle, rgba(244, 123, 36, 0.4) 0%, rgba(8, 14, 22, 0.9) 100%);
+      box-shadow: 0 0 18px rgba(244, 123, 36, 0.55);
+      transform: scale(1.08);
+    }
+    .triad-icon.cyan {
+      border-color: rgba(84, 198, 235, 0.45);
+      background: radial-gradient(circle, rgba(84, 198, 235, 0.22) 0%, rgba(8, 14, 22, 0.8) 100%);
+      color: #54c6eb;
+      box-shadow: 0 0 12px rgba(84, 198, 235, 0.25);
+    }
+    .triad-item:hover .triad-icon.cyan {
+      border-color: #54c6eb;
+      background: radial-gradient(circle, rgba(84, 198, 235, 0.4) 0%, rgba(8, 14, 22, 0.9) 100%);
+      box-shadow: 0 0 18px rgba(84, 198, 235, 0.55);
+      transform: scale(1.08);
+    }
+    .triad-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .triad-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .triad-num {
+      font-family: "Sora", sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      color: #ffb156;
+      transition: color 0.25s ease;
+    }
+    .triad-item:hover .triad-num {
+      color: #ffedd0;
+      text-shadow: 0 0 8px #ffb156;
+    }
+    .triad-title {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(11.5px, 1.05vw, 13px);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ffffff;
+      white-space: nowrap;
+      transition: color 0.25s ease, text-shadow 0.25s ease;
+    }
+    .triad-item:hover .triad-title {
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(255, 177, 86, 0.7);
+    }
+
+    .triad-sep {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffb156;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 8px rgba(244, 123, 36, 0.65));
+      animation: chevronPulse 3.5s infinite ease-in-out;
+      z-index: 2;
+    }
+    .triad-sep svg {
+      width: 11px;
+      height: 20px;
+    }
+
     .mission-contact { display: flex; align-items: center; gap: 20px; }
     .mission-contact a { color: rgba(255,255,255,.75); text-decoration: none; }
     @media (max-width: 1180px) {
@@ -1615,6 +1796,17 @@
       .hud-tagline { font-size: 9.5px; }
       .bridge-arc-wrap { height: 22px; width: 110px; }
       .team-hud-bracket { height: 36px; }
+      .service-screen .story-footer { padding-top: 10px; }
+      .triad-hud-console {
+        max-width: min(980px, calc(100% - 110px));
+        padding: 8px 20px;
+        gap: 20px;
+      }
+      .triad-icon { width: 28px; height: 28px; }
+      .triad-icon svg { width: 13px; height: 13px; }
+      .triad-num { font-size: 9px; }
+      .triad-title { font-size: 10.5px; }
+      .triad-sep svg { width: 9px; height: 16px; }
       .story-footer { padding-top: 10px; }
     }
     @media (max-width: 760px) {
@@ -1738,6 +1930,39 @@
       .hub-title-city.cyan { font-size: 18px; }
       .hud-tagline { font-size: 9px; }
       .bridge-arc-wrap { width: 120px; height: 24px; }
+      .service-screen .story-footer {
+        position: relative;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding-top: 14px;
+      }
+      .service-screen .story-footer .index {
+        position: static;
+        transform: none;
+        align-self: flex-end;
+      }
+      .triad-hud-console {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px 14px;
+        gap: 8px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .triad-item {
+        justify-content: flex-start;
+        padding: 6px 8px;
+        border-bottom: 1px solid rgba(244, 123, 36, 0.15);
+      }
+      .triad-item:last-child {
+        border-bottom: none;
+      }
+      .triad-sep {
+        display: none;
+      }
+      .triad-num { font-size: 9.5px; }
+      .triad-title { font-size: 10px; }
       .story-proof { max-width: 79%; flex-wrap: wrap; row-gap: 8px; }
       .mission-contact { align-items: flex-start; flex-direction: column; gap: 6px; }
       .index { width: 58px; height: 58px; min-height: 58px; }
@@ -2170,7 +2395,30 @@
       </div>
 
       <div class="story-footer">
-        <div class="story-proof"><span>Trained specialists</span><i></i><span>Tailor-made itineraries</span><i></i><span>Efficient technology</span></div>
+        <div class="triad-hud-console" role="region" aria-label="Core operational pillars">
+          <div class="triad-hud-glow"></div>
+          <div class="triad-light-streak"></div>
+          <div class="triad-item">
+            <div class="triad-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="triad-info"><span class="triad-num">01</span><strong class="triad-title">Trained Specialists</strong></div>
+          </div>
+          <div class="triad-sep" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none"><path d="M2 2L14 14L2 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="triad-item">
+            <div class="triad-icon cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+            </div>
+            <div class="triad-info"><span class="triad-num" style="color:var(--cyan)">02</span><strong class="triad-title">Tailor-Made Itineraries</strong></div>
+          </div>
+          <div class="triad-sep" aria-hidden="true"><svg viewBox="0 0 16 28" fill="none"><path d="M2 2L14 14L2 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="triad-item">
+            <div class="triad-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="triad-info"><span class="triad-num">03</span><strong class="triad-title">Efficient Technology</strong></div>
+          </div>
+        </div>
         <div class="index" data-step="7" aria-label="Slide 7 of 8">
           <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
             <circle class="index-ring__track" cx="26" cy="26" r="21" />
