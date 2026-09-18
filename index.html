@@ -487,12 +487,18 @@
       line-height: 1.55;
     }
     .about-footer {
+      position: relative;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 24px;
+      justify-content: center;
       padding-top: 20px;
       border-top: 1px solid rgba(255,255,255,.16);
+    }
+    .about-footer .index {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
     }
     /* =================================================== */
     /* SLIDE 2: LUXURY GLASS HUD BEAM                      */
@@ -502,27 +508,29 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: clamp(16px, 2.5vw, 36px);
-      padding: 12px clamp(20px, 3vw, 36px);
-      border-radius: 14px;
-      background: rgba(10, 14, 20, 0.62);
+      gap: clamp(20px, 3.5vw, 52px);
+      width: 100%;
+      max-width: min(1080px, calc(100% - 130px));
+      margin: 0 auto;
+      padding: 14px clamp(24px, 4vw, 56px);
+      border-radius: 16px;
+      background: rgba(10, 14, 20, 0.65);
       backdrop-filter: blur(24px) saturate(140%);
       -webkit-backdrop-filter: blur(24px) saturate(140%);
       border: 1px solid rgba(244, 123, 36, 0.42);
       box-shadow: 
         0 14px 36px rgba(0, 0, 0, 0.55),
-        0 0 24px rgba(244, 123, 36, 0.16),
-        inset 0 1px 1px rgba(255, 255, 255, 0.15),
+        0 0 28px rgba(244, 123, 36, 0.18),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.18),
         inset 0 -1px 1px rgba(0, 0, 0, 0.4);
       overflow: hidden;
-      max-width: min(720px, 78vw);
       transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
     .luxury-hud-beam:hover {
       border-color: rgba(255, 177, 86, 0.65);
       box-shadow: 
         0 18px 44px rgba(0, 0, 0, 0.65),
-        0 0 32px rgba(244, 123, 36, 0.28),
+        0 0 34px rgba(244, 123, 36, 0.3),
         inset 0 1px 2px rgba(255, 215, 130, 0.3);
     }
 
@@ -530,8 +538,8 @@
     .hud-light-streak {
       position: absolute;
       top: 0;
-      left: -160px;
-      width: 140px;
+      left: -260px;
+      width: 240px;
       height: 2.5px;
       background: linear-gradient(90deg, 
         transparent 0%, 
@@ -540,13 +548,13 @@
         #ffb156 80%, 
         transparent 100%
       );
-      box-shadow: 0 0 16px #ffb156, 0 0 28px #f47b24;
-      animation: hudSweep 5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 18px #ffb156, 0 0 32px #f47b24;
+      animation: hudSweep 6s infinite cubic-bezier(0.4, 0, 0.2, 1);
       pointer-events: none;
       z-index: 4;
     }
     @keyframes hudSweep {
-      0% { left: -160px; opacity: 0; }
+      0% { left: -260px; opacity: 0; }
       15% { opacity: 1; }
       85% { opacity: 1; }
       100% { left: 100%; opacity: 0; }
@@ -570,8 +578,9 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      gap: 5px;
-      padding: 4px 12px;
+      gap: 6px;
+      padding: 6px 18px;
+      flex: 1;
       cursor: pointer;
       user-select: none;
       z-index: 2;
@@ -585,8 +594,8 @@
       font-family: "Sora", sans-serif;
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.16em;
-      color: rgba(255, 215, 130, 0.75);
+      letter-spacing: 0.18em;
+      color: rgba(255, 215, 130, 0.8);
       transition: color 0.25s ease, text-shadow 0.25s ease;
     }
     .hud-item:hover .hud-num {
@@ -596,7 +605,7 @@
 
     .hud-title {
       font-family: "Sora", sans-serif;
-      font-size: 11.5px;
+      font-size: clamp(11.5px, 1.05vw, 13.5px);
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -607,7 +616,7 @@
     }
     .hud-item:hover .hud-title {
       color: #ffffff;
-      text-shadow: 0 0 12px rgba(255, 177, 86, 0.65);
+      text-shadow: 0 0 14px rgba(255, 177, 86, 0.7);
     }
 
     /* Soft hover spotlight under item */
@@ -1303,10 +1312,15 @@
       .exp-badge-icon { width: 26px; height: 26px; }
       .exp-badge-text { font-size: 11px; }
       .about-footer { padding-top: 10px; }
-      .luxury-hud-beam { padding: 8px 18px; gap: 16px; }
+      .luxury-hud-beam {
+        max-width: min(980px, calc(100% - 110px));
+        padding: 8px 24px;
+        gap: 20px;
+      }
+      .hud-item { padding: 4px 10px; }
       .hud-num { font-size: 10px; }
       .hud-title { font-size: 10.5px; }
-      .hud-sep svg { width: 9px; height: 16px; }
+      .hud-sep svg { width: 10px; height: 18px; }
       .story-footer { padding-top: 10px; }
     }
     @media (max-width: 760px) {
@@ -1324,11 +1338,22 @@
       .about-copy h2 strong { font-size: clamp(45px, 13vw, 72px); }
       .about-copy h2 em { font-size: clamp(34px, 10.4vw, 58px); white-space: normal; }
       .about-lead { max-width: 88%; }
-      .about-footer { align-items: flex-end; gap: 12px; }
+      .about-footer {
+        position: relative;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding-top: 14px;
+      }
+      .about-footer .index {
+        position: static;
+        transform: none;
+        align-self: flex-end;
+      }
       .luxury-hud-beam {
         width: 100%;
-        max-width: 78%;
-        padding: 8px 14px;
+        max-width: 100%;
+        padding: 10px 14px;
         gap: 6px;
         flex-direction: column;
         align-items: stretch;
@@ -1337,7 +1362,7 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        padding: 4px 6px;
+        padding: 5px 8px;
         border-bottom: 1px solid rgba(244, 123, 36, 0.15);
       }
       .hud-item:last-child {
