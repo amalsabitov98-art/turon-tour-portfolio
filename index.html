@@ -494,18 +494,209 @@
       padding-top: 20px;
       border-top: 1px solid rgba(255,255,255,.16);
     }
-    .proof-line {
+    /* =================================================== */
+    /* SLIDE 2: FLIGHT WAYPOINTS & RADAR TRAJECTORY        */
+    /* =================================================== */
+    .flight-waypoints-bar {
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 17px;
-      color: rgba(255,255,255,.72);
-      font-family: "Sora", sans-serif;
-      font-size: 8.5px;
-      font-weight: 600;
-      letter-spacing: .15em;
-      text-transform: uppercase;
+      gap: clamp(20px, 3vw, 44px);
+      flex: 1;
+      padding: 10px 0;
     }
-    .proof-line i { width: 4px; height: 4px; border-radius: 50%; background: var(--orange); }
+    .waypoint-vector-line {
+      position: absolute;
+      bottom: 6px;
+      left: 14px;
+      right: clamp(40px, 5vw, 80px);
+      height: 1.5px;
+      background: linear-gradient(90deg, 
+        rgba(244, 123, 36, 0.3) 0%, 
+        rgba(255, 177, 86, 0.6) 30%, 
+        rgba(244, 123, 36, 0.6) 70%, 
+        rgba(244, 123, 36, 0.15) 100%
+      );
+      box-shadow: 0 0 8px rgba(244, 123, 36, 0.35);
+      z-index: 1;
+    }
+    .waypoint-vector-glow {
+      position: absolute;
+      top: -1.5px;
+      left: 0;
+      width: 110px;
+      height: 4.5px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, #ffb156, #f47b24, transparent);
+      box-shadow: 0 0 14px #ffb156, 0 0 24px #f47b24;
+      animation: flightLinePulse 4.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes flightLinePulse {
+      0% { left: -110px; opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
+
+    .waypoint-node {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      z-index: 2;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.25s ease;
+    }
+    .waypoint-node:hover {
+      transform: translateY(-3px);
+    }
+
+    .waypoint-radar-anchor {
+      position: relative;
+      width: 26px;
+      height: 14px;
+      margin-left: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .waypoint-center-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffb156;
+      box-shadow: 0 0 10px #f47b24, 0 0 18px #f47b24;
+      z-index: 3;
+      transition: all 0.25s ease;
+    }
+    .radar-ping {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(244, 123, 36, 0.75);
+      animation: radarRipple 2.8s infinite ease-out;
+      pointer-events: none;
+    }
+    .radar-ping.ping-2 {
+      animation-delay: 1.4s;
+    }
+    .waypoint-node:nth-child(3) .radar-ping { animation-delay: 0.9s; }
+    .waypoint-node:nth-child(3) .radar-ping.ping-2 { animation-delay: 2.3s; }
+    .waypoint-node:nth-child(4) .radar-ping { animation-delay: 1.8s; }
+    .waypoint-node:nth-child(4) .radar-ping.ping-2 { animation-delay: 3.2s; }
+
+    @keyframes radarRipple {
+      0% {
+        transform: scale(0.4);
+        opacity: 0.9;
+        box-shadow: 0 0 4px #f47b24;
+      }
+      60% {
+        opacity: 0.5;
+        box-shadow: 0 0 12px #ffb156;
+      }
+      100% {
+        transform: scale(2.2);
+        opacity: 0;
+      }
+    }
+
+    .waypoint-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 14px 6px 8px;
+      border-radius: 12px;
+      background: rgba(8, 12, 18, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .waypoint-node:hover .waypoint-card {
+      background: rgba(14, 22, 34, 0.82);
+      border-color: rgba(244, 123, 36, 0.5);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(244, 123, 36, 0.28);
+    }
+
+    .waypoint-num {
+      font-family: "Bodoni Moda", Georgia, serif;
+      font-size: 20px;
+      font-weight: 500;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1;
+      transition: color 0.25s ease;
+    }
+    .waypoint-node:hover .waypoint-num {
+      color: #ffb156;
+      text-shadow: 0 0 10px rgba(255, 177, 86, 0.6);
+    }
+
+    .waypoint-halo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(244, 123, 36, 0.45);
+      background: radial-gradient(circle, rgba(244, 123, 36, 0.22) 0%, rgba(8, 12, 18, 0.7) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffb156;
+      box-shadow: 0 0 12px rgba(244, 123, 36, 0.25);
+      transition: all 0.25s ease;
+      animation: beaconFloat 3s infinite ease-in-out;
+    }
+    @keyframes beaconFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); filter: drop-shadow(0 0 8px #ffb156); }
+    }
+    .waypoint-node:hover .waypoint-halo-icon {
+      border-color: #ffb156;
+      background: radial-gradient(circle, rgba(244, 123, 36, 0.45) 0%, rgba(8, 12, 18, 0.85) 100%);
+      box-shadow: 0 0 20px rgba(244, 123, 36, 0.6);
+      transform: scale(1.08);
+    }
+    .waypoint-halo-icon svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .waypoint-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .waypoint-title {
+      font-family: "Sora", sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ffffff;
+      white-space: nowrap;
+      transition: color 0.25s ease;
+    }
+    .waypoint-node:hover .waypoint-title {
+      color: #ffb156;
+      text-shadow: 0 0 10px rgba(244, 123, 36, 0.6);
+    }
+    .waypoint-coord {
+      font-family: "Sora", sans-serif;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.4);
+      white-space: nowrap;
+      transition: color 0.25s ease;
+    }
+    .waypoint-node:hover .waypoint-coord {
+      color: rgba(255, 177, 86, 0.8);
+    }
     .directions-screen {
       position: relative;
       min-height: 100vh;
@@ -1163,6 +1354,14 @@
       .exp-badge { padding: 7px 16px; border-radius: 12px; gap: 10px; }
       .exp-badge-icon { width: 26px; height: 26px; }
       .exp-badge-text { font-size: 11px; }
+      .about-footer { padding-top: 10px; }
+      .flight-waypoints-bar { gap: 16px; padding: 4px 0; }
+      .waypoint-card { padding: 4px 10px; gap: 8px; }
+      .waypoint-halo-icon { width: 24px; height: 24px; }
+      .waypoint-halo-icon svg { width: 12px; height: 12px; }
+      .waypoint-num { font-size: 15px; }
+      .waypoint-title { font-size: 10px; }
+      .waypoint-coord { font-size: 7.5px; }
       .story-footer { padding-top: 10px; }
     }
     @media (max-width: 760px) {
@@ -1180,7 +1379,17 @@
       .about-copy h2 strong { font-size: clamp(45px, 13vw, 72px); }
       .about-copy h2 em { font-size: clamp(34px, 10.4vw, 58px); white-space: normal; }
       .about-lead { max-width: 88%; }
-      .proof-line { max-width: 76%; flex-wrap: wrap; row-gap: 8px; }
+      .about-footer { align-items: flex-end; gap: 12px; }
+      .flight-waypoints-bar { flex-direction: column; align-items: flex-start; gap: 7px; width: 100%; max-width: 76%; padding: 0; }
+      .waypoint-vector-line { display: none; }
+      .waypoint-node { width: 100%; gap: 0; }
+      .waypoint-radar-anchor { display: none; }
+      .waypoint-card { width: 100%; padding: 5px 10px; gap: 8px; border-radius: 10px; }
+      .waypoint-halo-icon { width: 24px; height: 24px; }
+      .waypoint-halo-icon svg { width: 12px; height: 12px; }
+      .waypoint-num { font-size: 15px; }
+      .waypoint-title { font-size: 9.5px; }
+      .waypoint-coord { font-size: 7.5px; }
       .directions-shell { padding: 24px 20px; }
       .directions-screen::before { background-position: 56% center; }
       .directions-screen::after { background: linear-gradient(90deg, rgba(0,0,0,.93), rgba(0,0,0,.7) 64%, rgba(0,0,0,.18)); }
@@ -1300,7 +1509,65 @@
       </div>
 
       <div class="about-footer">
-        <div class="proof-line"><span>Personalized service</span><i></i><span>Business &amp; group travel</span><i></i><span>Global coverage</span></div>
+        <div class="flight-waypoints-bar" aria-label="Core travel capabilities">
+          <div class="waypoint-vector-line">
+            <div class="waypoint-vector-glow"></div>
+          </div>
+
+          <div class="waypoint-node">
+            <div class="waypoint-radar-anchor">
+              <div class="radar-ping"></div>
+              <div class="radar-ping ping-2"></div>
+              <div class="waypoint-center-dot"></div>
+            </div>
+            <div class="waypoint-card">
+              <span class="waypoint-num">01</span>
+              <div class="waypoint-halo-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+              </div>
+              <div class="waypoint-info">
+                <strong class="waypoint-title">Personalized Service</strong>
+                <span class="waypoint-coord">41.2995° N, 69.2401° E</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="waypoint-node">
+            <div class="waypoint-radar-anchor">
+              <div class="radar-ping"></div>
+              <div class="radar-ping ping-2"></div>
+              <div class="waypoint-center-dot"></div>
+            </div>
+            <div class="waypoint-card">
+              <span class="waypoint-num">02</span>
+              <div class="waypoint-halo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="waypoint-info">
+                <strong class="waypoint-title">Business &amp; Group Travel</strong>
+                <span class="waypoint-coord">40.7128° N, 74.0060° W</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="waypoint-node">
+            <div class="waypoint-radar-anchor">
+              <div class="radar-ping"></div>
+              <div class="radar-ping ping-2"></div>
+              <div class="waypoint-center-dot"></div>
+            </div>
+            <div class="waypoint-card">
+              <span class="waypoint-num">03</span>
+              <div class="waypoint-halo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div class="waypoint-info">
+                <strong class="waypoint-title">Global Coverage</strong>
+                <span class="waypoint-coord">51.5074° N, 0.1278° W</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="index" data-step="2" aria-label="Slide 2 of 8">
           <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
             <circle class="index-ring__track" cx="26" cy="26" r="21" />
