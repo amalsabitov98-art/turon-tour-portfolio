@@ -876,6 +876,66 @@
     .team-screen .story-proof {
       font-size: clamp(10.5px, .85vw, 13px);
     }
+    .charter-screen .story-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .charter-ticker-bar {
+      position: relative;
+      width: min(980px, 100%);
+      margin-top: clamp(22px, 3.4vh, 38px);
+      padding: clamp(10px, 1.3vh, 14px) clamp(16px, 2.5vw, 32px);
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(8, 12, 18, 0.78) 0%, rgba(4, 7, 12, 0.88) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      box-shadow: 
+        0 20px 48px rgba(0, 0, 0, 0.65),
+        0 0 32px rgba(37, 169, 220, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.22);
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 clamp(30px, 5vw, 65px), #000 calc(100% - clamp(30px, 5vw, 65px)), transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 clamp(30px, 5vw, 65px), #000 calc(100% - clamp(30px, 5vw, 65px)), transparent 100%);
+    }
+    .charter-ticker-track {
+      display: flex;
+      align-items: center;
+      gap: clamp(34px, 4.5vw, 62px);
+      width: max-content;
+      animation: charterMarquee 28s linear infinite;
+      will-change: transform;
+    }
+    .charter-ticker-bar:hover .charter-ticker-track {
+      animation-play-state: paused;
+    }
+    @keyframes charterMarquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-33.333333%); }
+    }
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.88;
+      transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+      cursor: pointer;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .ticker-item:hover {
+      opacity: 1;
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 10px rgba(244, 123, 36, 0.6)) drop-shadow(0 0 22px rgba(37, 169, 220, 0.4));
+    }
+    .ticker-item img {
+      display: block;
+      width: auto;
+      object-fit: contain;
+      pointer-events: none;
+    }
     .story-footer {
       display: flex;
       align-items: center;
@@ -924,6 +984,9 @@
       .story-rule { margin: 18px 0 14px; }
       .story-lead { font-size: clamp(13px, 1vw, 15px); line-height: 1.46; }
       .story-note { margin-top: 6px; font-size: clamp(13px, 1vw, 15px); line-height: 1.46; }
+      .charter-ticker-bar { margin-top: 14px; padding: 7px 18px; border-radius: 14px; }
+      .charter-ticker-track { gap: 36px; animation-duration: 22s; }
+      .ticker-item img { transform: scale(0.85); }
       .story-footer { padding-top: 12px; }
     }
     @media (max-width: 760px) {
@@ -971,6 +1034,9 @@
       .story-copy h2 strong { max-width: 94%; font-size: clamp(42px, 12vw, 70px); }
       .story-copy h2 em { font-size: clamp(41px, 11.5vw, 66px); white-space: normal; }
       .story-lead, .story-note { max-width: 88%; }
+      .charter-ticker-bar { width: 100%; margin-top: 18px; padding: 8px 12px; border-radius: 14px; }
+      .charter-ticker-track { gap: 26px; animation-duration: 20s; }
+      .ticker-item img { transform: scale(0.82); }
       .story-proof { max-width: 79%; flex-wrap: wrap; row-gap: 8px; }
       .mission-contact { align-items: flex-start; flex-direction: column; gap: 6px; }
       .index { width: 58px; height: 58px; min-height: 58px; }
@@ -1174,13 +1240,41 @@
         <nav><a href="#about">About</a><a class="active" href="#charter">Services</a><a href="#experience">Expertise</a><a class="contact" href="#mission">Contact</a></nav>
       </header>
 
-      <div class="story-content">
+      <div class="story-content charter-content">
         <div class="story-copy">
           <div class="story-label">06 / Charter flights</div>
           <h2><strong>CHARTER REACH</strong><em>PROVEN DELIVERY.</em></h2>
           <div class="story-rule"></div>
           <p class="story-lead">For the past seven years, Turon Tourism has operated charter programs to Moscow, Istanbul, Dubai, New York, Jeddah, Medina and Phuket.</p>
           <p class="story-note">Programs have operated across the fleets of Uzbekistan Airways, Centrum Air, Turkish Airlines and Utair.</p>
+        </div>
+
+        <div class="charter-ticker-bar" aria-label="Charter fleet partner airlines">
+          <div class="charter-ticker-track">
+            <!-- Set 1 -->
+            <div class="ticker-item" title="Qanot Sharq"><img src="logos/qanot_sharq_white.png" alt="Qanot Sharq" style="height: 19px;"></div>
+            <div class="ticker-item" title="Utair"><img src="logos/utair_white.svg" alt="Utair" style="height: 22px;"></div>
+            <div class="ticker-item" title="Centrum Air"><img src="logos/centrum_air_white.png" alt="Centrum Air" style="height: 24px;"></div>
+            <div class="ticker-item" title="Turkish Airlines"><img src="logos/turkish_airlines_white.svg" alt="Turkish Airlines" style="height: 20px;"></div>
+            <div class="ticker-item" title="Uzbekistan Airways"><img src="logos/uzbekistan_airways_white.svg" alt="Uzbekistan Airways" style="height: 20px;"></div>
+            <div class="ticker-item" title="FlyOne"><img src="logos/flyone_white.png" alt="FlyOne" style="height: 25px;"></div>
+
+            <!-- Set 2 -->
+            <div class="ticker-item" title="Qanot Sharq"><img src="logos/qanot_sharq_white.png" alt="Qanot Sharq" style="height: 19px;"></div>
+            <div class="ticker-item" title="Utair"><img src="logos/utair_white.svg" alt="Utair" style="height: 22px;"></div>
+            <div class="ticker-item" title="Centrum Air"><img src="logos/centrum_air_white.png" alt="Centrum Air" style="height: 24px;"></div>
+            <div class="ticker-item" title="Turkish Airlines"><img src="logos/turkish_airlines_white.svg" alt="Turkish Airlines" style="height: 20px;"></div>
+            <div class="ticker-item" title="Uzbekistan Airways"><img src="logos/uzbekistan_airways_white.svg" alt="Uzbekistan Airways" style="height: 20px;"></div>
+            <div class="ticker-item" title="FlyOne"><img src="logos/flyone_white.png" alt="FlyOne" style="height: 25px;"></div>
+
+            <!-- Set 3 -->
+            <div class="ticker-item" title="Qanot Sharq"><img src="logos/qanot_sharq_white.png" alt="Qanot Sharq" style="height: 19px;"></div>
+            <div class="ticker-item" title="Utair"><img src="logos/utair_white.svg" alt="Utair" style="height: 22px;"></div>
+            <div class="ticker-item" title="Centrum Air"><img src="logos/centrum_air_white.png" alt="Centrum Air" style="height: 24px;"></div>
+            <div class="ticker-item" title="Turkish Airlines"><img src="logos/turkish_airlines_white.svg" alt="Turkish Airlines" style="height: 20px;"></div>
+            <div class="ticker-item" title="Uzbekistan Airways"><img src="logos/uzbekistan_airways_white.svg" alt="Uzbekistan Airways" style="height: 20px;"></div>
+            <div class="ticker-item" title="FlyOne"><img src="logos/flyone_white.png" alt="FlyOne" style="height: 25px;"></div>
+          </div>
         </div>
       </div>
 
