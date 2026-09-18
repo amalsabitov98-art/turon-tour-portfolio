@@ -785,151 +785,6 @@
         linear-gradient(90deg, rgba(0,0,0,.91) 0%, rgba(0,0,0,.75) 27%, rgba(0,0,0,.36) 48%, rgba(0,0,0,.08) 72%),
         linear-gradient(180deg, rgba(0,0,0,.28), transparent 34%, rgba(0,0,0,.78));
     }
-    .charter-screen {
-      position: relative;
-      min-height: 100svh;
-      overflow: hidden;
-      isolation: isolate;
-      background: #030406;
-    }
-    .charter-screen::before {
-      display: none !important;
-    }
-    .charter-bg-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      z-index: -3;
-      display: block;
-      filter: none !important;
-      transform: scale(1.005);
-    }
-    .charter-screen::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -2;
-      background: 
-        radial-gradient(circle at 65% 50%, transparent 48%, rgba(3, 4, 6, 0.4) 100%),
-        linear-gradient(180deg, rgba(3, 4, 6, 0.55) 0%, transparent 16%, transparent 84%, rgba(3, 4, 6, 0.65) 100%);
-      pointer-events: none;
-    }
-    .charter-shell {
-      position: relative;
-      z-index: 2;
-    }
-    .charter-content {
-      display: flex !important;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 0;
-      padding: clamp(12px, 2vh, 28px) 0;
-      width: 100%;
-    }
-    .charter-card {
-      position: relative;
-      max-width: min(480px, 38vw);
-      padding: clamp(22px, 3vh, 34px) clamp(24px, 2.2vw, 34px);
-      border-radius: 24px;
-      background: linear-gradient(145deg, rgba(6, 9, 14, 0.8) 0%, rgba(3, 5, 8, 0.9) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(24px) saturate(170%);
-      -webkit-backdrop-filter: blur(24px) saturate(170%);
-      box-shadow: 
-        0 24px 60px rgba(0, 0, 0, 0.75),
-        0 0 40px rgba(37, 169, 220, 0.12),
-        inset 0 1px 1px rgba(255, 255, 255, 0.2);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-    .charter-card.is-minimized {
-      opacity: 0.15;
-      transform: translateX(-20px) scale(0.96);
-    }
-    .charter-card.is-minimized:hover {
-      opacity: 0.95;
-      transform: translateX(0) scale(1);
-    }
-    .charter-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-    .charter-card-header .story-label {
-      margin-bottom: 0;
-    }
-    .charter-toggle-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 999px;
-      color: rgba(255, 255, 255, 0.82);
-      font-family: "Sora", sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s ease, color 0.2s ease;
-    }
-    .charter-toggle-btn:hover {
-      background: rgba(244, 123, 36, 0.2);
-      border-color: rgba(244, 123, 36, 0.5);
-      color: #fff;
-    }
-    .charter-card h2 strong {
-      font-size: clamp(34px, 3.4vw, 60px);
-      line-height: .95;
-    }
-    .charter-card h2 em {
-      font-size: clamp(34px, 3.6vw, 64px);
-      margin-top: 8px;
-    }
-    .charter-card .story-rule {
-      margin: 22px 0 18px;
-    }
-    .charter-card .story-lead {
-      max-width: 100%;
-      font-size: clamp(13px, .95vw, 15px);
-      line-height: 1.6;
-      color: rgba(246, 245, 241, 0.9);
-    }
-    .charter-card .story-note {
-      max-width: 100%;
-      font-size: clamp(12px, .85vw, 13.5px);
-      line-height: 1.5;
-      color: rgba(246, 245, 241, 0.7);
-      margin-top: 10px;
-    }
-    .charter-fleets {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-top: 18px;
-    }
-    .fleet-tag {
-      font-family: "Sora", sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: .06em;
-      padding: 4px 11px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      color: rgba(246, 245, 241, 0.9);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-    @media (max-width: 900px) {
-      .charter-card {
-        max-width: 100%;
-        backdrop-filter: blur(28px);
-      }
-    }
     .story-shell {
       min-height: 100svh;
       display: grid;
@@ -1312,35 +1167,20 @@
       </div>
     </div>
   </section>
-  <section class="story-screen charter-screen" id="charter">
-    <img class="charter-bg-img" src="charter-infographic.jpg" alt="Turon Charter Flight Network" />
-    <div class="story-shell charter-shell">
+  <section class="story-screen charter-screen" id="charter" style="--image: url('sixth-charter.png'); --position: center; --brightness: .72;">
+    <div class="story-shell">
       <header class="story-header">
         <div class="brand"><img class="brand-mark" src="tour-mark.png" alt="Turon Tour"><span class="brand-copy"><strong>TURON</strong><small>TOUR</small></span></div>
         <nav><a href="#about">About</a><a class="active" href="#charter">Services</a><a href="#experience">Expertise</a><a class="contact" href="#mission">Contact</a></nav>
       </header>
 
-      <div class="story-content charter-content">
-        <div class="charter-card">
-          <div class="charter-card-header">
-            <div class="story-label">06 / Charter flights</div>
-            <button type="button" class="charter-toggle-btn" id="charterMapToggle" aria-label="Toggle map view" title="Скрыть/показать текст">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              <span>View Map</span>
-            </button>
-          </div>
+      <div class="story-content">
+        <div class="story-copy">
+          <div class="story-label">06 / Charter flights</div>
           <h2><strong>CHARTER REACH</strong><em>PROVEN DELIVERY.</em></h2>
           <div class="story-rule"></div>
           <p class="story-lead">For the past seven years, Turon Tourism has operated charter programs to Moscow, Istanbul, Dubai, New York, Jeddah, Medina and Phuket.</p>
           <p class="story-note">Programs have operated across the fleets of Uzbekistan Airways, Centrum Air, Turkish Airlines and Utair.</p>
-          <div class="charter-fleets">
-            <span class="fleet-tag">Uzbekistan Airways</span>
-            <span class="fleet-tag">Turkish Airlines</span>
-            <span class="fleet-tag">Utair</span>
-            <span class="fleet-tag">Centrum Air</span>
-            <span class="fleet-tag">FlyOne</span>
-            <span class="fleet-tag">Qanot Sharq</span>
-          </div>
         </div>
       </div>
 
@@ -1615,19 +1455,6 @@
         setActive(activeIndex);
       }, { threshold: [0, .2, .35, .5, .7, .9] });
       sections.forEach((section) => observer.observe(section));
-    })();
-  </script>
-  <script id="charter-toggle-script">
-    (() => {
-      const btn = document.getElementById('charterMapToggle');
-      const card = document.querySelector('.charter-card');
-      if (!btn || !card) return;
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isMin = card.classList.toggle('is-minimized');
-        const span = btn.querySelector('span');
-        if (span) span.textContent = isMin ? 'Show Text' : 'View Map';
-      });
     })();
   </script>
 </body>
