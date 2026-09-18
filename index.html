@@ -795,7 +795,7 @@
     .charter-screen::before {
       display: none !important;
     }
-    .charter-video-bg {
+    .charter-bg-img {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -805,6 +805,7 @@
       z-index: -3;
       display: block;
       filter: none !important;
+      transform: scale(1.005);
     }
     .charter-screen::after {
       content: "";
@@ -812,7 +813,7 @@
       inset: 0;
       z-index: -2;
       background: 
-        radial-gradient(circle at 65% 50%, transparent 45%, rgba(3, 4, 6, 0.45) 100%),
+        radial-gradient(circle at 65% 50%, transparent 48%, rgba(3, 4, 6, 0.4) 100%),
         linear-gradient(180deg, rgba(3, 4, 6, 0.55) 0%, transparent 16%, transparent 84%, rgba(3, 4, 6, 0.65) 100%);
       pointer-events: none;
     }
@@ -829,20 +830,57 @@
       width: 100%;
     }
     .charter-card {
-      max-width: min(500px, 42vw);
-      padding: clamp(24px, 3.2vh, 38px) clamp(24px, 2.5vw, 36px);
+      position: relative;
+      max-width: min(480px, 38vw);
+      padding: clamp(22px, 3vh, 34px) clamp(24px, 2.2vw, 34px);
       border-radius: 24px;
-      background: linear-gradient(145deg, rgba(8, 12, 18, 0.74) 0%, rgba(3, 5, 8, 0.86) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: linear-gradient(145deg, rgba(6, 9, 14, 0.8) 0%, rgba(3, 5, 8, 0.9) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(24px) saturate(170%);
       -webkit-backdrop-filter: blur(24px) saturate(170%);
       box-shadow: 
-        0 24px 60px rgba(0, 0, 0, 0.7),
+        0 24px 60px rgba(0, 0, 0, 0.75),
         0 0 40px rgba(37, 169, 220, 0.12),
         inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      transition: opacity 0.35s ease, transform 0.35s ease;
     }
-    .charter-card .story-label {
+    .charter-card.is-minimized {
+      opacity: 0.15;
+      transform: translateX(-20px) scale(0.96);
+    }
+    .charter-card.is-minimized:hover {
+      opacity: 0.95;
+      transform: translateX(0) scale(1);
+    }
+    .charter-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       margin-bottom: 18px;
+    }
+    .charter-card-header .story-label {
+      margin-bottom: 0;
+    }
+    .charter-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.82);
+      font-family: "Sora", sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .charter-toggle-btn:hover {
+      background: rgba(244, 123, 36, 0.2);
+      border-color: rgba(244, 123, 36, 0.5);
+      color: #fff;
     }
     .charter-card h2 strong {
       font-size: clamp(34px, 3.4vw, 60px);
@@ -1275,7 +1313,7 @@
     </div>
   </section>
   <section class="story-screen charter-screen" id="charter">
-    <video class="charter-video-bg" src="charter-flights.mp4" autoplay loop muted playsinline></video>
+    <img class="charter-bg-img" src="charter-infographic.jpg" alt="Turon Charter Flight Network" />
     <div class="story-shell charter-shell">
       <header class="story-header">
         <div class="brand"><img class="brand-mark" src="tour-mark.png" alt="Turon Tour"><span class="brand-copy"><strong>TURON</strong><small>TOUR</small></span></div>
@@ -1284,7 +1322,13 @@
 
       <div class="story-content charter-content">
         <div class="charter-card">
-          <div class="story-label">06 / Charter flights</div>
+          <div class="charter-card-header">
+            <div class="story-label">06 / Charter flights</div>
+            <button type="button" class="charter-toggle-btn" id="charterMapToggle" aria-label="Toggle map view" title="Скрыть/показать текст">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span>View Map</span>
+            </button>
+          </div>
           <h2><strong>CHARTER REACH</strong><em>PROVEN DELIVERY.</em></h2>
           <div class="story-rule"></div>
           <p class="story-lead">For the past seven years, Turon Tourism has operated charter programs to Moscow, Istanbul, Dubai, New York, Jeddah, Medina and Phuket.</p>
@@ -1571,6 +1615,19 @@
         setActive(activeIndex);
       }, { threshold: [0, .2, .35, .5, .7, .9] });
       sections.forEach((section) => observer.observe(section));
+    })();
+  </script>
+  <script id="charter-toggle-script">
+    (() => {
+      const btn = document.getElementById('charterMapToggle');
+      const card = document.querySelector('.charter-card');
+      if (!btn || !card) return;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isMin = card.classList.toggle('is-minimized');
+        const span = btn.querySelector('span');
+        if (span) span.textContent = isMin ? 'Show Text' : 'View Map';
+      });
     })();
   </script>
 </body>
