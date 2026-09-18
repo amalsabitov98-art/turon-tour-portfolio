@@ -785,6 +785,43 @@
         linear-gradient(90deg, rgba(0,0,0,.91) 0%, rgba(0,0,0,.75) 27%, rgba(0,0,0,.36) 48%, rgba(0,0,0,.08) 72%),
         linear-gradient(180deg, rgba(0,0,0,.28), transparent 34%, rgba(0,0,0,.78));
     }
+    .charter-screen::before {
+      display: none;
+    }
+    .charter-video {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 68% center;
+      filter: contrast(1.05) brightness(.94);
+      transform: scale(1.01);
+    }
+    .charter-screen::after {
+      background:
+        linear-gradient(90deg, 
+          rgba(5,5,5,.97) 0%, 
+          rgba(5,5,5,.92) 32%, 
+          rgba(5,5,5,.68) 50%, 
+          rgba(5,5,5,.18) 70%, 
+          rgba(5,5,5,.4) 100%),
+        linear-gradient(180deg, 
+          rgba(5,5,5,.4) 0%, 
+          transparent 26%, 
+          transparent 74%, 
+          rgba(5,5,5,.72) 100%);
+    }
+    @media (max-width: 900px) {
+      .charter-video {
+        object-position: center center;
+        opacity: .38;
+      }
+      .charter-screen::after {
+        background: linear-gradient(180deg, rgba(5,5,5,.88) 0%, rgba(5,5,5,.75) 50%, rgba(5,5,5,.94) 100%);
+      }
+    }
     .story-shell {
       min-height: 100svh;
       display: grid;
@@ -1167,7 +1204,8 @@
       </div>
     </div>
   </section>
-  <section class="story-screen charter-screen" id="charter" style="--image: url('sixth-charter.png'); --position: center; --brightness: .72;">
+  <section class="story-screen charter-screen" id="charter">
+    <video class="charter-video" src="charter-flights.mp4" autoplay loop muted playsinline></video>
     <div class="story-shell">
       <header class="story-header">
         <div class="brand"><img class="brand-mark" src="tour-mark.png" alt="Turon Tour"><span class="brand-copy"><strong>TURON</strong><small>TOUR</small></span></div>
@@ -1180,7 +1218,7 @@
           <h2><strong>CHARTER REACH</strong><em>PROVEN DELIVERY.</em></h2>
           <div class="story-rule"></div>
           <p class="story-lead">For the past seven years, Turon Tourism has operated charter programs to Moscow, Istanbul, Dubai, New York, Jeddah, Medina and Phuket.</p>
-          <p class="story-note">Programs have operated across the fleets of Uzbekistan Airways, Centrum Air, Turkish Airlines and Utah Airways.</p>
+          <p class="story-note">Programs have operated across the fleets of Uzbekistan Airways, Centrum Air, Turkish Airlines and Utair.</p>
         </div>
       </div>
 
@@ -1267,13 +1305,17 @@
   </section>
   <script id="hero-video-script">
     (() => {
-      const video = document.querySelector('.hero-video');
-      if (!video) return;
-      video.muted = true;
-      video.defaultMuted = true;
+      const videos = [...document.querySelectorAll('video')];
+      if (!videos.length) return;
+      videos.forEach((video) => {
+        video.muted = true;
+        video.defaultMuted = true;
+      });
       const attemptPlayback = () => {
-        const playback = video.play();
-        if (playback && typeof playback.catch === 'function') playback.catch(() => {});
+        videos.forEach((video) => {
+          const playback = video.play();
+          if (playback && typeof playback.catch === 'function') playback.catch(() => {});
+        });
       };
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', attemptPlayback, { once: true });
       else attemptPlayback();
