@@ -743,18 +743,93 @@
       padding-top: 20px;
       border-top: 1px solid rgba(255,255,255,.16);
     }
-    .experience-proof {
+    .experience-badges {
       display: flex;
       align-items: center;
-      gap: 17px;
-      color: rgba(255,255,255,.72);
-      font-family: "Sora", sans-serif;
-      font-size: 8.5px;
-      font-weight: 600;
-      letter-spacing: .15em;
-      text-transform: uppercase;
+      gap: 16px;
+      flex-wrap: wrap;
     }
-    .experience-proof i { width: 4px; height: 4px; border-radius: 50%; background: var(--orange); }
+    .exp-badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 22px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(8, 14, 22, 0.82) 0%, rgba(4, 8, 14, 0.92) 100%);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      box-shadow: 
+        0 12px 30px rgba(0, 0, 0, 0.65),
+        -6px 0 20px rgba(244, 123, 36, 0.22),
+        6px 0 20px rgba(84, 198, 235, 0.25),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.25);
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .exp-badge::before {
+      content: "";
+      position: absolute;
+      inset: -1.5px;
+      border-radius: 14px;
+      padding: 1.5px;
+      background: linear-gradient(115deg, #f47b24 0%, rgba(244, 123, 36, 0.35) 30%, rgba(84, 198, 235, 0.35) 70%, #54c6eb 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      transition: all 0.28s ease;
+    }
+    .exp-badge:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 
+        0 16px 36px rgba(0, 0, 0, 0.75),
+        -8px 0 26px rgba(244, 123, 36, 0.45),
+        8px 0 26px rgba(84, 198, 235, 0.5);
+    }
+    .exp-badge:hover::before {
+      background: linear-gradient(115deg, #f47b24 0%, rgba(244, 123, 36, 0.6) 30%, rgba(84, 198, 235, 0.6) 70%, #54c6eb 100%);
+      filter: drop-shadow(0 0 6px #54c6eb) drop-shadow(0 0 6px #f47b24);
+    }
+    .exp-badge-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+    .exp-badge-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+    .exp-badge:hover .exp-badge-icon {
+      background: rgba(84, 198, 235, 0.18);
+      border-color: rgba(84, 198, 235, 0.5);
+      color: #54c6eb;
+      filter: drop-shadow(0 0 8px #54c6eb);
+    }
+    .exp-badge-text {
+      font-family: "Sora", sans-serif;
+      font-size: clamp(11.5px, 0.95vw, 13.5px);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #ffffff;
+      white-space: nowrap;
+      transition: color 0.25s ease;
+    }
+    .exp-badge:hover .exp-badge-text {
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.75);
+    }
     .story-screen {
       position: relative;
       min-height: 100svh;
@@ -1085,6 +1160,9 @@
       .dest-ticker-bar { margin-top: 8px; padding: 8px 18px; border-radius: 16px; }
       .dest-ticker-track { gap: 24px; animation-duration: 24s; }
       .dest-qs-text { font-size: 13.5px; }
+      .exp-badge { padding: 7px 16px; border-radius: 12px; gap: 10px; }
+      .exp-badge-icon { width: 26px; height: 26px; }
+      .exp-badge-text { font-size: 11px; }
       .story-footer { padding-top: 10px; }
     }
     @media (max-width: 760px) {
@@ -1123,8 +1201,11 @@
       .experience-copy { width: 100%; }
       .experience-copy h2 strong { max-width: 92%; font-size: clamp(43px, 12.5vw, 72px); }
       .experience-copy h2 em { font-size: clamp(42px, 12vw, 68px); white-space: normal; }
-      .experience-lead { max-width: 87%; }
-      .experience-proof { max-width: 78%; flex-wrap: wrap; row-gap: 8px; }
+      .experience-badges { max-width: 86%; gap: 8px; flex-wrap: wrap; }
+      .exp-badge { padding: 8px 14px; border-radius: 12px; gap: 9px; }
+      .exp-badge-icon { width: 26px; height: 26px; }
+      .exp-badge-icon svg { width: 13px; height: 13px; }
+      .exp-badge-text { font-size: 10.5px; }
       .story-shell { padding: 24px 20px; }
       .story-screen::before { background-position: 58% center; }
       .story-screen::after, .mission-screen::after { background: linear-gradient(90deg, rgba(0,0,0,.96), rgba(0,0,0,.76) 68%, rgba(0,0,0,.2)); }
@@ -1286,7 +1367,26 @@
       </div>
 
       <div class="experience-footer">
-        <div class="experience-proof"><span>Air consolidation</span><i></i><span>GSA expertise</span><i></i><span>Tour packages</span></div>
+        <div class="experience-badges">
+          <div class="exp-badge">
+            <div class="exp-badge-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+            </div>
+            <span class="exp-badge-text">Air Consolidation</span>
+          </div>
+          <div class="exp-badge">
+            <div class="exp-badge-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <span class="exp-badge-text">GSA Expertise</span>
+          </div>
+          <div class="exp-badge">
+            <div class="exp-badge-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="12" y1="12" x2="12" y2="12.01"/></svg>
+            </div>
+            <span class="exp-badge-text">Tour Packages</span>
+          </div>
+        </div>
         <div class="index" data-step="4" aria-label="Slide 4 of 8">
           <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
             <circle class="index-ring__track" cx="26" cy="26" r="21" />
