@@ -1341,285 +1341,7 @@
     }
     .story-proof i { width: 4px; height: 4px; border-radius: 50%; background: var(--orange); }
 
-    /* =================================================== */
-    /* SLIDE 5: GLOBAL OPERATIONS HUD CONSOLE (TAS ⇄ NYC)  */
-    /* =================================================== */
-    .team-screen .story-footer {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-top: 20px;
-    }
-    .team-screen .story-footer .index {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-    }
 
-    .team-operations-hud {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: clamp(14px, 2.5vw, 36px);
-      width: 100%;
-      max-width: min(1080px, calc(100% - 130px));
-      margin: 0 auto;
-      padding: 12px clamp(20px, 3.5vw, 44px);
-      border-radius: 16px;
-      background: rgba(8, 14, 22, 0.74);
-      backdrop-filter: blur(24px) saturate(140%);
-      -webkit-backdrop-filter: blur(24px) saturate(140%);
-      border: 1px solid rgba(84, 198, 235, 0.35);
-      box-shadow: 
-        0 14px 38px rgba(0, 0, 0, 0.62),
-        0 0 28px rgba(84, 198, 235, 0.14),
-        0 0 16px rgba(244, 123, 36, 0.12),
-        inset 0 1px 1.5px rgba(255, 255, 255, 0.18),
-        inset 0 -1px 1px rgba(0, 0, 0, 0.5);
-      overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-    .team-operations-hud:hover {
-      border-color: rgba(84, 198, 235, 0.58);
-      box-shadow: 
-        0 18px 46px rgba(0, 0, 0, 0.72),
-        0 0 36px rgba(84, 198, 235, 0.26),
-        0 0 22px rgba(244, 123, 36, 0.2),
-        inset 0 1px 2px rgba(255, 255, 255, 0.25);
-    }
-
-    /* Ambient glass reflection */
-    .team-hud-glow {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(84, 198, 235, 0.12) 0%, rgba(244, 123, 36, 0.08) 50%, transparent 75%);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* Dual-tone moving streak along top edge */
-    .team-hud-streak {
-      position: absolute;
-      top: 0;
-      left: -260px;
-      width: 240px;
-      height: 2.5px;
-      background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(255, 177, 86, 0.5) 20%, 
-        #ffffff 50%, 
-        #54c6eb 80%, 
-        transparent 100%
-      );
-      box-shadow: 0 0 16px #54c6eb, 0 0 26px #ffb156;
-      animation: teamHudSweep 6s infinite cubic-bezier(0.4, 0, 0.2, 1);
-      pointer-events: none;
-      z-index: 4;
-    }
-    @keyframes teamHudSweep {
-      0% { left: -260px; opacity: 0; }
-      15% { opacity: 1; }
-      85% { opacity: 1; }
-      100% { left: 100%; opacity: 0; }
-    }
-
-    /* Column Items */
-    .team-hud-col {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      flex: 1;
-      gap: 3px;
-      padding: 4px 10px;
-      cursor: pointer;
-      user-select: none;
-      z-index: 2;
-      transition: transform 0.25s ease;
-    }
-    .team-hud-col:hover {
-      transform: translateY(-2px);
-    }
-
-    .hud-metric-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .hud-metric-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1px solid rgba(244, 123, 36, 0.4);
-      background: radial-gradient(circle, rgba(244, 123, 36, 0.2) 0%, rgba(8, 14, 22, 0.7) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffb156;
-      box-shadow: 0 0 12px rgba(244, 123, 36, 0.25);
-      transition: all 0.25s ease;
-      flex-shrink: 0;
-    }
-    .team-hud-col:hover .hud-metric-icon {
-      border-color: #ffb156;
-      background: radial-gradient(circle, rgba(244, 123, 36, 0.35) 0%, rgba(8, 14, 22, 0.9) 100%);
-      box-shadow: 0 0 18px rgba(244, 123, 36, 0.5);
-      transform: scale(1.06);
-    }
-    .hud-metric-icon svg {
-      width: 17px;
-      height: 17px;
-    }
-
-    .hud-val {
-      font-family: "Sora", sans-serif;
-      font-size: clamp(24px, 2.3vw, 34px);
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      transition: color 0.25s ease, text-shadow 0.25s ease;
-    }
-    .hud-val.gold {
-      color: #ffb156;
-      text-shadow: 0 0 16px rgba(244, 123, 36, 0.55);
-    }
-    .team-hud-col:hover .hud-val.gold {
-      color: #ffedd0;
-      text-shadow: 0 0 22px rgba(255, 177, 86, 0.85);
-    }
-
-    .hud-tagline {
-      font-family: "Sora", sans-serif;
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      transition: color 0.25s ease, text-shadow 0.25s ease;
-    }
-    .hud-tagline.cyan {
-      color: #54c6eb;
-      text-shadow: 0 0 10px rgba(84, 198, 235, 0.4);
-    }
-    .hud-tagline.white {
-      color: rgba(255, 255, 255, 0.72);
-    }
-    .team-hud-col:hover .hud-tagline.cyan {
-      color: #ffffff;
-      text-shadow: 0 0 14px #54c6eb;
-    }
-    .team-hud-col:hover .hud-tagline.white {
-      color: #54c6eb;
-      text-shadow: 0 0 12px rgba(84, 198, 235, 0.7);
-    }
-
-    /* Vertical HUD Brackets */
-    .team-hud-bracket {
-      width: 1.5px;
-      height: 44px;
-      background: linear-gradient(180deg, transparent, #54c6eb, transparent);
-      box-shadow: 0 0 10px rgba(84, 198, 235, 0.6);
-      flex-shrink: 0;
-      opacity: 0.75;
-      animation: bracketPulse 3.5s infinite ease-in-out;
-    }
-    @keyframes bracketPulse {
-      0%, 100% { opacity: 0.5; filter: drop-shadow(0 0 4px #54c6eb); }
-      50% { opacity: 1; filter: drop-shadow(0 0 10px #54c6eb); }
-    }
-
-    /* Center Transatlantic Corridor */
-    .bridge-center {
-      flex: 1.25;
-      gap: 2px;
-      padding: 0 8px;
-    }
-    .transatlantic-flight-path {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-    }
-    .bridge-node {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      line-height: 1.1;
-    }
-    .hub-code {
-      font-family: "Sora", sans-serif;
-      font-size: 11.5px;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      color: #ffedd0;
-      text-shadow: 0 0 8px rgba(255, 177, 86, 0.5);
-    }
-    .hub-name {
-      font-family: "Sora", sans-serif;
-      font-size: 8px;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.45);
-      letter-spacing: 0.08em;
-    }
-
-    .bridge-arc-wrap {
-      width: clamp(100px, 14vw, 150px);
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .bridge-arc-svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-      filter: drop-shadow(0 0 6px rgba(84, 198, 235, 0.4));
-    }
-    .arc-beacon {
-      filter: drop-shadow(0 0 8px #ffb156);
-    }
-    .arc-beacon-echo {
-      filter: drop-shadow(0 0 6px #54c6eb);
-    }
-
-    .bridge-title-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 1px;
-    }
-    .hub-title-city.cyan {
-      font-family: "Sora", sans-serif;
-      font-size: clamp(20px, 2vw, 26px);
-      font-weight: 900;
-      letter-spacing: 0.1em;
-      color: #54c6eb;
-      text-shadow: 0 0 16px rgba(84, 198, 235, 0.65);
-      transition: color 0.25s ease, text-shadow 0.25s ease;
-    }
-    .hub-title-arrow {
-      font-size: 18px;
-      color: #ffb156;
-      filter: drop-shadow(0 0 8px #ffb156);
-      transition: transform 0.25s ease;
-    }
-    .team-hud-col:hover .hub-title-city.cyan {
-      color: #ffffff;
-      text-shadow: 0 0 22px #54c6eb, 0 0 35px rgba(84, 198, 235, 0.6);
-    }
-    .team-hud-col:hover .hub-title-arrow {
-      transform: scale(1.15);
-      filter: drop-shadow(0 0 12px #ffedd0);
-    }
 
     /* =================================================== */
     /* SLIDE 7: OPERATIONAL TRIAD HUD CONSOLE              */
@@ -2080,19 +1802,7 @@
       .hud-num { font-size: 10px; }
       .hud-title { font-size: 10.5px; }
       .hud-sep svg { width: 10px; height: 18px; }
-      .team-screen .story-footer { padding-top: 10px; }
-      .team-operations-hud {
-        max-width: min(980px, calc(100% - 110px));
-        padding: 8px 20px;
-        gap: 16px;
-      }
-      .hud-metric-icon { width: 26px; height: 26px; }
-      .hud-metric-icon svg { width: 14px; height: 14px; }
-      .hud-val { font-size: 24px; }
-      .hub-title-city.cyan { font-size: 18px; }
-      .hud-tagline { font-size: 9.5px; }
-      .bridge-arc-wrap { height: 22px; width: 110px; }
-      .team-hud-bracket { height: 36px; }
+
       .service-screen .story-footer { padding-top: 10px; }
       .triad-hud-console {
         max-width: min(980px, calc(100% - 110px));
@@ -2294,28 +2004,7 @@
         transform: none;
         align-self: flex-end;
       }
-      .team-operations-hud {
-        width: 100%;
-        max-width: 100%;
-        padding: 8px 12px;
-        gap: 6px;
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .team-hud-col {
-        padding: 6px 8px;
-        border-bottom: 1px solid rgba(84, 198, 235, 0.15);
-      }
-      .team-hud-col:last-child {
-        border-bottom: none;
-      }
-      .team-hud-bracket {
-        display: none;
-      }
-      .hud-val { font-size: 20px; }
-      .hub-title-city.cyan { font-size: 16px; }
-      .hud-tagline { font-size: 9px; }
-      .bridge-arc-wrap { width: 100px; height: 20px; }
+
 
       /* Slide 6: Charter Flights */
       .charter-screen .story-footer {
@@ -2661,84 +2350,12 @@
       </div>
 
       <div class="story-footer">
-        <div class="team-operations-hud" role="region" aria-label="Team scale and global presence">
-          <div class="team-hud-glow"></div>
-          <div class="team-hud-streak"></div>
-
-          <!-- Left Metric: 100+ Team Specialists -->
-          <div class="team-hud-col metric-left">
-            <div class="hud-metric-row">
-              <div class="hud-metric-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-              </div>
-              <strong class="hud-val gold">100+</strong>
-            </div>
-            <span class="hud-tagline cyan">Team Specialists</span>
-          </div>
-
-          <!-- Center Pillar: Transatlantic Bridge TAS ⇄ NYC -->
-          <div class="team-hud-bracket" aria-hidden="true"></div>
-
-          <div class="team-hud-col bridge-center">
-            <div class="transatlantic-flight-path" aria-label="Direct flight corridor: Tashkent to New York">
-              <div class="bridge-node tas">
-                <span class="hub-code">TAS</span>
-                <span class="hub-name">Tashkent</span>
-              </div>
-              <div class="bridge-arc-wrap">
-                <svg class="bridge-arc-svg" viewBox="0 0 160 38" fill="none" preserveAspectRatio="none">
-                  <path class="arc-base" d="M 8 32 Q 80 4 152 32" stroke="rgba(84, 198, 235, 0.28)" stroke-width="1.8" stroke-dasharray="3 3"/>
-                  <path class="arc-glow-track" d="M 8 32 Q 80 4 152 32" stroke="url(#arcGradient)" stroke-width="2.2" stroke-linecap="round"/>
-                  <circle class="arc-beacon" r="3.2" fill="#ffb156">
-                    <animateMotion path="M 8 32 Q 80 4 152 32" dur="3.8s" repeatCount="indefinite" />
-                  </circle>
-                  <circle class="arc-beacon-echo" r="6" fill="none" stroke="#54c6eb" stroke-width="1" opacity="0.6">
-                    <animateMotion path="M 8 32 Q 80 4 152 32" dur="3.8s" repeatCount="indefinite" />
-                  </circle>
-                  <defs>
-                    <linearGradient id="arcGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#ffb156" />
-                      <stop offset="50%" stop-color="#ffffff" />
-                      <stop offset="100%" stop-color="#54c6eb" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-              <div class="bridge-node nyc">
-                <span class="hub-code">NYC</span>
-                <span class="hub-name">New York</span>
-              </div>
-            </div>
-
-            <div class="bridge-title-row">
-              <span class="hub-title-city cyan">TAS</span>
-              <span class="hub-title-arrow">⇄</span>
-              <span class="hub-title-city cyan">NYC</span>
-            </div>
-            <span class="hud-tagline white">Global Presence</span>
-          </div>
-
-          <div class="team-hud-bracket" aria-hidden="true"></div>
-
-          <!-- Right Metric: 30K+ Passengers / Year -->
-          <div class="team-hud-col metric-right">
-            <div class="hud-metric-row">
-              <strong class="hud-val gold">30K+</strong>
-              <div class="hud-metric-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"/>
-                  <line x1="2" y1="12" x2="22" y2="12"/>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                </svg>
-              </div>
-            </div>
-            <span class="hud-tagline cyan">Passengers / Year</span>
-          </div>
+        <div class="story-proof">
+          <span>Tashkent HQ</span>
+          <i></i>
+          <span>New York Office</span>
+          <i></i>
+          <span>30,000+ Annual Travelers</span>
         </div>
         <div class="index" data-step="5" aria-label="Slide 5 of 8">
           <svg class="index-ring" viewBox="0 0 52 52" aria-hidden="true">
@@ -3211,8 +2828,7 @@
       if (!sections.length) return;
       const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Tag revealable content elements (headings, text, badges, console bars - NOT top navigation/header)
-      const revealSelector = ['.copy > *', '.about-copy > *', '.directions-copy > *', '.experience-copy > *', '.story-copy > *', '.luxury-hud-beam', '.route-lines', '.experience-badges', '.team-operations-hud', '.charter-ticker-bar', '.dest-ticker-bar', '.triad-hud-console', '.hub-console'].join(',');
+      const revealSelector = ['.copy > *', '.about-copy > *', '.directions-copy > *', '.experience-copy > *', '.story-copy > *', '.luxury-hud-beam', '.route-lines', '.experience-badges', '.story-proof', '.charter-ticker-bar', '.dest-ticker-bar', '.triad-hud-console', '.hub-console'].join(',');
       
       sections.forEach((section, sectionIndex) => {
         section.classList.add('motion-screen');

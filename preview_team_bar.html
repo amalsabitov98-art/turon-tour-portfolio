@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turon Tour — Премиальная верстка слайда команды</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Sora', sans-serif;
+      background: #090c10;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    p.subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .tab-btn:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+    .tab-btn.active {
+      background: #fff;
+      color: #090c10;
+      border-color: #fff;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Screen simulation */
+    .viewport-mock {
+      position: relative;
+      width: 100%;
+      height: 560px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #000 url('fifth-team.png') center bottom / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 44px 50px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+    .viewport-mock::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(8, 12, 18, 0.65) 0%, rgba(8, 12, 18, 0.2) 45%, rgba(8, 12, 18, 0.88) 100%);
+      pointer-events: none;
+    }
+
+    .slide-copy {
+      position: relative;
+      z-index: 2;
+      max-width: 540px;
+    }
+    .slide-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 8px;
+    }
+    .slide-title {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+    .slide-title em {
+      font-family: 'Cinzel', serif;
+      font-style: italic;
+      font-weight: 500;
+      color: #ffb156;
+      display: block;
+    }
+    .slide-lead {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 14px;
+    }
+
+    .footer-slot {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    /* 1. Pure Editorial (No box) */
+    .foot-pure {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 20px;
+    }
+    .pure-brand-line {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .pure-brand-line strong { color: #fff; font-weight: 700; }
+    .pure-brand-line span.dot { opacity: 0.3; }
+
+    /* 2. Swiss Baseline Grid */
+    .foot-swiss {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    .swiss-item strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .swiss-item p {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* 3. The AI Box */
+    .foot-box {
+      background: rgba(12, 16, 22, 0.75);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 16px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hidden { display: none !important; }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .analysis-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 22px;
+    }
+    .analysis-box h3 { font-size: 15px; margin-bottom: 8px; font-weight: 700; }
+    .analysis-box p { font-size: 13px; color: rgba(255, 255, 255, 0.6); line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Разбор «ИИшности»: почему плашка лишняя</h1>
+      <p class="subtitle">Посмотри, как выигрывает слайд, когда мы убираем генеративный шаблон</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="setMode('pure')">Решение 1: Чистый кадр (Рекомендуется)</button>
+      <button class="tab-btn" onclick="setMode('swiss')">Решение 2: Типографическая сетка без плашки</button>
+      <button class="tab-btn" onclick="setMode('box')">Решение 3: Плавающая плашка-островок</button>
+    </div>
+
+    <div class="viewport-mock">
+      <div class="slide-copy">
+        <div class="slide-label">05 / Our team</div>
+        <div class="slide-title">100+ SPECIALISTS <em>ONE STANDARD.</em></div>
+        <p class="slide-lead">Qualified travel professionals across Uzbekistan and New York, focused on precise, personal service. We serve more than 30,000 tourists each year.</p>
+      </div>
+
+      <div class="footer-slot">
+        <!-- 1. Pure -->
+        <div id="m-pure" class="foot-pure">
+          <div class="pure-brand-line">
+            <strong>Tashkent</strong>
+            <span class="dot">•</span>
+            <strong>New York</strong>
+            <span class="dot">•</span>
+            <span>Global Operations Network</span>
+          </div>
+          <div style="font-size: 11px; opacity: 0.5; font-family: monospace;">05 / 08</div>
+        </div>
+
+        <!-- 2. Swiss -->
+        <div id="m-swiss" class="foot-swiss hidden">
+          <div class="swiss-item">
+            <strong>Tashkent &amp; New York</strong>
+            <p>Два прямых операционных центра управления</p>
+          </div>
+          <div class="swiss-item">
+            <strong>100+ Специалистов</strong>
+            <p>Персональные менеджеры, чартеры, визы и логистика</p>
+          </div>
+          <div class="swiss-item">
+            <strong>30,000+ Туристов в год</strong>
+            <p>Доверие корпоративных и индивидуальных клиентов</p>
+          </div>
+        </div>
+
+        <!-- 3. Box -->
+        <div id="m-box" class="foot-box hidden">
+          <div>
+            <div style="font-size: 26px; font-weight: 800;">100+</div>
+            <div style="font-size: 9px; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.14em;">Specialists</div>
+          </div>
+          <div style="font-size: 13px; opacity: 0.5; letter-spacing: 0.1em;">TAS ──── ✈ ──── NYC</div>
+          <div>
+            <div style="font-size: 26px; font-weight: 800;">30,000+</div>
+            <div style="font-size: 9px; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.14em;">Passengers / Year</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-grid">
+      <div class="analysis-box">
+        <h3>Почему Решение 1 выглядит дорого?</h3>
+        <p>Кадр кинематографичный: люди в костюмах идут по залитому солнцем терминалу. Когда внизу нет навязанной «коробки с цифрами», взгляд не спотыкается. Заголовок <strong>100+ SPECIALISTS</strong> работает сам по себе, создавая эффект презентации Apple или разворота журнала Monocle.</p>
+      </div>
+      <div class="analysis-box">
+        <h3>Почему Решение 2 выглядит по-человечески?</h3>
+        <p>Вместо «капсулы из UI-кита» данные просто аккуратно лежат на тонкой линии сетки (как на главном экране сайта). Никаких теней, никаких скруглений, чистый функциональный дизайн.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function setMode(mode) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('m-pure').classList.add('hidden');
+      document.getElementById('m-swiss').classList.add('hidden');
+      document.getElementById('m-box').classList.add('hidden');
+      document.getElementById('m-' + mode).classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
