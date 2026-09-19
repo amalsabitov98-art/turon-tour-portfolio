@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turon Tour — 3D Glass Orbs / Liquid Glass Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #06090e;
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 20px;
+    }
+    .container {
+      width: 100%;
+      max-width: 1100px;
+    }
+    header {
+      margin-bottom: 36px;
+      text-align: center;
+    }
+    h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.02em; }
+    p.sub { font-size: 15px; color: rgba(255, 255, 255, 0.6); }
+
+    .stage {
+      background: radial-gradient(circle at 50% 0%, #111a28 0%, #06090e 70%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 50px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 12px;
+    }
+
+    /* ========================================================== */
+    /* 3D REALISTIC LIQUID GLASS BUBBLES / ORBS                   */
+    /* ========================================================== */
+    .glass-orb {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.04) 65%, rgba(255, 255, 255, 0.14) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      box-shadow: 
+        0 12px 28px rgba(0, 0, 0, 0.75),
+        inset 0 -8px 16px rgba(255, 255, 255, 0.28),
+        inset 0 1px 3px rgba(255, 255, 255, 0.65);
+      transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+      cursor: pointer;
+    }
+    .glass-orb::before {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 14%;
+      width: 72%;
+      height: 44%;
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.22) 60%, transparent 100%);
+      filter: blur(0.3px);
+      pointer-events: none;
+    }
+    .glass-orb::after {
+      content: '';
+      position: absolute;
+      bottom: 3.5px;
+      left: 22%;
+      width: 56%;
+      height: 28%;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, transparent 75%);
+      filter: blur(0.5px);
+      pointer-events: none;
+    }
+    .glass-orb svg {
+      position: relative;
+      z-index: 2;
+      width: 20px;
+      height: 20px;
+      color: #ffffff;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.6));
+      transition: transform 0.25s ease;
+    }
+    .glass-orb:hover {
+      transform: scale(1.1) translateY(-3px);
+      box-shadow: 
+        0 18px 36px rgba(0, 0, 0, 0.85),
+        inset 0 -10px 20px rgba(255, 255, 255, 0.4),
+        inset 0 1px 4px rgba(255, 255, 255, 0.85);
+      border-color: rgba(255, 255, 255, 0.65);
+    }
+    .glass-orb:hover svg {
+      transform: scale(1.12);
+    }
+
+    /* Gold Tinted Glass Sphere */
+    .glass-orb.gold {
+      background: radial-gradient(circle at 50% 120%, rgba(244, 123, 36, 0.35) 0%, rgba(244, 123, 36, 0.08) 65%, rgba(255, 255, 255, 0.16) 100%);
+      border-color: rgba(255, 177, 86, 0.48);
+      box-shadow: 
+        0 12px 28px rgba(0, 0, 0, 0.75),
+        0 0 18px rgba(244, 123, 36, 0.25),
+        inset 0 -8px 16px rgba(255, 177, 86, 0.35),
+        inset 0 1px 3px rgba(255, 255, 255, 0.75);
+    }
+
+    /* Cyan Tinted Glass Sphere */
+    .glass-orb.cyan {
+      background: radial-gradient(circle at 50% 120%, rgba(84, 198, 235, 0.35) 0%, rgba(84, 198, 235, 0.08) 65%, rgba(255, 255, 255, 0.16) 100%);
+      border-color: rgba(84, 198, 235, 0.48);
+      box-shadow: 
+        0 12px 28px rgba(0, 0, 0, 0.75),
+        0 0 18px rgba(84, 198, 235, 0.25),
+        inset 0 -8px 16px rgba(84, 198, 235, 0.35),
+        inset 0 1px 3px rgba(255, 255, 255, 0.75);
+    }
+
+    /* Console Bar */
+    .lux-console {
+      background: rgba(10, 14, 22, 0.75);
+      backdrop-filter: blur(28px) saturate(140%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 12px 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      box-shadow: 
+        0 24px 54px rgba(0, 0, 0, 0.75),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      transition: border-color 0.3s ease;
+    }
+    .lux-console:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .lux-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+    }
+    .lux-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .lux-num {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+    .lux-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+    .lux-chevron {
+      color: rgba(255, 177, 86, 0.6);
+      font-size: 18px;
+      font-weight: 300;
+      opacity: 0.7;
+    }
+    .lux-tag {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* Comparison grid */
+    .grid-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 36px;
+    }
+    .card-info {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .card-info h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .card-info p { font-size: 13px; color: rgba(255, 255, 255, 0.6); line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Стилистика 3D Glass Orbs (Liquid Glass)</h1>
+      <p class="sub">Реалистичные стеклянные сферы с бликами вместо плоских неоновых кругляшей</p>
+    </header>
+
+    <div class="stage">
+      
+      <!-- 1. Slide 7: Operational Triad -->
+      <div>
+        <div class="section-title">Слайд 07: Operational Triad (Консоль возможностей)</div>
+        <div class="lux-console">
+          <!-- Item 1 -->
+          <div class="lux-item">
+            <div class="glass-orb gold">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="lux-meta">
+              <span class="lux-num" style="color: #ffb156;">01</span>
+              <strong class="lux-title">Trained Specialists</strong>
+            </div>
+          </div>
+
+          <div class="lux-chevron">›</div>
+
+          <!-- Item 2 -->
+          <div class="lux-item">
+            <div class="glass-orb cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+              </svg>
+            </div>
+            <div class="lux-meta">
+              <span class="lux-num" style="color: #54c6eb;">02</span>
+              <strong class="lux-title">Tailor-Made Itineraries</strong>
+            </div>
+          </div>
+
+          <div class="lux-chevron">›</div>
+
+          <!-- Item 3 -->
+          <div class="lux-item">
+            <div class="glass-orb">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <div class="lux-meta">
+              <span class="lux-num" style="color: rgba(255,255,255,0.6);">03</span>
+              <strong class="lux-title">Efficient Technology</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Slide 8: Official Contact Channels -->
+      <div>
+        <div class="section-title">Слайд 08: Official Contact Channels (Контакты)</div>
+        <div class="lux-console">
+          <!-- Channel 1 -->
+          <div class="lux-item">
+            <div class="glass-orb gold">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+            </div>
+            <div class="lux-meta">
+              <span class="lux-tag" style="color: #ffb156;">● Official Inquiries</span>
+              <strong class="lux-title">info@turontourism.uz</strong>
+            </div>
+          </div>
+
+          <div class="lux-chevron">›</div>
+
+          <!-- Channel 2 -->
+          <div class="lux-item">
+            <div class="glass-orb cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div class="lux-meta">
+              <span class="lux-tag" style="color: #54c6eb;">● Online Booking Platform</span>
+              <strong class="lux-title">turonbooking.uz</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="grid-info">
+      <div class="card-info">
+        <h3 style="color: #fff;">1. Реалистичная 3D оптика вместо плоских колец</h3>
+        <p>Каждая сфера имеет трехслойную физику света: верхний полумесяц-блик (specular highlight), нижнее рассеянное отражение (caustic), объемную тень и прозрачную преломляющую линзу.</p>
+      </div>
+      <div class="card-info">
+        <h3 style="color: #e5c392;">2. Дорогой тактильный hover-эффект</h3>
+        <p>При наведении сфера плавно увеличивается, усиливает глубину отражений и дает ощущение настоящего стеклянного шара из операционной системы Apple visionOS.</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
