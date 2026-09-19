@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turon Tour — Редизайн Слайда 02 (Без нейрослопа)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,400;1,500;1,600&family=Cinzel:wght@500;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #090c10;
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .container {
+      width: 100%;
+      max-width: 1080px;
+    }
+    header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    p.sub { font-size: 14px; color: rgba(255,255,255,0.6); }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .tab-btn:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+    .tab-btn.active {
+      background: #fff;
+      color: #090c10;
+      border-color: #fff;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Screen simulation */
+    .viewport-mock {
+      position: relative;
+      width: 100%;
+      height: 580px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #050505 url('second-route-table.png') right center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 44px 50px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+    .viewport-mock::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, #050505 0%, #050505 44%, rgba(5,5,5,.92) 55%, rgba(5,5,5,.3) 75%, transparent 100%),
+        linear-gradient(180deg, rgba(0,0,0,.35), transparent 40%, rgba(0,0,0,.5));
+      pointer-events: none;
+    }
+
+    .slide-copy {
+      position: relative;
+      z-index: 2;
+      max-width: 580px;
+    }
+    .slide-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 8px;
+    }
+    .slide-title {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+    .slide-title em {
+      font-family: 'Cinzel', serif;
+      font-style: italic;
+      font-weight: 500;
+      color: #ffb156;
+      display: block;
+    }
+    .slide-rule {
+      width: 48px;
+      height: 2px;
+      background: #f47b24;
+      margin: 16px 0 20px;
+    }
+
+    /* 1. Clean Editorial */
+    .clean-lead {
+      font-size: 16.5px;
+      line-height: 1.65;
+      font-weight: 500;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+    .clean-body {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.65);
+      margin-top: 14px;
+    }
+    .clean-quote {
+      font-family: "Bodoni Moda", Georgia, serif;
+      font-style: italic;
+      font-size: 17.5px;
+      line-height: 1.45;
+      color: rgba(255, 235, 210, 0.95);
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* 2. Original Slop */
+    .slop-lead {
+      font-size: 16px;
+      line-height: 1.65;
+      color: #fff;
+    }
+    .slop-lead .accent-gold {
+      color: #ffb156;
+      font-weight: 700;
+      text-shadow: 0 0 16px rgba(255, 177, 86, 0.35);
+    }
+    .slop-box {
+      margin: 18px 0 0;
+      padding-left: 20px;
+      border-left: 2px solid rgba(84, 198, 235, 0.45);
+    }
+    .slop-badge {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #54c6eb;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .slop-story {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(246, 245, 241, 0.84);
+    }
+    .slop-story strong {
+      color: #fff;
+      font-weight: 600;
+    }
+    .slop-creed {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.14);
+    }
+    .slop-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(244, 123, 36, 0.12);
+      border: 1px solid rgba(244, 123, 36, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f47b24;
+      flex-shrink: 0;
+      box-shadow: 0 0 14px rgba(244, 123, 36, 0.2);
+    }
+    .slop-quote {
+      font-family: "Bodoni Moda", Georgia, serif;
+      font-style: italic;
+      font-size: 18px;
+      color: #ffedd0;
+      text-shadow: 0 2px 14px rgba(244, 123, 36, 0.25);
+    }
+
+    /* Footer preview */
+    .foot-mock {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 18px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .hidden { display: none !important; }
+
+    .grid-notes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .card-note {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 22px;
+    }
+    .card-note h3 { font-size: 15px; margin-bottom: 8px; font-weight: 700; }
+    .card-note p { font-size: 13px; color: rgba(255, 255, 255, 0.6); line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Слайд 02: Очистка от «нейрослопа»</h1>
+      <p class="sub">Сравнение текущего варианта и чистого редакционного стиля</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="setMode('clean')">Чистый редакционный стиль (Рекомендуется)</button>
+      <button class="tab-btn" onclick="setMode('slop')">Как сейчас (Нейрослоп)</button>
+    </div>
+
+    <div class="viewport-mock">
+      <div class="slide-copy">
+        <div class="slide-label">02 / About Turon</div>
+        <div class="slide-title">GLOBAL REACH. <em>PERSONAL CONTROL.</em></div>
+        <div class="slide-rule"></div>
+
+        <!-- 1. CLEAN EDITORIAL -->
+        <div id="m-clean">
+          <p class="clean-lead">
+            Turon Tourism delivers high-tier travel and aviation solutions across Uzbekistan and worldwide, combining international scale with uncompromising personal control.
+          </p>
+          <p class="clean-body">
+            Founded in 2019, the company established its reputation during the global pandemic by organizing vital charter corridors when commercial skies were closed — building the operational discipline that powers our network today.
+          </p>
+          <p class="clean-quote">
+            “Our ambition is to set a higher standard for travel in Uzbekistan.”
+          </p>
+        </div>
+
+        <!-- 2. SLOP -->
+        <div id="m-slop" class="hidden">
+          <p class="slop-lead">
+            Turon Tourism is a <span class="accent-gold">market-leading travel company</span> in Uzbekistan, delivering high-quality, personalized and flexible service for individual, group, leisure and business travel.
+          </p>
+          <div class="slop-box">
+            <div class="slop-badge">★ Founding Resilience • Est. 2019</div>
+            <p class="slop-story">
+              Forged through crisis during the global pandemic, we engineered and executed <strong>essential charter flights across closed skies</strong>, building the foundation of trust that drives our travel network today.
+            </p>
+          </div>
+          <div class="slop-creed">
+            <div class="slop-icon">★</div>
+            <span class="slop-quote">“Our ambition is to set a higher standard for travel in Uzbekistan.”</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot-mock">
+        <div>01 Personalized Service &nbsp;•&nbsp; 02 Business Travel &nbsp;•&nbsp; 03 Global Coverage</div>
+        <div>02 / 08</div>
+      </div>
+    </div>
+
+    <div class="grid-notes">
+      <div class="card-note">
+        <h3 style="color: #f87171;">Анатомия нейрослопа в этом блоке:</h3>
+        <p>1. <strong>ChatGPT-выделения:</strong> искусственно вставленный <code>bold</code> и оранжевая подсветка посреди предложений.<br>
+           2. <strong>Notion-колл-аут:</strong> синяя вертикальная палочка слева и звездочка.<br>
+           3. <strong>Детские иконки:</strong> оранжевый кругляш со звездочкой перед цитатой.<br>
+           4. <strong>Штампы в тексте:</strong> перечисление 8 прилагательных подряд и пафос кинотрейлера.</p>
+      </div>
+      <div class="card-note">
+        <h3 style="color: #34d399;">Человеческий премиум-подход:</h3>
+        <p>1. <strong>Ровная, уверенная верстка:</strong> текст читается цельным блоком без цветных вставок и визуальных спотыканий.<br>
+           2. <strong>Факты вместо пафоса:</strong> четкая история основания в 2019 г. и организации чартеров в кризис.<br>
+           3. <strong>Элегантная цитата:</strong> набрана благородным курсивом без светящихся эффектов и звездочек.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function setMode(mode) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('m-clean').classList.add('hidden');
+      document.getElementById('m-slop').classList.add('hidden');
+      document.getElementById('m-' + mode).classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

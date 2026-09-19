@@ -485,72 +485,28 @@
       font-weight: 700;
       text-shadow: 0 0 16px rgba(255, 177, 86, 0.35);
     }
-    .about-story-box {
-      position: relative;
-      margin: 18px 0 0;
-      padding-left: 20px;
-      border-left: 2px solid rgba(84, 198, 235, 0.45);
-      max-width: 640px;
-    }
-    .about-story-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-family: "Sora", sans-serif;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #54c6eb;
-      margin-bottom: 8px;
-    }
-    .about-story-badge svg {
-      width: 12px;
-      height: 12px;
-      color: #ffb156;
-      filter: drop-shadow(0 0 6px rgba(244, 123, 36, 0.7));
-    }
     .about-story {
-      margin: 0;
-      color: rgba(246, 245, 241, 0.84);
-      font-size: clamp(13px, 1vw, 15px);
-      font-weight: 450;
-      line-height: 1.64;
-    }
-    .about-story strong {
-      color: #ffffff;
-      font-weight: 600;
+      max-width: 640px;
+      margin: 16px 0 0;
+      color: rgba(246, 245, 241, 0.75);
+      font-size: clamp(13.5px, 1.02vw, 15.5px);
+      font-weight: 400;
+      line-height: 1.68;
     }
     .about-creed {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-top: 18px;
-      padding-top: 16px;
-      border-top: 1px dashed rgba(255, 255, 255, 0.14);
       max-width: 640px;
-    }
-    .about-creed-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(244, 123, 36, 0.12);
-      border: 1px solid rgba(244, 123, 36, 0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #f47b24;
-      flex-shrink: 0;
-      box-shadow: 0 0 14px rgba(244, 123, 36, 0.2);
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
     }
     .about-creed-text {
+      margin: 0;
       font-family: "Bodoni Moda", Georgia, serif;
       font-style: italic;
-      font-size: clamp(16.5px, 1.25vw, 20px);
-      font-weight: 500;
-      color: #ffedd0;
-      line-height: 1.4;
-      text-shadow: 0 2px 14px rgba(244, 123, 36, 0.25);
+      font-size: clamp(16px, 1.2vw, 19px);
+      font-weight: 400;
+      color: rgba(255, 238, 216, 0.95);
+      line-height: 1.45;
     }
     .about-footer {
       position: relative;
@@ -1877,14 +1833,9 @@
       .about-copy h2 em { font-size: clamp(28px, 8vw, 46px); margin-top: 6px; white-space: normal; line-height: 0.98; }
       .about-rule { width: 72px; height: 2px; margin: 14px 0 12px; }
       .about-lead { font-size: clamp(13.5px, 3.8vw, 16px); line-height: 1.55; max-width: 100%; }
-      .about-story-box { margin: 12px 0 0; padding-left: 14px; border-left-width: 2px; max-width: 100%; }
-      .about-story-badge { font-size: 8.5px; letter-spacing: 0.12em; margin-bottom: 5px; }
-      .about-story-badge svg { width: 10px; height: 10px; }
-      .about-story { font-size: clamp(12px, 3.4vw, 13.5px); line-height: 1.52; }
-      .about-creed { margin-top: 12px; padding-top: 10px; gap: 11px; align-items: flex-start; max-width: 100%; }
-      .about-creed-icon { width: 24px; height: 24px; min-width: 24px; margin-top: 2px; }
-      .about-creed-icon svg { width: 12px; height: 12px; }
-      .about-creed-text { font-size: clamp(13.5px, 3.8vw, 16px); line-height: 1.42; }
+      .about-story { font-size: clamp(12.5px, 3.4vw, 14px); line-height: 1.55; margin-top: 10px; max-width: 100%; }
+      .about-creed { margin-top: 14px; padding-top: 12px; max-width: 100%; }
+      .about-creed-text { font-size: clamp(13.5px, 3.8vw, 16px); line-height: 1.45; }
       .about-footer {
         position: relative;
         flex-direction: column;
@@ -2177,25 +2128,10 @@
           <div class="about-label">02 / About Turon</div>
           <h2><strong>GLOBAL REACH.</strong><em>PERSONAL CONTROL.</em></h2>
           <div class="about-rule"></div>
-          <p class="about-lead">Turon Tourism is a <span class="accent-gold">market-leading travel company</span> in Uzbekistan, delivering high-quality, personalized and flexible service for individual, group, leisure and business travel.</p>
-          
-          <div class="about-story-box">
-            <div class="about-story-badge">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15 9H22L16.5 14L18.5 21L12 17L5.5 21L7.5 14L2 9H9L12 2Z"/></svg>
-              <span>Founding Resilience • Est. 2019</span>
-            </div>
-            <p class="about-story">Forged through crisis during the global pandemic, we engineered and executed <strong>essential charter flights across closed skies</strong>, building the foundation of trust that drives our travel network today.</p>
-          </div>
-
+          <p class="about-lead">Turon Tourism delivers high-tier travel and aviation solutions across Uzbekistan and worldwide, combining international scale with uncompromising personal control.</p>
+          <p class="about-story">Founded in 2019, the company established its reputation during the global pandemic by organizing vital charter corridors when commercial skies were closed — building the operational discipline that powers our network today.</p>
           <div class="about-creed">
-            <div class="about-creed-icon">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-              </svg>
-            </div>
-            <div class="about-creed-text">
-              “Our ambition is to set a higher standard for travel in Uzbekistan.”
-            </div>
+            <p class="about-creed-text">“Our ambition is to set a higher standard for travel in Uzbekistan.”</p>
           </div>
         </div>
       </div>
