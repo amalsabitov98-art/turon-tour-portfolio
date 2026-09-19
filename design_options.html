@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>5 Дизайн-концепций: Без ИИ-слопа — Turon Tour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Manrope:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #d4af37;
+      --gold-light: #f5e6b3;
+      --gold-bronze: #aa8232;
+      --orange: #f47b24;
+      --cyan: #25a9dc;
+      --sand: #e6dfd5;
+      --dark-base: #0a0e14;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #06080c;
+      color: #f0ede6;
+      font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Top Navigation Toolbar */
+    .top-toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(8, 11, 16, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .toolbar-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toolbar-title span {
+      background: linear-gradient(135deg, #f47b24, #d4af37);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .toolbar-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.6);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .tab-btn.active {
+      color: #06080c;
+      background: #f0ede6;
+      font-weight: 700;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Main Container */
+    .main-wrap {
+      margin-top: 68px;
+      padding: 0 24px 80px;
+    }
+
+    /* Concept Header Card */
+    .concept-hero-bar {
+      max-width: 1300px;
+      margin: 20px auto 28px;
+      padding: 22px 30px;
+      background: rgba(16, 20, 28, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .concept-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #ffb156;
+      margin-bottom: 6px;
+    }
+    .concept-heading {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+    }
+    .concept-why-not-ai {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 620px;
+      line-height: 1.6;
+    }
+    .concept-why-not-ai strong {
+      color: #54c6eb;
+    }
+
+    /* Slide Stage Simulation */
+    .slide-stage {
+      position: relative;
+      max-width: 1300px;
+      height: 680px;
+      margin: 0 auto 40px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9);
+      background: url('seventh-service.png') center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 36px 56px 42px;
+    }
+    .slide-stage::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 30%, rgba(5, 8, 14, 0.6) 0%, rgba(5, 8, 14, 0.88) 100%),
+                  linear-gradient(180deg, rgba(5,8,14,0.3) 0%, rgba(5,8,14,0.95) 100%);
+      z-index: 1;
+    }
+
+    /* Stage Header & Content */
+    .stage-header {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-box img {
+      width: 30px;
+      height: 30px;
+    }
+    .brand-name {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .brand-name small {
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.5);
+      margin-left: 4px;
+    }
+
+    .stage-content {
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+    }
+    .stage-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #ffb156;
+      margin-bottom: 10px;
+    }
+    .stage-title {
+      font-family: 'Bodoni Moda', Georgia, serif;
+      font-size: clamp(32px, 3.8vw, 44px);
+      line-height: 1.05;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+    .stage-title em {
+      display: block;
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.65);
+    }
+    .stage-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(246, 245, 241, 0.75);
+      max-width: 520px;
+    }
+
+    /* Target Area For Options */
+    .stage-target {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ================================================================ */
+    /* VARIANT 1: QUIET LUXURY EDITORIAL (AMAN / BELMOND)               */
+    /* ================================================================ */
+    .v1-editorial-wrap {
+      width: 100%;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      padding-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+      position: relative;
+    }
+    .v1-col {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      position: relative;
+    }
+    .v1-col:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -18px;
+      top: 15%;
+      height: 70%;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.14), transparent);
+    }
+    .v1-num {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 30px;
+      font-weight: 400;
+      font-style: italic;
+      color: #e6dfd5;
+      line-height: 1;
+      opacity: 0.92;
+    }
+    .v1-title {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-top: 4px;
+    }
+    .v1-subtitle {
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+    }
+
+    /* ================================================================ */
+    /* VARIANT 2: SWISS ARCHITECTURAL GRID (LEICA / BRUTALIST PRECISION)*/
+    /* ================================================================ */
+    .v2-swiss-wrap {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .v2-card {
+      background: rgba(8, 12, 18, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 88px;
+      backdrop-filter: blur(20px);
+      transition: all 0.25s ease;
+    }
+    .v2-card:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+      background: rgba(14, 18, 26, 0.85);
+    }
+    .v2-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .v2-index {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.45);
+      font-weight: 500;
+    }
+    .v2-icon {
+      color: #ffffff;
+      opacity: 0.7;
+    }
+    .v2-icon svg { width: 14px; height: 14px; }
+    .v2-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-top: 8px;
+    }
+
+    /* ================================================================ */
+    /* VARIANT 3: SILK ROAD HERITAGE & BRASS (ВОСТОЧНЫЙ ПРЕМИУМ)        */
+    /* ================================================================ */
+    .v3-heritage-wrap {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, rgba(28, 23, 17, 0.8) 0%, rgba(16, 14, 11, 0.88) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(245, 230, 179, 0.25);
+      border-radius: 12px;
+      padding: 16px 36px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+    }
+    .v3-heritage-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .v3-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+    .v3-seal {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.2) 0%, rgba(16, 14, 11, 0.9) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f5e6b3;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(245, 230, 179, 0.4);
+      flex-shrink: 0;
+    }
+    .v3-seal svg { width: 17px; height: 17px; }
+    .v3-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .v3-step {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: #d4af37;
+      text-transform: uppercase;
+    }
+    .v3-title {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: #f5e6b3;
+      text-transform: uppercase;
+    }
+    .v3-divider {
+      width: 1px;
+      height: 34px;
+      background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+    }
+
+    /* ================================================================ */
+    /* VARIANT 4: ASYMMETRIC VOGUE MAGAZINE SPREAD (РАЗВОРОТ ЖУРНАЛА)   */
+    /* ================================================================ */
+    .v4-magazine-wrap {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      border-top: 2px solid rgba(255, 255, 255, 0.9);
+      padding-top: 16px;
+    }
+    .v4-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .v4-topline {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .v4-num {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #f47b24;
+    }
+    .v4-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+    .v4-desc {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.48);
+      line-height: 1.4;
+    }
+
+    /* ================================================================ */
+    /* VARIANT 5: APPLE PRO MATTE MONOLITH (ЧИСТЫЙ ТЕХНО-ЛЮКС)          */
+    /* ================================================================ */
+    .v5-monolith-wrap {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(13, 16, 22, 0.65);
+      backdrop-filter: blur(36px) saturate(180%);
+      -webkit-backdrop-filter: blur(36px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 10px 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+    }
+    .v5-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 6px 14px;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+    }
+    .v5-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .v5-glyph-slot {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+    .v5-glyph-slot svg { width: 17px; height: 17px; stroke-width: 1.8; }
+    .v5-meta {
+      display: flex;
+      flex-direction: column;
+    }
+    .v5-meta-idx {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+    }
+    .v5-meta-text {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: #ffffff;
+    }
+    .v5-sep {
+      width: 1px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Comparison Section */
+    .comparison-grid {
+      max-width: 1300px;
+      margin: 30px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .comp-card {
+      background: rgba(14, 18, 25, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .comp-card:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+    }
+    .comp-card.active {
+      border-color: #f47b24;
+      background: rgba(244, 123, 36, 0.05);
+      box-shadow: 0 0 0 1px #f47b24, 0 16px 36px rgba(0, 0, 0, 0.6);
+    }
+    .comp-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .comp-card.active .comp-badge {
+      background: #f47b24;
+      color: #000;
+    }
+    .comp-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .comp-desc {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .comp-pros {
+      font-size: 11px;
+      color: #54c6eb;
+      font-weight: 600;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 8px;
+    }
+
+    /* Floating Choice Bar */
+    .choice-bar {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(10, 14, 20, 0.95);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 40px;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+    .choice-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .choice-text strong {
+      color: #f47b24;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Toolbar -->
+  <div class="top-toolbar">
+    <div class="toolbar-left">
+      <div class="toolbar-title">
+        <span>Turon Tour</span> • 5 Концепций Дизайна
+      </div>
+      <div class="toolbar-tabs" id="tabContainer">
+        <button class="tab-btn active" onclick="switchOption(1)">1. Quiet Luxury</button>
+        <button class="tab-btn" onclick="switchOption(2)">2. Swiss Grid</button>
+        <button class="tab-btn" onclick="switchOption(3)">3. Silk Road Brass</button>
+        <button class="tab-btn" onclick="switchOption(4)">4. Vogue Editorial</button>
+        <button class="tab-btn" onclick="switchOption(5)">5. Apple Monolith</button>
+      </div>
+    </div>
+    <div class="toolbar-right">
+      <span style="font-size: 12px; color: rgba(255,255,255,0.5);">Кликните для переключения</span>
+    </div>
+  </div>
+
+  <div class="main-wrap">
+
+    <!-- Concept Description Header -->
+    <div class="concept-hero-bar" id="conceptInfo">
+      <div>
+        <div class="concept-tag" id="optTag">КОНЦЕПЦИЯ 01 / АБСОЛЮТНЫЙ ЧИСТЫЙ ЛЮКС</div>
+        <h2 class="concept-heading" id="optHeading">Quiet Luxury Editorial (в стиле Aman & Belmond)</h2>
+      </div>
+      <div class="concept-why-not-ai" id="optDesc">
+        <strong>Почему здесь нет ИИ-слопа:</strong> Полный отказ от рамок, коробок, плавающих капсул и светящихся кружков. Чистая крупная типографика (антиква Bodoni) прямо в кадре и тонкие волосяные линии. Эстетика закрытого элитного журнала путешествий.
+      </div>
+    </div>
+
+    <!-- Live Slide Stage (Slide 07 Simulation) -->
+    <div class="slide-stage" id="slideStage">
+      <div class="stage-header">
+        <div class="brand-box">
+          <img src="tour-mark.png" alt="Turon Tour">
+          <div class="brand-name">TURON<small>TOUR</small></div>
+        </div>
+        <div style="font-size: 11px; letter-spacing: 0.15em; color: rgba(255,255,255,0.4); text-transform: uppercase;">
+          Интерактивный симулятор Слайда 07
+        </div>
+      </div>
+
+      <div class="stage-content">
+        <div class="stage-label">07 / Our approach</div>
+        <h1 class="stage-title">Personal Service<em>Built to Perform.</em></h1>
+        <p class="stage-desc">Experienced people, continuous training and current technology support comprehensive, cost-effective travel solutions.</p>
+      </div>
+
+      <!-- Render Target Area -->
+      <div class="stage-target" id="renderTarget">
+        
+        <!-- OPTION 1 RENDER (Default) -->
+        <div class="v1-editorial-wrap">
+          <div class="v1-col">
+            <span class="v1-num">01</span>
+            <span class="v1-title">Trained Specialists</span>
+            <span class="v1-subtitle">Dedicated operational experts</span>
+          </div>
+          <div class="v1-col">
+            <span class="v1-num">02</span>
+            <span class="v1-title">Tailor-Made Itineraries</span>
+            <span class="v1-subtitle">Bespoke private charter & routes</span>
+          </div>
+          <div class="v1-col">
+            <span class="v1-num">03</span>
+            <span class="v1-title">Efficient Technology</span>
+            <span class="v1-subtitle">Modern dispatch & booking flow</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Cards Grid for quick comparison -->
+    <div class="comparison-grid">
+      <div class="comp-card active" id="card1" onclick="switchOption(1)">
+        <span class="comp-badge">Вариант 1 (Рекомендуется)</span>
+        <div class="comp-title">Quiet Luxury Editorial</div>
+        <div class="comp-desc">Никаких капсул и плашек. Крупные номера антиквой Bodoni Moda, тонкие волосяные делители. Чистый воздух и кинематографичность.</div>
+        <div class="comp-pros">✓ Как у Aman, Belmond, Ritz-Carlton</div>
+      </div>
+
+      <div class="comp-card" id="card2" onclick="switchOption(2)">
+        <span class="comp-badge">Вариант 2</span>
+        <div class="comp-title">Swiss Architectural Grid</div>
+        <div class="comp-desc">Строгие матовые плашки почти без скруглений. Технические моноширинные метки [01], аккуратные линейные монохромные значки.</div>
+        <div class="comp-pros">✓ Строгость Leica и швейцарской типографики</div>
+      </div>
+
+      <div class="comp-card" id="card3" onclick="switchOption(3)">
+        <span class="comp-badge">Вариант 3</span>
+        <div class="comp-title">Silk Road Heritage & Brass</div>
+        <div class="comp-desc">Благородная теплая латунь, чеканка и золотистый контур цвета шампанского. Связь с историческим Самаркандом и Бухарой.</div>
+        <div class="comp-pros">✓ Аутентичный ориентальный люкс</div>
+      </div>
+
+      <div class="comp-card" id="card4" onclick="switchOption(4)">
+        <span class="comp-badge">Вариант 4</span>
+        <div class="comp-title">Vogue Magazine Spread</div>
+        <div class="comp-desc">Асимметричная журнальная верстка: акцентная линия сверху, высокая контрастная антиква и поясняющий текст.</div>
+        <div class="comp-pros">✓ Эстетика модных глянцевых изданий</div>
+      </div>
+
+      <div class="comp-card" id="card5" onclick="switchOption(5)">
+        <span class="comp-badge">Вариант 5</span>
+        <div class="comp-title">Apple Pro Matte Monolith</div>
+        <div class="comp-desc">Если плашка нужна: цельный матовый брусок из темного титана с глубоким размытием. Без ярких лазеров и без разноцветного неона.</div>
+        <div class="comp-pros">✓ Сдержанный минималистичный премиум</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sticky Choice Bar -->
+  <div class="choice-bar">
+    <div class="choice-text">
+      Текущий просмотр: <strong id="selectedLabel">1. Quiet Luxury Editorial</strong>
+    </div>
+  </div>
+
+  <script>
+    const optionsData = {
+      1: {
+        tag: "КОНЦЕПЦИЯ 01 / АБСОЛЮТНЫЙ ЧИСТЫЙ ЛЮКС",
+        heading: "Quiet Luxury Editorial (в стиле Aman & Belmond)",
+        desc: "<strong>Почему здесь нет ИИ-слопа:</strong> Полный отказ от рамок, коробок, плавающих капсул и светящихся кружков. Чистая крупная типографика (антиква Bodoni) прямо в кадре и тонкие волосяные линии. Эстетика закрытого элитного журнала путешествий.",
+        label: "1. Quiet Luxury Editorial",
+        html: `
+          <div class="v1-editorial-wrap">
+            <div class="v1-col">
+              <span class="v1-num">01</span>
+              <span class="v1-title">Trained Specialists</span>
+              <span class="v1-subtitle">Dedicated operational experts</span>
+            </div>
+            <div class="v1-col">
+              <span class="v1-num">02</span>
+              <span class="v1-title">Tailor-Made Itineraries</span>
+              <span class="v1-subtitle">Bespoke private charter & routes</span>
+            </div>
+            <div class="v1-col">
+              <span class="v1-num">03</span>
+              <span class="v1-title">Efficient Technology</span>
+              <span class="v1-subtitle">Modern dispatch & booking flow</span>
+            </div>
+          </div>
+        `
+      },
+      2: {
+        tag: "КОНЦЕПЦИЯ 02 / АРХИТЕКТУРНЫЙ МОНОХРОМ",
+        heading: "Swiss Architectural Grid (в стиле Leica и швейцарского дизайна)",
+        desc: "<strong>Почему здесь нет ИИ-слопа:</strong> Никаких круглых капсул и градиентных подсветок. Строгие карточки с матовым затемнением, технические индексы [01] и монохромная графика без неоновых вензелей.",
+        label: "2. Swiss Architectural Grid",
+        html: `
+          <div class="v2-swiss-wrap">
+            <div class="v2-card">
+              <div class="v2-header">
+                <span class="v2-index">[01] OPERATIONAL</span>
+                <span class="v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg></span>
+              </div>
+              <div class="v2-title">Trained Specialists</div>
+            </div>
+            <div class="v2-card">
+              <div class="v2-header">
+                <span class="v2-index">[02] BESPOKE</span>
+                <span class="v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+              </div>
+              <div class="v2-title">Tailor-Made Itineraries</div>
+            </div>
+            <div class="v2-card">
+              <div class="v2-header">
+                <span class="v2-index">[03] INFRASTRUCTURE</span>
+                <span class="v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+              </div>
+              <div class="v2-title">Efficient Technology</div>
+            </div>
+          </div>
+        `
+      },
+      3: {
+        tag: "КОНЦЕПЦИЯ 03 / АУТЕНТИЧНЫЙ ВОСТОЧНЫЙ ПРЕМИУМ",
+        heading: "Silk Road Heritage & Brass (Шелковый Путь и благородный металл)",
+        desc: "<strong>Почему здесь нет ИИ-слопа:</strong> Вместо пластикового неонового киберпанка — благородная патина латуни, золоченая чеканка цвета шампанского и шрифт Cinzel. Идеально ложится на восточную атмосферу Туркестана.",
+        label: "3. Silk Road Heritage & Brass",
+        html: `
+          <div class="v3-heritage-wrap">
+            <div class="v3-item">
+              <div class="v3-seal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="v3-info">
+                <span class="v3-step">I • Team</span>
+                <strong class="v3-title">Trained Specialists</strong>
+              </div>
+            </div>
+            <div class="v3-divider"></div>
+            <div class="v3-item">
+              <div class="v3-seal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+              </div>
+              <div class="v3-info">
+                <span class="v3-step">II • Route</span>
+                <strong class="v3-title">Tailor-Made Tours</strong>
+              </div>
+            </div>
+            <div class="v3-divider"></div>
+            <div class="v3-item">
+              <div class="v3-seal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+              </div>
+              <div class="v3-info">
+                <span class="v3-step">III • Fleet</span>
+                <strong class="v3-title">Current Technology</strong>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      4: {
+        tag: "КОНЦЕПЦИЯ 04 / ЖУРНАЛЬНЫЙ ГЛЯНЕЦ",
+        heading: "Vogue / Monocle Magazine Spread (Разворот элитного издания)",
+        desc: "<strong>Почему здесь нет ИИ-слопа:</strong> Строгая журнальная черта сверху, типографика с акцентным цветом на номере, лаконичные подзаголовки. Создает ощущение дорогой печатной верстки.",
+        label: "4. Vogue Magazine Spread",
+        html: `
+          <div class="v4-magazine-wrap">
+            <div class="v4-item">
+              <div class="v4-topline">
+                <span class="v4-num">01.</span>
+                <span class="v4-title">Trained Specialists</span>
+              </div>
+              <p class="v4-desc">Rigorous international certification and hands-on hospitality discipline.</p>
+            </div>
+            <div class="v4-item">
+              <div class="v4-topline">
+                <span class="v4-num">02.</span>
+                <span class="v4-title">Tailor-Made Routes</span>
+              </div>
+              <p class="v4-desc">Custom luxury itineraries crafted for high-profile individual journeys.</p>
+            </div>
+            <div class="v4-item">
+              <div class="v4-topline">
+                <span class="v4-num">03.</span>
+                <span class="v4-title">Efficient Technology</span>
+              </div>
+              <p class="v4-desc">Seamless charter tracking and direct airline booking coordination.</p>
+            </div>
+          </div>
+        `
+      },
+      5: {
+        tag: "КОНЦЕПЦИЯ 05 / МАТОВЫЙ ТЕХНО-МОНОЛИТ",
+        heading: "Apple Pro Matte Monolith (Сдержанный матовый титан)",
+        desc: "<strong>Почему здесь нет ИИ-слопа:</strong> Никаких бегающих лазеров, неоновых аур и разноцветных кружков. Единая темная титановая планка с глубоким физическим матовым размытием и белыми монохромными иконками.",
+        label: "5. Apple Pro Matte Monolith",
+        html: `
+          <div class="v5-monolith-wrap">
+            <div class="v5-item">
+              <div class="v5-glyph-slot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="v5-meta">
+                <span class="v5-meta-idx">01 • TEAM</span>
+                <strong class="v5-meta-text">Trained Specialists</strong>
+              </div>
+            </div>
+            <div class="v5-sep"></div>
+            <div class="v5-item">
+              <div class="v5-glyph-slot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+              </div>
+              <div class="v5-meta">
+                <span class="v5-meta-idx">02 • ITINERARY</span>
+                <strong class="v5-meta-text">Tailor-Made Solutions</strong>
+              </div>
+            </div>
+            <div class="v5-sep"></div>
+            <div class="v5-item">
+              <div class="v5-glyph-slot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+              </div>
+              <div class="v5-meta">
+                <span class="v5-meta-idx">03 • SYSTEMS</span>
+                <strong class="v5-meta-text">Efficient Technology</strong>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    function switchOption(num) {
+      const data = optionsData[num];
+      if (!data) return;
+
+      const tabs = document.querySelectorAll('.tab-btn');
+      tabs.forEach((tab, index) => {
+        if (index === num - 1) tab.classList.add('active');
+        else tab.classList.remove('active');
+      });
+
+      for (let i = 1; i <= 5; i++) {
+        const card = document.getElementById('card' + i);
+        if (card) {
+          if (i === num) card.classList.add('active');
+          else card.classList.remove('active');
+        }
+      }
+
+      document.getElementById('optTag').textContent = data.tag;
+      document.getElementById('optHeading').textContent = data.heading;
+      document.getElementById('optDesc').innerHTML = data.desc;
+      document.getElementById('selectedLabel').textContent = data.label;
+
+      const target = document.getElementById('renderTarget');
+      target.innerHTML = data.html;
+    }
+  </script>
+</body>
+</html>
